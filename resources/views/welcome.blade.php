@@ -23,7 +23,7 @@
 <body class="home" data-spy="scroll" data-target="#navbar-nav">
     <!-- =========== Start of Preloader ============ -->
     <div class="pre-laoder">
-        <img src="{{asset('frontend_assets/img/diagonal-line-pattern.png')}}" alt="overlay" class="background-image-holder">
+        {{-- <img src="{{asset('frontend_assets/img/diagonal-line-pattern.png')}}" alt="overlay" class="background-image-holder">
         <div id="lineDrawing">
             <div class="demo-content align-center">
                 <svg class="svg-sahpe">
@@ -38,33 +38,22 @@
                     </g>
                 </svg>
             </div>
-        </div>
-
+        </div> --}}
     </div>
     <!-- =========== End of Preloader ============ -->
 
     <!-- =========== Start of Navigation (main menu) ============ -->
     <header class="navbar navbar-expand-lg navbar-dark position-fixed">
         <div class="container">
+            <div class="navbar-header">
+                <a href="index-2.html" class="brand-logo"><img src="{{asset('frontend_assets/img/logo/white-logo.png')}}" alt="brand-logo"></a>
+            </div>
             <!-- end navbar-toggler = -->
             <div class="navbar-inner">
                 <nav class="flex-row d-lg-flex justify-content-lg-end align-items-lg-center">
                     <ul class="navbar-nav" id="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#!"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Home
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="index-2.html">Home-1</a></li>
-                                <li><a class="dropdown-item" href="home-2.html">Home-2</a></li>
-                                <li><a class="dropdown-item" href="home-3.html">Home-3</a></li>
-                                <li><a class="dropdown-item" href="home-4.html">Home-4</a></li>
-                                <li><a class="dropdown-item" href="home-5.html">Home-5</a></li>
-                                <li><a class="dropdown-item" href="home-6.html">Home-6</a></li>
-                                <li><a class="dropdown-item" href="home-7.html">Home-7</a></li>
-                                <li><a class="dropdown-item" href="home-8.html">Home-8</a></li>
-                                <li><a class="dropdown-item" href="home-9.html">Home-9</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#!">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#story">About</a>
@@ -78,54 +67,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#skills">Skills</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#!"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Pages
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="about.html">About Me/Us</a></li>
-                                <li><a class="dropdown-item" href="services.html">Services</a></li>
-                                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Portfolio</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="portfolio-grid.html">Portfolio Grid</a></li>
-                                        <li><a class="dropdown-item" href="portfolio-masonry.html">Portfolio Masonry</a></li>
-                                        <li><a class="dropdown-item" href="portfolio-masonry-full.html">Portfolio
-                                                Masonry Full</a></li>
-                                        <li><a class="dropdown-item" href="portfolio-masonry-full-unequal.html">Portfolio
-                                                Masonry Unequal</a></li>
-                                        <li><a class="dropdown-item" href="portfolio-details-1.html">Portfolio Details
-                                                1</a></li>
-                                        <li><a class="dropdown-item" href="portfolio-details-2.html">Portfolio Details
-                                                2</a></li>
-                                        <li><a class="dropdown-item" href="portfolio-details-3.html">Portfolio Details
-                                                3</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Blog
-                                        Pages</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="blog-full.html">Blog Full</a></li>
-                                        <li><a class="dropdown-item" href="blog-sidebar-right.html">Blog Sidebar Right</a></li>
-                                        <li><a class="dropdown-item" href="blog-sidebar-left.html">Blog Sidebar left</a></li>
-                                        <li><a class="dropdown-item" href="blog-details-full.html">Blog Details Full</a></li>
-                                        <li><a class="dropdown-item" href="blog-details-sidebar-right.html">Blog
-                                                Details Sidebar Right</a></li>
-                                        <li><a class="dropdown-item" href="blog-details-sidebar-left.html">Blog Details
-                                                Sidebar left</a></li>
-                                    </ul>
-                                </li>
-                                <li><a class="dropdown-item" href="coming-soon.html">Coming Soon</a></li>
-                                <li><a class="dropdown-item" href="404.html">404 Page</a></li>
-                            </ul>
-                        </li>
                     </ul>
                     <!-- end of nav menu items -->
                 </nav>
             </div>
         </div>
-        <span class="site-language">
-            <a href="#">ENG</a>
-        </span>
     </header>
     <!-- =========== End of Navigation (main menu)  ============ -->
 
@@ -133,29 +79,13 @@
     <div>
         <div class="navigations-sidebar">
             <span class="logo-holder">
-                <a href="index-2.html" class="brand-logo"><img src="{{asset('frontend_assets/img/brand-logo.png')}}" alt="brand-logo"></a>
+                <a href="index-2.html" class="brand-logo"><img src="{{asset('frontend_assets/img/logo/white-logo.png')}}" alt="brand-logo"></a>
             </span>
 
             <!-- Offcanvas Nav Toggoler -->
             <button class="offcanvas-toggler action action--open" aria-label="Open Menu">
                 <span class="offcanvas-toggler-icon"></span>
             </button>
-
-            <!-- Main Nav Toggoler *It's here because it helps to make the responsive nav easier* -->
-            <button class="navbar-toggler" type="button" data-toggle="navbarToggler" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- end of main nav toggler -->
-
-
-            <div class="navigations-connect">
-                <ul>
-                    <li><a href="#"><i class="ft ft-facebook"></i></a></li>
-                    <li><a href="#"><i class="ft ft-twitter"></i></a></li>
-                    <li><a href="#"><i class="ft ft-linkedin"></i></a></li>
-                    <li><a href="#"><i class="ft ft-instagram"></i></a></li>
-                </ul>
-            </div>
         </div>
         <!-- end of navigations sidebar -->
 
@@ -167,65 +97,14 @@
                 <div class="menu__wrap">
                     <!-- Mainmenu -->
                     <ul data-menu="main" class="menu__level" tabindex="-1" role="menu" aria-label="All">
-                        <li class="menu__item " role="menuitem"><a class="menu__link menu__link--current" data-submenu="submenu-1" aria-owns="submenu-1" href="#">Home</a></li>
+                        <li class="menu__item " role="menuitem"><a class="menu__link menu__link--current" href="#">Home</a></li>
                         <li class="menu__item" role="menuitem"><a class="menu__link" href="about.html">About</a></li>
                         <li class="menu__item" role="menuitem"><a class="menu__link" href="services.html">Services</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-3" aria-owns="submenu-3" href="#">Portfolio</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" data-submenu="submenu-4" aria-owns="submenu-4" href="#">Blog</a></li>
+                        <li class="menu__item" role="menuitem"><a class="menu__link" href="#">Portfolio</a></li>
+                        <li class="menu__item" role="menuitem"><a class="menu__link" href="#">Blog</a></li>
                         <li class="menu__item" role="menuitem"><a class="menu__link" href="contact.html">Contact</a></li>
                         <li class="menu__item" role="menuitem"><a class="menu__link" href="coming-soon.html">Coming Soon</a></li>
                         <li class="menu__item" role="menuitem"><a class="menu__link" href="404.html">404</a></li>
-                    </ul>
-                    <!-- Submenu 1 -->
-                    <ul data-menu="submenu-1" id="submenu-1" class="menu__level" tabindex="-1" role="menu" aria-label="">
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="index-2.html">HOME FULL IMAGE
-                                SLIDER</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-2.html">HOME HLAF IMAGE
-                                SLIDER</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-3.html">HOME FULL IMAGE</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-4.html">HOME HALF IMAGE</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-5.html">HOME Video</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-6.html">HOME HALF IMAGE
-                                PARTICLE</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-7.html">HOME HALF IMAGE
-                                SLIDER PARTICLE</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-8.html">HOME Full IMAGE
-                                PARTICLE</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="home-9.html">HOME Full IMAGE
-                                SLIDER PARTICLE</a></li>
-                    </ul>
-                    <!-- Submenu 3 -->
-                    <ul data-menu="submenu-3" id="submenu-3" class="menu__level" tabindex="-1" role="menu" aria-label="">
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="portfolio-grid.html">Portfolio
-                                Grid</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="portfolio-masonry.html">Portfolio
-                                Masonry</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="portfolio-masonry-full.html">Portfolio
-                                Masonry Full</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="portfolio-masonry-full-unequal.html">Portfolio
-                                Masonry Unequal</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="portfolio-details-1.html">Portfolio
-                                Details-1</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="portfolio-details-2.html">Portfolio
-                                Details-2</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="portfolio-details-3.html">Portfolio
-                                Details-3</a></li>
-                    </ul>
-                    <!-- Submenu 4 -->
-                    <ul data-menu="submenu-4" id="submenu-4" class="menu__level" tabindex="-1" role="menu" aria-label="">
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="blog-full.html">Blog Full</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="blog-sidebar-right.html">Blog
-                                Sidebar Right</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="blog-sidebar-left.html">Blog
-                                Sidebar Left</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="blog-details-sidebar-left.html">Blog
-                                Full Sidebar Left</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="blog-details-full.html">Blog
-                                Details Full</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="blog-details-sidebar-right.html">Blog
-                                Details Sidebar Right</a></li>
-                        <li class="menu__item" role="menuitem"><a class="menu__link" href="blog-details-sidebar-left.html">Blog
-                                Details Sidebar Left</a></li>
                     </ul>
                 </div>
             </nav>
@@ -249,7 +128,7 @@
                     <div class="col-12">
                         <div class="cover__content">
                             <div class="content__top"><span></span>Hello<span></span></div>
-                            <h1>I’m <span>Jofra</span> Arthor <br> passionate with Design</h1>
+                            <h1>I’m <span>Bappa</span> Sutradhar <br> passionate with Development</h1>
                             <p>Passionate about Branding but mostly about App and Web design focused on interfaces and user experience (UI/UX).</p>
                             <div>
                                 <a class="btn btn--primary btn--megaEffect" href="#"> See Works
@@ -1169,7 +1048,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-12">
                         <div class="footer-about">
-                            <span class="footer-brand-logo"><img src="{{asset('frontend_assets/img/brand-logo-2.png')}}" alt="brand-logo"></span>
+                            <span class="footer-brand-logo"><img src="{{asset('frontend_assets/img/logo/brand-logo.png')}}" alt="brand-logo"></span>
                             <p class="footer-about__description">We are <span>Jofra Arthor</span>. 10 years of experience on this field with most awesome talanted peoples and leaders. </p>
                             <ul class="contact-info">
                                 <li><i class="ft ft-phone-call"></i>
