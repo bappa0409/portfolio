@@ -522,7 +522,7 @@
                     </div>
                     <div class="col-lg-5 col-12 offset-lg-1">
                         <picture class="process__img">
-                            <img src="{{asset('frontend_assets/img/process.png')}}" alt="process">
+                            <img src="{{asset('frontend_assets/img/process.jpg')}}" alt="process">
                         </picture>
                     </div>
                 </div>
