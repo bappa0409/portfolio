@@ -921,20 +921,20 @@ img + .card {
 
 /**! 11. section-title **/
 .section-title {
-    max-width: 31.875rem;
-    padding-bottom: 3.75rem;
+    /* max-width: 31.875rem; */
+    padding-bottom: 3rem;
     position: relative;
     z-index: 0;
 }
 
-@media only screen and (min-width: 992px) {
+/* @media only screen and (min-width: 992px) {
     .section-title {
         padding-bottom: 5.625rem;
     }
-}
+} */
 
 .section-title__main {
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
     line-height: 3rem;
 }
 
@@ -3143,6 +3143,10 @@ img + .card {
     box-shadow: 0 50px 0 -25px #e8eefb;
 }
 
+.story__img img{
+    border: 1px solid #3d70a4;
+}
+
 @media only screen and (max-width: 767px) {
     .story__img {
         text-align: center;
@@ -3334,7 +3338,7 @@ img + .card {
 
 @media only screen and (min-width: 992px) {
     .facts-inner {
-        padding-top: 6rem;
+        /* padding-top: 6rem; */
         padding-bottom: 1rem;
         padding-right: 6rem;
         padding-left: 6rem;
@@ -5028,12 +5032,12 @@ img + .card {
 
 /**! ----- Porfolio FIlter---- **/
 .filter-button-group {
-    margin-bottom: 4.375rem;
+    margin-bottom: 3rem;
     text-align: center;
 }
 
 .filter-button-group button {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #5e729b;
     text-transform: uppercase;

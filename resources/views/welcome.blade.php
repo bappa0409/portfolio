@@ -67,6 +67,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#skills">Skills</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#contact">Contact</a>
+                        </li>
                     </ul>
                     <!-- end of nav menu items -->
                 </nav>
@@ -118,7 +121,7 @@
         <!-- =========== Start of Hero ============ -->
         <section class="cover p-0" id="hero" data-scrollax-parent="true">
             <div class="cover-image" data-scrollax="properties: { 'translateY': '500px'}">
-                <img class="background-image-holder" src="{{asset('frontend_assets/img/hero-img-4.jpg')}}" alt="background">
+                <img class="background-image-holder" src="{{asset('frontend_assets/img/hero-img.jpg')}}" alt="background">
             </div>
             <div class="overlay overlay--pattern">
                 <img class="background-image-holder" src="{{asset('frontend_assets/img/diagonal-line-pattern.png')}}" alt="overlay">
@@ -128,8 +131,11 @@
                     <div class="col-12">
                         <div class="cover__content">
                             <div class="content__top"><span></span>Hello<span></span></div>
-                            <h1>I’m <span>Bappa</span> Sutradhar <br> passionate with Development</h1>
-                            <p>Passionate about Branding but mostly about App and Web design focused on interfaces and user experience (UI/UX).</p>
+                            <h1>I’m <span>Bappa</span> Sutradhar <br> Web Developer</h1>
+                            <p>Full stack Web developer having 1+ year of
+                                experience in my field and a passionate
+                                Software Engineering student, who's
+                                always dedicated to his work.</p>
                             <div>
                                 <a class="btn btn--primary btn--megaEffect" href="#"> See Works
                                 </a>
@@ -139,10 +145,10 @@
                     </div>
                 </div>
             </div>
-            <div class="quick-contact">
+            {{-- <div class="quick-contact">
                 <span class="quick-contact__text">Contact</span>
                 <a class="quick-contact__link" href="mailto:"><i class="ft ft-mail"></i></a>
-            </div>
+            </div> --}}
         </section>
         <!-- =========== End of Hero ============ -->
 
@@ -152,9 +158,8 @@
                 <div class="row">
                     <div class="col-lg-5 text-center text-sm-left">
                         <div class="story-img-block">
-                            <div class="title-overlay title-overlay--vertical" data-scrollax="properties: { 'margin-top': '-100%'}">About</div>
                             <picture class="story__img">
-                                <img src="{{asset('frontend_assets/img/about-profile.png')}}" alt="image">
+                                <img src="{{asset('frontend_assets/img/about-profile.jpg')}}" alt="image">
                             </picture>
 
                         </div>
@@ -162,14 +167,9 @@
                     <div class="col-lg-7">
                         <div class="story-details">
                             <span class="story__mini-title">WHO AM I?</span>
-                            <h3>Passionate with Design <br> Mostly ui/ux and Application design</h3>
-                            <p>I am a Front-End Developer and UI UX Designer based in Bangladesh. I am director and CEO at Marvel Theme Creative Agency. I am a dreamer and a fanatic of all digital things. I have many years of experience in consulting in
-                                all areas of digital. I love minmal design and Biker. I am also an Author an Envato Marketplace.</p>
-                            <span class="story__signature">
-                                <img class="" src="{{asset('frontend_assets/img/signature.png')}}" alt="signature">
-                            </span>
-                            <a href="#" class="btn btn--primary btn--sm btn--megaEffect">
-                                Download CV </a>
+                            <h3>Passionate with Web Application Development</h3>
+                            <p>I'm full stack Web developer having 1+ year of experience in my field and a passionate Software Engineering student, who's always dedicated to his work. I specialize in responsive web and application development for small to medium size businesses. I've worked on many different project, difficulties, platforms and teams. I love doing my work and making clients happy.</p>
+                            <a href="#" class="btn btn--primary btn--sm btn--megaEffect">Download CV</a>
                         </div>
                     </div>
 
@@ -187,9 +187,7 @@
                         <div class="card service">
                             <i class="icon ti-paint-bucket"></i>
                             <div class="service__body">
-                                <a href="#">
-                                    <h5>ui ux Design</h5>
-                                </a>
+                                <h5>Web Design</h5>
                                 <p>tempor incididunt ut labore et dolore magna aliqua. Ut enim adita minim lagbore emit.
                                 </p>
                             </div>
@@ -199,9 +197,7 @@
                         <div class="card service">
                             <i class="icon ti-vector"></i>
                             <div class="service__body">
-                                <a href="#">
-                                    <h5>iOS App Design</h5>
-                                </a>
+                                <h5>Bug Fixing</h5>
                                 <p>tempor incididunt ut labore et dolore magna aliqua. Ut enim adita minim lagbore emit.
                                 </p>
                             </div>
@@ -209,11 +205,9 @@
                     </div>
                     <div class="col-lg-4 col-12">
                         <div class="card service">
-                            <i class="icon ti-camera"></i>
+                            <i class="icon ti-desktop"></i>
                             <div class="service__body">
-                                <a href="#">
-                                    <h5>Web Development</h5>
-                                </a>
+                                <h5>Web Development</h5>
                                 <p>tempor incididunt ut labore et dolore magna aliqua. Ut enim adita minim lagbore emit.
                                 </p>
                             </div>
@@ -235,33 +229,33 @@
                     <div class="col-12">
                         <div class="facts-inner background-dark" data-scrollax="properties: { 'translateY': '20%'}">
                             <div class="section-title">
-                                <span class="title-overlay" data-scrollax="properties: { translateY: '-250px' }">
+                                {{-- <span class="title-overlay" data-scrollax="properties: { translateY: '-250px' }">
                                     Funfact
-                                </span>
-                                <h3 class="section-title__main">Lets See Some <br> Funfacts About me</h3>
+                                </span> --}}
+                                <h3 class="section-title__main">Lets See Some Funfacts About me</h3>
                                 <p class="section-title__description">Over 10 Years Expericences i am work with business & provide solution to client with their business problem</p>
                             </div>
                             <ul class="facts-items">
                                 <li class="fact">
                                     <i class="icon ti-user"></i>
                                     <span class="fact__title">Happy Clients</span>
-                                    <span class="fact__value" data-value="378">00</span>
+                                    <span class="fact__value" data-value="10">00</span>
                                 </li>
                                 <li class="fact">
                                     <i class="icon ti-blackboard"></i>
                                     <span class="fact__title">Project Complete</span>
-                                    <span class="fact__value" data-value="532">00</span>
+                                    <span class="fact__value" data-value="36">00</span>
                                 </li>
                                 <li class="fact">
                                     <i class="icon ti-cup"></i>
                                     <span class="fact__title">Cups of tea</span>
-                                    <span class="fact__value" data-value="812">00</span>
+                                    <span class="fact__value" data-value="226">00</span>
                                 </li>
 
                                 <li class="fact">
-                                    <i class="icon ti-user"></i>
-                                    <span class="fact__title">ti-crown</span>
-                                    <span class="fact__value" data-value="812">00</span>
+                                    <i class="icon ti-calendar"></i>
+                                    <span class="fact__title">Year of Experience</span>
+                                    <span class="fact__value" data-value="2">00</span>
                                 </li>
                             </ul>
                         </div>
@@ -277,257 +271,230 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title">
-                            <span class="title-overlay" data-scrollax="properties: { translateY: '-150px' }">
+                            {{-- <span class="title-overlay" data-scrollax="properties: { translateY: '-150px' }">
                                 Portfolio
-                            </span>
+                            </span> --}}
                             <h2 class="section-title__main">Featured Work</h2>
-                            <p class="section-title__description">Over 10 Years Expericences i am work with business & provide solution to client with their business problem</p>
+                            <p class="section-title__description">Over 1 Years Expericences i am work with business & provide solution to client with their business problem</p>
                         </div>
                         <!-- section title end -->
-
-                        <!-- swiper-navigation -->
-                        <div class="swiper-navigation">
-                            <div class="swiper-button-prev">PREV</div>
-                            <div class="swiper-button-next">NEXT</div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-1.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-1.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="filter-button-group button-group">
+                            <button class="button is-checked" data-filter="*">Show All</button>
+                            <button class="button" data-filter=".illustration">Illustration</button>
+                            <button class="button" data-filter=".branding">Branding</button>
+                            <button class="button" data-filter=".web-design">Web Design</button>
+                            <button class="button" data-filter=".design">Design</button>
                         </div>
+                        <!-- end of filter -->
                     </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-2.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-2.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-3.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-3.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-4.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-4.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-2.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-2.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-1.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-1.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-2.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-2.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-3.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-3.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-4.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-4.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
-                    <div class="swiper-slide">
-                        <div class="slide-inner">
-                            <div class="slide-inner-image">
-
-                                <a class="slide-inner__lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/portfolio-2.png')}}">
-                                    <i class="ft ft-image"></i>
-                                </a>
-                                <!-- lightbox item end-->
-
-                                <img src="{{asset('frontend_assets/img/portfolio-2.png')}}" alt="portfolio">
-                            </div>
-                            <!-- main thumbnail end -->
-                            <div class="slide-inner-meta">
-                                <div class="slide-inner__category">
-                                    <span>Design</span>
-                                    <span>Illustration</span>
-                                </div>
-                                <a href="#" class="slide-inner__title">Visual Oil Painting</a>
-                            </div>
-                            <!-- item description end -->
-                        </div>
-                    </div>
-                    <!-- single slide end -->
                 </div>
-                <!-- Add Scrollbar -->
-                <div class="swiper-scrollbar"></div>
+                <!-- end of row -->
+            </div>
+            <!-- end of container -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="works masonry">
+                            <li class="works-item masonry-item all illustration">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/work-gird-1.png')}}">
+                                        <i class="ft ft-image"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-1.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+
+                            <li class="works-item masonry-item all web-design design">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action" data-gall="portfolio-gall" href="#">
+                                        <i class="ft ft-link"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-2.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+                            <li class="works-item masonry-item all illustration design">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/work-gird-3.png')}}">
+                                        <i class="ft ft-image"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-3.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+                            <li class="works-item masonry-item all design branding">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action" data-gall="portfolio-gall" href="#">
+                                        <i class="ft ft-link"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-4.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+                            <li class="works-item masonry-item all branding illustration design">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action" data-gall="portfolio-gall" href="#">
+                                        <i class="ft ft-link"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-5.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+                            <li class="works-item masonry-item all illustration wide">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/work-gird-6.png')}}">
+                                        <i class="ft ft-image"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-6.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+                            <li class="works-item masonry-item all web-design illustration design">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/work-gird-7.png')}}">
+                                        <i class="ft ft-image"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-7.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+                            <li class="works-item masonry-item all web-design illustration design">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/work-gird-8.png')}}">
+                                        <i class="ft ft-image"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-8.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+                            <li class="works-item masonry-item all web-design illustration">
+                                <div class="masonry-image">
+                                    <a class="works__thumb-action lightbox" data-gall="portfolio-gall" href="{{asset('frontend_assets/img/work-gird-9.png')}}">
+                                        <i class="ft ft-image"></i>
+                                    </a>
+                                    <!-- lightbox item end-->
+                                    <div class="masonry-image__thumb">
+                                        <img src="{{asset('frontend_assets/img/work-gird-9.png')}}" class="background-image-holder" alt="">
+                                    </div>
+                                </div>
+                                <!-- main thumbnail end -->
+                                <div class="works-meta">
+                                    <div class="works__category">
+                                        <span>Design</span>
+                                        <span>Illustration</span>
+                                    </div>
+                                    <a href="#" class="works__title">Visual Oil Painting</a>
+                                </div>
+                                <!-- item description end -->
+                            </li>
+                            <!-- end of single item -->
+
+                        </ul>
+                    </div>
+                </div>
             </div>
             <!-- slider end -->
         </section>
