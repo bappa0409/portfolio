@@ -536,11 +536,8 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title">
-                            <span class="title-overlay" data-scrollax="properties: { translateY: '150px' }">
-                                    Experience
-                                </span>
                             <h3 class="section-title__main">Work Experience</h3>
-                            <p class="section-title__description">Over 10 Years Expericences i am work with business & provide solution to client with their business problem</p>
+                            <p class="section-title__description">Over 1.5 Years Expericences i am work with web application software</p>
                         </div>
                         <!-- section title end -->
                     </div>
@@ -554,10 +551,10 @@
                         <!-- image end -->
                         <div class="experience-text">
                             <div class="experience-title">
-                                <span class="experience__cologo"><img src="{{asset('frontend_assets/img/company-logo-2.png')}}" alt="company-logo"></span>
+                                <span class="experience__cologo"><img src="{{asset('frontend_assets/img/icon.png')}}" alt="company-logo"></span>
                                 <div>
-                                    <h6>UI UX Designer at Behance</h6>
-                                    <p>January 2015 - August 2018</p>
+                                    <h6>Laravel Developer (Intern) at Excel IT AI</h6>
+                                    <p>October 24, 2021 - February 24 2022</p>
                                 </div>
                             </div>
                             <!-- experience-title end -->
@@ -586,10 +583,10 @@
                         <!-- image end -->
                         <div class="experience-text">
                             <div class="experience-title">
-                                <span class="experience__cologo"><img src="{{asset('frontend_assets/img/company-logo-3.png')}}" alt="company-logo"></span>
+                                <span class="experience__cologo"><img src="{{asset('frontend_assets/img/icon.png')}}" alt="company-logo"></span>
                                 <div>
-                                    <h6>UI UX Designer at Behance</h6>
-                                    <p>January 2015 - August 2018</p>
+                                    <h6>Laravel Developer at App Atlantis Corp.</h6>
+                                    <p>March 01, 2022 - September 29, 2022</p>
                                 </div>
                             </div>
                             <!-- experience-title end -->
@@ -618,10 +615,10 @@
                         <!-- image end -->
                         <div class="experience-text">
                             <div class="experience-title">
-                                <span class="experience__cologo"><img src="{{asset('frontend_assets/img/company-logo.png')}}" alt="company-logo"></span>
+                                <span class="experience__cologo"><img src="{{asset('frontend_assets/img/icon.png')}}" alt="company-logo"></span>
                                 <div>
-                                    <h6>UI UX Designer at Behance</h6>
-                                    <p>January 2015 - August 2018</p>
+                                    <h6>Laravel Developer at Bdtask Ltd.</h6>
+                                    <p>December 01, 2022 - Still Now</p>
                                 </div>
                             </div>
                             <!-- experience-title end -->
@@ -653,9 +650,6 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title">
-                            <span class="title-overlay" data-scrollax="properties: { translateY: '-100px' }">
-                                My Skills
-                            </span>
                             <h3 class="section-title__main">My Expertise Areas</h3>
                             <p class="section-title__description">Over 10 Years Expericences i am work with business & provide solution to client with their business problem</p>
                         </div>
@@ -666,17 +660,15 @@
                     <div class="col-12">
                         <div class="tab-container">
                             <ul class="tabs">
-                                <li><button data-animate="progress"><i class="ft ft-image"></i>UI UX DESIGN</button></li>
-
+                                <li><button data-animate="progress"><i class="ft ft-image"></i>WEB DESIGN</button></li>
                                 <li><button data-animate="progress"><i class="ft ft-airplay"></i>WEB DEVELOPMENT</button></li>
-
                                 <li><button data-animate="progress"><i class="ft ft-server"></i>LANGUAGE SKILLS</button></li>
                             </ul>
                             <!-- skill tab end -->
                             <div class="tab-content">
                                 <div class="tabs-item tabs-item--active">
                                     <div class="skill">
-                                        <span class="skill__name">Adobe Photoshop</span>
+                                        <span class="skill__name">HTML & CSS</span>
                                         <div class="progress">
                                             <div class="progress-bar" style="width:95%;">
                                                 <span class="skill__value">95%</span>
@@ -685,19 +677,19 @@
                                     </div>
                                     <!-- single item end -->
                                     <div class="skill">
-                                        <span class="skill__name">Adobe Illustrator</span>
+                                        <span class="skill__name">Bootstrap</span>
                                         <div class="progress">
-                                            <div class="progress-bar" style="width:85%;">
-                                                <span class="skill__value">85%</span>
+                                            <div class="progress-bar" style="width:90%;">
+                                                <span class="skill__value">90%</span>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- single item end -->
                                     <div class="skill">
-                                        <span class="skill__name">Adobe After Effect</span>
+                                        <span class="skill__name">jQuery</span>
                                         <div class="progress">
-                                            <div class="progress-bar" style="width:75%">
-                                                <span class="skill__value">75%</span>
+                                            <div class="progress-bar" style="width:95%">
+                                                <span class="skill__value">95%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -706,30 +698,39 @@
                                 <!-- single tab end -->
                                 <div class="tabs-item">
                                     <div class="skill">
-                                        <span class="skill__name">HTML/CSS
+                                        <span class="skill__name">PHP
                                         </span>
                                         <div class="progress">
-                                            <div class="progress-bar" style="width:90%">
+                                            <div class="progress-bar" style="width:75%">
+                                                <span class="skill__value">75%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- single item end -->
+                                    <div class="skill">
+                                        <span class="skill__name">Laravel</span>
+                                        <div class="progress">
+                                            <div class="progress-bar reveal" style="width:90%">
                                                 <span class="skill__value">90%</span>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- single item end -->
                                     <div class="skill">
-                                        <span class="skill__name">Javascript</span>
+                                        <span class="skill__name">Codeigniter</span>
                                         <div class="progress">
-                                            <div class="progress-bar reveal" style="width:80%">
-                                                <span class="skill__value">80%</span>
+                                            <div class="progress-bar reveal" style="width:75%">
+                                                <span class="skill__value">75%</span>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- single item end -->
+                                    <!-- single item end -->
                                     <div class="skill">
-                                        <span class="skill__name">WordPress
-                                        </span>
+                                        <span class="skill__name">Ajax</span>
                                         <div class="progress">
-                                            <div class="progress-bar reveal" style="width:85%">
-                                                <span class="skill__value">85%</span>
+                                            <div class="progress-bar reveal" style="width:90%">
+                                                <span class="skill__value">90%</span>
                                             </div>
                                         </div>
                                     </div>
@@ -741,27 +742,26 @@
                                         <span class="skill__name">English
                                         </span>
                                         <div class="progress">
-                                            <div class="progress-bar reveal" style="width:95%">
-                                                <span class="skill__value">95%</span>
+                                            <div class="progress-bar reveal" style="width:75%">
+                                                <span class="skill__value">75%</span>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- single item end -->
                                     <div class="skill">
-                                        <span class="skill__name">Spanish</span>
+                                        <span class="skill__name">Bangla</span>
                                         <div class="progress">
-                                            <div class="progress-bar reveal" style="width:65%">
-                                                <span class="skill__value">65%</span>
+                                            <div class="progress-bar reveal" style="width:100%">
+                                                <span class="skill__value">100%</span>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- single item end -->
                                     <div class="skill">
-                                        <span class="skill__name">German
-                                        </span>
+                                        <span class="skill__name">Hindi</span>
                                         <div class="progress">
-                                            <div class="progress-bar reveal" style="width:70%">
-                                                <span class="skill__value">70%</span>
+                                            <div class="progress-bar reveal" style="width:80%">
+                                                <span class="skill__value">80%</span>
                                             </div>
                                         </div>
                                     </div>

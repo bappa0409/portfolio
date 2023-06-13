@@ -3816,12 +3816,6 @@ img + .card {
     width: 100%;
 }
 
-.process__img:hover img {
-    -webkit-transform: scale(1.2) rotate(10deg);
-    -ms-transform: scale(1.2) rotate(10deg);
-    transform: scale(1.2) rotate(10deg);
-}
-
 /**! 29. experiences **/
 .experience {
     counter-reset: section;
@@ -3883,7 +3877,7 @@ img + .card {
     -webkit-box-pack: start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .experience-title p {
@@ -3894,7 +3888,7 @@ img + .card {
     width: 5rem;
     height: 5rem;
     line-height: 5rem;
-    margin-right: 2rem;
+    margin-right: 1.5rem;
     border: 1px solid #e8eefb;
     background: #fafcff;
     text-align: center;
@@ -4063,8 +4057,8 @@ img + .card {
 
 .skills .tab-container .tabs li button {
     background: #191d29;
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
     color: #fff;
@@ -4102,6 +4096,7 @@ img + .card {
 .skills .tab-container .tabs li.current button {
     background: #fbc25e;
     color: #1c202d;
+    border-radius: 5px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -4126,12 +4121,12 @@ img + .card {
 }
 
 .skills .skill:not(:last-child) {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .skills .skill__name {
     color: #fbc86d;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 1rem;
 }
 
