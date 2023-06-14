@@ -131,8 +131,8 @@
                     <div class="col-12">
                         <div class="cover__content">
                             <div class="content__top"><span></span>Hello<span></span></div>
-                            <h1>I’m <span>Bappa</span> Sutradhar <br> Web Developer</h1>
-                            <p>Full stack Web developer having 1+ year of
+                            <h1>I’m <span>Bappa</span> Sutradhar <br> Full Stack Developer</h1>
+                            <p>Full stack Web developer having 1.5+ year of
                                 experience in my field and a passionate
                                 Software Engineering student, who's
                                 always dedicated to his work.</p>
@@ -168,7 +168,7 @@
                         <div class="story-details">
                             <span class="story__mini-title">WHO AM I?</span>
                             <h3>Passionate with Web Application Development</h3>
-                            <p>I'm full stack Web developer having 1+ year of experience in my field and a passionate Software Engineering student, who's always dedicated to his work. I specialize in responsive web and application development for small to medium size businesses. I've worked on many different project, difficulties, platforms and teams. I love doing my work and making clients happy.</p>
+                            <p>I'm full stack Web developer having 1.5+ year of experience in my field and a passionate Software Engineering student, who's always dedicated to his work. I specialize in responsive web and application development for small to medium size businesses. I've worked on many different project, difficulties, platforms and teams. I love doing my work and making clients happy.</p>
                             <a href="#" class="btn btn--primary btn--sm btn--megaEffect">Download CV</a>
                         </div>
                     </div>
@@ -783,9 +783,6 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="section-title">
-                            <span class="title-overlay" data-scrollax="properties: { translateY: '-200px' }">
-                                Testimonials
-                            </span>
                             <h3 class="section-title__main">Testimonials</h3>
                             <p class="section-title__description">Over 10 Years Expericences i am work with business & provide solution to client with their business problem</p>
                         </div>
@@ -793,7 +790,7 @@
                     </div>
                 </div>
             </div>
-            <div class="container-fluid">
+            <div class="container">
                 <div class="row">
                     <div class="col-12">
                         <div class="swiper-container">
