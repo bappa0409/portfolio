@@ -54,12 +54,58 @@ class WebsiteController extends Controller
                     'API docs-ready structure',
                 ],
             ],
+            [
+                'slug' => 'erp-solution',
+                'title' => 'ERP Solution',
+                'subtitle' => 'ERP system with modules like HR, inventory, accounts, and reports.',
+                'stack' => ['Laravel', 'MySQL', 'Tailwind', 'RBAC'],
+                'status' => 'Live',
+                'impact' => 'Streamlined business operations with centralized modules and reporting.',
+                'overview' => 'An ERP solution built for managing core business operations with role-based access.',
+                'features' => [
+                    'HR & employee management',
+                    'Inventory & stock management',
+                    'Accounting & transaction records',
+                    'Reports and exports',
+                ],
+            ],
+            [
+                'slug' => 'news-portal-cms',
+                'title' => 'News Portal & CMS',
+                'subtitle' => 'SEO-friendly news portal with category, tag, and editor workflows.',
+                'stack' => ['Laravel', 'MySQL', 'Tailwind', 'SEO'],
+                'status' => 'Live',
+                'impact' => 'Improved content publishing flow with role-based editors and optimized SEO structure.',
+                'overview' => 'A news portal CMS with admin panel, editor roles, and publishing workflow.',
+                'features' => [
+                    'Category, tag, and post management',
+                    'Editor & admin roles',
+                    'SEO-friendly URLs and metadata',
+                    'Media library and scheduled publishing',
+                ],
+            ],
+            [
+                'slug' => 'business-website-wordpress',
+                'title' => 'Business Website (WordPress)',
+                'subtitle' => 'Custom WordPress theme development and business website customization.',
+                'stack' => ['WordPress', 'PHP', 'Custom Theme', 'Elementor'],
+                'status' => 'Live',
+                'impact' => 'Delivered a fast, responsive business website with easy content management.',
+                'overview' => 'A business website built with WordPress theme customization and performance optimization.',
+                'features' => [
+                    'Custom theme development',
+                    'Responsive pages (Home, About, Services, Contact)',
+                    'Speed optimization and SEO basics',
+                    'Plugin integration and security hardening',
+                ],
+            ],
         ];
     }
 
+
     public function home()
     {
-        $projects = array_slice($this->projectsData(), 0, 3);
+        $projects = array_slice($this->projectsData(), 0, 6);
 
         $services = [
             ['Laravel Web Apps', 'Custom dashboards, RBAC, business modules.'],
