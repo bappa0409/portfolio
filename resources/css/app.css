@@ -2,6 +2,75 @@
 @tailwind components;
 @tailwind utilities;
 
-[x-cloak] {
-    display: none;
+[x-cloak] { display:none; }
+
+html, body { min-height: 100%; }
+
+/* =======================
+   IMAGE CYBER BACKGROUND
+======================= */
+.site-bg {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(5,10,10,.90), rgba(5,10,10,.90)),
+    url('../images/red-binary-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Grid overlay */
+.cyber-grid{
+  background-image:
+    linear-gradient(rgba(16,185,129,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16,185,129,.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 50% 20%, black 40%, transparent 75%);
+}
+
+/* =======================
+   GLOW + TEXT
+======================= */
+.cyber-glow {
+  box-shadow:
+    0 0 0 1px rgba(16,185,129,.16),
+    0 0 35px rgba(16,185,129,.10);
+}
+
+.cyber-text {
+  text-shadow: 0 0 18px rgba(16,185,129,.35);
+}
+
+/* =======================
+   GLASS UI
+======================= */
+.glass {
+  background: rgba(5, 15, 15, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(16, 185, 129, 0.18);
+}
+
+.glass-soft {
+  background: rgba(5, 15, 15, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(16, 185, 129, 0.12);
+}
+
+.glass h1, .glass h2, .glass h3,
+.glass-soft h1, .glass-soft h2, .glass-soft h3 {
+  text-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+}
+
+
+/* =======================
+   PAGE FADE
+======================= */
+.page-fade { animation: fadeIn .6s ease-out both; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

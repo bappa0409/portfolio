@@ -7,13 +7,20 @@
     <meta name="description" content="@yield('meta_description', 'Laravel developer portfolio: web apps, APIs, admin panels, ecommerce.')">
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
-    @include('partials.nav')
 
-    <main class="pt-16">
-        @yield('content')
-    </main>
+<body class="min-h-screen text-slate-100">
+    <div class="site-bg relative overflow-hidden">
 
-    @include('partials.footer')
+        <!-- GRID OVERLAY -->
+        <div class="absolute inset-0 cyber-grid opacity-60 pointer-events-none"></div>
+
+        @include('partials.nav')
+
+        <main class="pt-16 relative z-10">
+            @yield('content')
+        </main>
+
+        @include('partials.footer')
+    </div>
 </body>
 </html>

@@ -1,18 +1,30 @@
-<footer class="border-t border-white/10 mt-16">
-    <div class="mx-auto max-w-6xl px-4 py-10 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+<footer class="border-t border-emerald-400/15 mt-16">
+    <div class="mx-auto max-w-6xl px-4 py-10
+                flex flex-col md:flex-row gap-6
+                items-start md:items-center justify-between">
+
+        <!-- BRAND -->
         <div>
-            <div class="font-extrabold text-lg">
-                <span>Your</span><span class="text-blue-400">Name</span>
+            <div class="font-extrabold text-lg text-white">
+                <span>Bappa</span>
+                <span class="text-emerald-400">Sutradhar</span>
             </div>
-            <p class="text-slate-400 text-sm mt-2">Laravel Developer — Web Apps, APIs, Admin Panels.</p>
+
+            <p class="text-white/60 text-sm mt-2">
+                Laravel Developer — Web Apps, APIs, Admin Panels.
+            </p>
         </div>
 
-        <div class="flex gap-5 text-sm text-slate-300">
-            <a class="hover:text-white" href="{{ route('projects') }}">Projects</a>
-            <a class="hover:text-white" href="{{ route('about') }}">About</a>
-            <a class="hover:text-white" href="{{ route('contact') }}">Contact</a>
+        <!-- LINKS -->
+        <div class="flex gap-5 text-sm text-white/70">
+            <a class="hover:text-emerald-300 transition" href="{{ route('projects') }}">Projects</a>
+            <a class="hover:text-emerald-300 transition" href="{{ route('about') }}">About</a>
+            <a class="hover:text-emerald-300 transition" href="{{ route('contact') }}">Contact</a>
         </div>
 
-        <p class="text-slate-500 text-sm">© {{ date('Y') }} YourName. All rights reserved.</p>
+        <!-- COPYRIGHT -->
+        <p class="text-white/50 text-sm">
+            © {{ date('Y') }} Bappa Sutradhar. All rights reserved.
+        </p>
     </div>
 </footer>
