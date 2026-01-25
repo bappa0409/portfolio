@@ -70,11 +70,6 @@
 
             <!-- RIGHT PROFILE CARD -->
             <div class="rounded-md p-5 glass-soft cyber-glow">
-                {{-- <div class="flex justify-center">
-                    <img src="{{ asset('images/profile.jpg') }}"
-                         alt="Bappa Sutradhar"
-                         class="w-full max-h-[260px] rounded-md object-cover border border-emerald-400/15">
-                </div> --}}
                 <div class="flex justify-center">
                     <div class="relative w-full max-h-[260px] overflow-hidden rounded-md border border-emerald-400/15">
 
@@ -96,8 +91,6 @@
                         <div class="absolute top-2 right-2 h-5 w-5 border-t-2 border-r-2 border-emerald-400/60"></div>
                         <div class="absolute bottom-2 left-2 h-5 w-5 border-b-2 border-l-2 border-emerald-400/60"></div>
                         <div class="absolute bottom-2 right-2 h-5 w-5 border-b-2 border-r-2 border-emerald-400/60"></div>
-
-
                     </div>
                 </div>
 

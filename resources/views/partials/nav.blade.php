@@ -19,7 +19,7 @@
 
                 <!-- Inner box -->
                 <div class="absolute inset-1 rounded-md bg-emerald-400/10 flex items-center justify-center">
-                    <span class="text-2xl font-bold font-mono text-emerald-300 tracking-widest tracking-[-2px]">
+                    <span class="text-2xl font-bold font-mono text-emerald-300 tracking-[-2px]">
                         B.S
                     </span>
                 </div>
