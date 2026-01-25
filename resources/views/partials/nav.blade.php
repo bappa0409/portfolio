@@ -5,7 +5,7 @@
     <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-3">
 
         <!-- LOGO -->
-        <a href="{{ route('home') }}" class="flex items-center gap-4 group select-none">
+        <a href="{{ route('home') }}" class="flex items-center gap-4 group select-none focus:outline-none focus-visible:outline-none">
             <!-- LOGO BOX -->
             <div class="relative w-14 h-10 shrink-0">
                 <!-- Outer Frame -->
@@ -19,7 +19,7 @@
 
                 <!-- Inner box -->
                 <div class="absolute inset-1 rounded-md bg-emerald-400/10 flex items-center justify-center">
-                    <span class="text-2xl font-bold font-mono text-emerald-300 tracking-widest">
+                    <span class="text-2xl font-bold font-mono text-emerald-300 tracking-widest tracking-[-2px]">
                         B.S
                     </span>
                 </div>

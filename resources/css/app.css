@@ -42,6 +42,15 @@ html, body { min-height: 100%; }
   text-shadow: 0 0 18px rgba(16,185,129,.35);
 }
 
+.cyber-noise{
+  background-image:
+    radial-gradient(rgba(255,255,255,.20) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
+  background-size: 3px 3px, 6px 6px;
+  background-position: 0 0, 1px 1px;
+  mix-blend-mode: normal; /* IMPORTANT: visible */
+}
+
 /* =======================
    GLASS UI
 ======================= */

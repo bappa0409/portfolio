@@ -124,7 +124,18 @@
                         </svg>
                     </div>
                 </a>
-                
+
+                <!-- Email -->
+                <a href="mailto:sutradhar019@gmail.com" target="_blank"
+                class="rounded-md bg-slate-950/30 text-center hover:border-emerald-400/25 transition">
+                    <div class="mx-auto h-10 w-10 rounded-md bg-emerald-400/10 border border-emerald-400/15 grid place-items-center text-emerald-200">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M3.75 5.25L3 6V18L3.75 18.75H20.25L21 18V6L20.25 5.25H3.75ZM4.5 7.6955V17.25H19.5V7.69525L11.9999 14.5136L4.5 7.6955ZM18.3099 6.75H5.68986L11.9999 12.4864L18.3099 6.75Z"/>
+                        </svg>
+                    </div>
+                </a>
             </div>
 
             <a href="{{ asset('cv/Bappa_Sutradhar_CV.pdf') }}" target="_blank"
@@ -133,6 +144,16 @@
                       hover:bg-cyan-400/20 transition font-semibold">
                 ⭳ Download CV
             </a>
+
+            <!-- DIRECT CONTACT (optional but useful) -->
+            <div class="mt-4 space-y-2">
+                <a href="tel:+8801928040976"
+                   class="flex items-center gap-2 rounded-md border border-white/10 bg-slate-950/30 px-3 py-2
+                          hover:border-emerald-400/30 transition">
+                    <span class="text-emerald-300">☎</span>
+                    <span class="text-xs text-slate-200 font-mono">+880 1928-040976</span>
+                </a>
+            </div>
         </div>
 
         <!-- SYSTEM INFO -->

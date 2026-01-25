@@ -268,7 +268,7 @@
             ['5', 'Deploy & Support', 'Deploy + post-launch support and maintenance.'],
         ] as $step)
             <div class="rounded-md border border-white/10 bg-white/5 p-5">
-                <div class="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-400/20 flex items-center justify-center font-bold text-blue-300">
+                <div class="w-10 h-10 rounded-md bg-blue-500/15 border border-blue-400/20 flex items-center justify-center font-bold text-blue-300">
                     {{ $step[0] }}
                 </div>
                 <h3 class="mt-3 font-semibold text-white">{{ $step[1] }}</h3>

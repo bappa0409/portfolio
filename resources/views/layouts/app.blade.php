@@ -3,8 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title', 'Laravel Developer | Portfolio')</title>
+    <title>@yield('title')</title>
     <meta name="description" content="@yield('meta_description', 'Laravel developer portfolio: web apps, APIs, admin panels, ecommerce.')">
+
+    <!-- FAVICONS -->
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-192x192.png') }}">
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 

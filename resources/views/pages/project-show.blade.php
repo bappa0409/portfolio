@@ -20,7 +20,7 @@
                     </div>
                 </div>
 
-                <div class="rounded-xl border border-white/10 bg-slate-950/40 p-4 min-w-[220px]">
+                <div class="rounded-md border border-white/10 bg-slate-950/40 p-4 min-w-[220px]">
                     <p class="text-xs text-slate-400">Status</p>
                     <p class="font-semibold">{{ $project['status'] }}</p>
                     <p class="mt-3 text-xs text-slate-400">Impact</p>
@@ -45,7 +45,7 @@
 
             <div class="mt-8">
                 <a href="{{ route('contact') }}"
-                   class="inline-block rounded-xl bg-blue-500 hover:bg-blue-400 px-5 py-3 font-semibold text-slate-950">
+                   class="inline-block rounded-md bg-blue-500 hover:bg-blue-400 px-5 py-3 font-semibold text-slate-950">
                     Build something like this
                 </a>
             </div>

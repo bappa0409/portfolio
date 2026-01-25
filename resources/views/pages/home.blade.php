@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('title','Bappa Sutradhar | Home')
-
 @section('content')
-
 <div class="page-fade">
 
     <!-- HERO -->
@@ -29,17 +27,17 @@
 
                 <div class="mt-6 flex flex-wrap gap-3">
                     <a href="{{ route('contact') }}"
-                       class="rounded-xl bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/30 transition">
+                       class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/30 transition">
                         Hire Me
                     </a>
 
                     <a href="{{ route('projects') }}"
-                       class="rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition">
+                       class="rounded-md border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition">
                         View Projects
                     </a>
 
                     <a href="{{ route('contact') }}"
-                       class="rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition">
+                       class="rounded-md border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition">
                         Get a Free Quote
                     </a>
                 </div>
@@ -72,11 +70,37 @@
 
             <!-- RIGHT PROFILE CARD -->
             <div class="rounded-md p-5 glass-soft cyber-glow">
-                <div class="flex justify-center">
+                {{-- <div class="flex justify-center">
                     <img src="{{ asset('images/profile.jpg') }}"
                          alt="Bappa Sutradhar"
                          class="w-full max-h-[260px] rounded-md object-cover border border-emerald-400/15">
+                </div> --}}
+                <div class="flex justify-center">
+                    <div class="relative w-full max-h-[260px] overflow-hidden rounded-md border border-emerald-400/15">
+
+                        <img src="{{ asset('images/profile.jpg') }}"
+                            alt="Bappa Sutradhar"
+                            class="w-full max-h-[260px] object-cover" />
+
+                        <!-- DARK OVERLAY -->
+                        <div class="absolute inset-0 bg-black/30"></div>
+
+                        <!-- CYBER NOISE (VISIBLE) -->
+                        <div class="absolute inset-0 cyber-noise pointer-events-none opacity-50"></div>
+
+                        <!-- SCANLINE -->
+                        <div class="absolute inset-0 scanline opacity-40 pointer-events-none"></div>
+
+                        <!-- Glow corner accents -->
+                        <div class="absolute top-2 left-2 h-5 w-5 border-t-2 border-l-2 border-emerald-400/60"></div>
+                        <div class="absolute top-2 right-2 h-5 w-5 border-t-2 border-r-2 border-emerald-400/60"></div>
+                        <div class="absolute bottom-2 left-2 h-5 w-5 border-b-2 border-l-2 border-emerald-400/60"></div>
+                        <div class="absolute bottom-2 right-2 h-5 w-5 border-b-2 border-r-2 border-emerald-400/60"></div>
+
+
+                    </div>
                 </div>
+
 
                 <div class="mt-4 flex items-center justify-between">
                     <div>
@@ -142,7 +166,7 @@
 
         <div class="mt-10 text-center">
             <a href="{{ route('contact') }}"
-               class="inline-block rounded-xl bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
+               class="inline-block rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
                 Discuss Your Project
             </a>
         </div>
@@ -226,7 +250,7 @@
                 ['5', 'Deploy & Support', 'Deploy + post-launch support and maintenance.'],
             ] as $step)
                 <div class="rounded-md p-5 glass-soft cyber-glow">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-400/15 border border-emerald-400/20 flex items-center justify-center font-bold text-emerald-200">
+                    <div class="w-10 h-10 rounded-md bg-emerald-400/15 border border-emerald-400/20 flex items-center justify-center font-bold text-emerald-200">
                         {{ $step[0] }}
                     </div>
                     <h3 class="mt-3 font-semibold text-white">{{ $step[1] }}</h3>
@@ -315,7 +339,7 @@
             </div>
 
             <a href="{{ route('contact') }}"
-               class="rounded-xl bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
+               class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
                 Let’s Talk
             </a>
         </div>
