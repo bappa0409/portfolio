@@ -233,24 +233,6 @@
                 </div>
             </div>
 
-            <!-- TECH STACK -->
-            <div class="mt-10 rounded-md glass cyber-glow p-6 relative">
-                <div class="absolute inset-0 scanline rounded-md pointer-events-none"></div>
-
-                <div class="flex items-center gap-2">
-                    <span class="text-emerald-200 font-mono">&gt;</span>
-                    <h2 class="text-white font-bold tracking-wide">TECH_STACK</h2>
-                </div>
-
-                <div class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                    @foreach (['Laravel', 'PHP', 'MySQL', 'Tailwind', 'WordPress', 'SQA', 'Git', 'REST API', 'Redis', 'VPS', 'cPanel', 'JavaScript'] as $t)
-                        <div
-                            class="rounded-md border border-white/10 bg-slate-950/30 p-4 text-center hover:border-emerald-400/25 transition">
-                            <p class="text-xs text-slate-200 font-mono">{{ $t }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
 
             <!-- FINAL CTA -->
             <div class="mt-10 rounded-md glass cyber-glow p-8 text-center relative">

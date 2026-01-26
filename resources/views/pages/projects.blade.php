@@ -84,10 +84,10 @@
             ];
 
             $challenges = $challenges ?? [
-                ['title' => 'Card Generator', 'desc' => 'Component-based UI practice', 'tags' => ['UI','Tailwind'], 'url' => '#', 'thumb' => 'images/challenges/ch1.jpg'],
-                ['title' => 'Landing Page', 'desc' => 'Hero + pricing layout', 'tags' => ['HTML','CSS'], 'url' => '#', 'thumb' => 'images/challenges/ch2.jpg'],
-                ['title' => 'Dashboard UI', 'desc' => 'Grid layout & stats cards', 'tags' => ['UI','Grid'], 'url' => '#', 'thumb' => 'images/challenges/ch3.jpg'],
-                ['title' => 'Form UI', 'desc' => 'Validation + spacing', 'tags' => ['Forms'], 'url' => '#', 'thumb' => 'images/challenges/ch4.jpg'],
+                ['title' => 'Card Generator', 'desc' => 'Component-based UI practice', 'tags' => ['UI','Tailwind'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-1.avif'],
+                ['title' => 'Landing Page', 'desc' => 'Hero + pricing layout', 'tags' => ['HTML','CSS'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-2.avif'],
+                ['title' => 'Dashboard UI', 'desc' => 'Grid layout & stats cards', 'tags' => ['UI','Grid'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-3.avif'],
+                ['title' => 'Form UI', 'desc' => 'Validation + spacing', 'tags' => ['Forms'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-4.avif'],
             ];
 
             // Optional: filter featured
@@ -194,7 +194,7 @@
                 Handpicked showcases — real builds and portfolio work.
             </p>
 
-            <div class="mt-6 grid md:grid-cols-3 gap-6">
+            {{-- <div class="mt-6 grid md:grid-cols-3 gap-6">
                 @foreach ($visibleProjects as $p)
                     <a href="{{ $p['url'] ?? '#' }}"
                        class="rounded-md overflow-hidden glass-soft cyber-glow border border-white/10 hover:border-emerald-400/25 transition block">
@@ -236,6 +236,44 @@
                         </div>
                     </a>
                 @endforeach
+            </div> --}}
+              <div class="mt-6 grid md:grid-cols-3 gap-5">
+                @foreach ($projects as $p)
+                    <a href="{{ route('projects.show', $p['slug']) }}"
+                        class="group block rounded-md overflow-hidden glass-soft cyber-glow hover:border-emerald-400/25 transition">
+
+                        <!-- IMAGE -->
+                        <div class="relative h-60 px-6 pt-6 overflow-hidden">
+                            <img src="{{ asset('images/projects/' . $p['image']) }}" alt="{{ $p['title'] }}"
+                                class="h-full w-full object-cover" loading="lazy" decoding="async">
+
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-black/30"></div>
+
+                            <!-- Cyber accents -->
+                            <div class="absolute inset-0 scanline opacity-40 pointer-events-none"></div>
+                        </div>
+
+                        <!-- CONTENT -->
+                        <div class="p-6">
+                            <h3 class="font-semibold text-white">{{ $p['title'] }}</h3>
+                            <p class="mt-2 text-white/70 text-sm">{{ $p['subtitle'] }}</p>
+
+                            <div class="mt-4 flex flex-wrap gap-1">
+                                @foreach ($p['stack'] as $tag)
+                                    <span
+                                        class="text-xs rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-white/85">
+                                        {{ $tag }}
+                                    </span>
+                                @endforeach
+                            </div>
+
+                            <p class="mt-4 text-xs text-white/55">
+                                Status: {{ $p['status'] }}
+                            </p>
+                        </div>
+                    </a>
+                @endforeach
             </div>
         </div>
 
@@ -273,8 +311,8 @@
             <p class="mt-2 text-sm text-slate-400">UI builds and layout practice (handpicked).</p>
 
             <div class="mt-6 grid sm:grid-cols-2 md:grid-cols-4 gap-5">
-                @foreach ($challenges as $c)
-                    <a href="{{ $c['url'] ?? '#' }}"
+                  {{-- @foreach ($challenges as $c)
+                  <a href="{{ $c['url'] ?? '#' }}"
                        class="rounded-md overflow-hidden glass-soft cyber-glow border border-white/10 hover:border-emerald-400/25 transition block">
                         <div class="h-28 bg-slate-950/30 relative">
                             @if (!empty($c['thumb']))
@@ -297,8 +335,43 @@
                                 @endforeach
                             </div>
                         </div>
-                    </a>
-                @endforeach
+                    </a> 
+                @endforeach--}}
+                    @foreach ($challenges as $c)
+                        <a href="{{ route('projects.show', $p['slug']) }}"
+                            class="group block rounded-md overflow-hidden glass-soft cyber-glow hover:border-emerald-400/25 transition">
+
+                            <!-- IMAGE -->
+                            <div class="relative h-48 md:h-52 px-6 pt-6 overflow-hidden">
+                                <img src="{{ asset($c['thumb']) }}" alt="{{ $c['title'] }}"
+                                    class="h-full w-full object-cover" loading="lazy" decoding="async">
+
+                                <!-- Overlay -->
+                                <div class="absolute inset-0 bg-black/30"></div>
+
+                                <!-- Cyber accents -->
+                                <div class="absolute inset-0 scanline opacity-40 pointer-events-none"></div>
+                            </div>
+
+                            <!-- CONTENT -->
+                            <div class="p-6">
+                                <h3 class="font-semibold text-white">{{ $c['title'] }}</h3>
+                                <p class="mt-2 text-white/70 text-sm">{{ $c['desc'] }}</p>
+
+                                <div class="mt-4 flex flex-wrap gap-1">
+                                    @foreach (($c['tags'] ?? []) as $t)
+                                        <span class="text-[10px] font-mono rounded-full bg-white/5 border border-white/10 px-2 py-1 text-white/75">
+                                            {{ $t }}
+                                        </span>
+                                    @endforeach
+                                </div>
+
+                                <p class="mt-4 text-xs text-white/55">
+                                    Status: {{ $p['status'] }}
+                                </p>
+                            </div>
+                        </a>
+                    @endforeach
             </div>
         </div>
 
