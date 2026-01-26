@@ -4,7 +4,7 @@
 @section('title', 'Bappa Sutradhar | Contact')
 
 @section('content')
-    <div class="relative overflow-hidden page-fade">
+    <div class="relative overflow-hidden">
         <div class="absolute inset-0 cyber-grid opacity-40 pointer-events-none"></div>
 
         <section class="relative z-10 mx-auto max-w-6xl px-4 py-10">

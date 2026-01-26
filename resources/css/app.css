@@ -2,9 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-[x-cloak] { display:none; }
+[x-cloak] {
+  display: none;
+}
 
-html, body { min-height: 100%; }
+html,
+body {
+  min-height: 100%;
+}
 
 /* =======================
    IMAGE CYBER BACKGROUND
@@ -12,8 +17,8 @@ html, body { min-height: 100%; }
 .site-bg {
   min-height: 100vh;
   background:
-    linear-gradient(rgba(5,10,10,.90), rgba(5,10,10,.90)),
-    url('../images/red-binary-bg.png');
+    linear-gradient(rgba(5, 10, 10, .90), rgba(5, 10, 10, .90)),
+    url('../images/binary-bg.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -21,34 +26,208 @@ html, body { min-height: 100%; }
 }
 
 /* Grid overlay */
-.cyber-grid{
+.cyber-grid {
   background-image:
-    linear-gradient(rgba(16,185,129,.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16,185,129,.06) 1px, transparent 1px);
+    linear-gradient(rgba(16, 185, 129, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, .06) 1px, transparent 1px);
   background-size: 42px 42px;
   mask-image: radial-gradient(circle at 50% 20%, black 40%, transparent 75%);
 }
+
+/* Splash effect overlay */
+.project-media {
+  position: relative;
+  overflow: hidden;
+}
+
+/* the "splash" */
+.project-media::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+
+  /* splash look */
+  background:
+    radial-gradient(circle at 35% 40%,
+      rgba(52, 211, 153, 0.55) 0%,
+      rgba(52, 211, 153, 0.22) 18%,
+      rgba(52, 211, 153, 0.08) 38%,
+      transparent 60%);
+
+  transform: scale(0.2) rotate(-12deg);
+  opacity: 0;
+  filter: blur(2px);
+  transition: transform 650ms cubic-bezier(.2, .9, .2, 1), opacity 650ms;
+}
+
+/* when hovering the entire card (your <a class="group ...">) */
+.group:hover .project-media::after {
+  transform: scale(1.35) rotate(8deg);
+  opacity: 1;
+}
+
+/* optional: image zoom for extra punch */
+.group:hover .project-media img {
+  transform: scale(1.06) rotate(-0.4deg);
+  transition: transform 650ms cubic-bezier(.2, .9, .2, 1);
+}
+
+.project-media img {
+  transition: transform 650ms cubic-bezier(.2, .9, .2, 1);
+}
+
+
+/* === GLASS SPLASH (hover wipe) === */
+.glass-splash {
+  position: relative;
+  overflow: hidden;
+}
+
+/* moving glass streak */
+/* base state */
+.glass-splash::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+
+  background: linear-gradient(115deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.00) 35%,
+      rgba(255, 255, 255, 0.28) 45%,
+      rgba(255, 255, 255, 0.12) 55%,
+      rgba(255, 255, 255, 0.00) 65%,
+      transparent 100%);
+
+  transform: translateX(-65%) translateY(12%) rotate(8deg);
+  opacity: 0;
+  filter: blur(1.5px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+
+/* subtle glass ripple */
+.glass-splash::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border-radius: 999px;
+
+  /* “kacher moto” ring */
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 0 0 rgba(255, 255, 255, 0.12),
+    0 0 18px rgba(255, 255, 255, 0.10);
+
+  transform: translate(-50%, -50%) scale(0.2);
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+/* hover trigger on the whole card (group) */
+.group:hover .glass-splash::before {
+  animation: glassWipe 900ms cubic-bezier(.2, .9, .2, 1) both;
+}
+
+.group:hover .glass-splash::after {
+  opacity: 1;
+  animation: glassRipple 650ms ease-out;
+}
+
+/* when hover ends, fade out smoothly */
+.glass-splash::before,
+.glass-splash::after {
+  transition: opacity 250ms ease;
+}
+
+/* reset position when NOT hovering (so next hover starts clean) */
+.group:not(:hover) .glass-splash::before {
+  opacity: 0;
+  transform: translateX(-60%) translateY(10%) rotate(8deg);
+  animation: none;
+}
+
+.group:not(:hover) .glass-splash::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.2);
+  animation: none;
+}
+
+/* keyframes */
+@keyframes glassWipe {
+  0% {
+    transform: translateX(-70%) translateY(14%) rotate(8deg);
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(75%) translateY(-12%) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes glassRipple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(14);
+    opacity: 0;
+  }
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+  .group:hover .glass-splash::before,
+  .group:hover .glass-splash::after {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
 
 /* =======================
    GLOW + TEXT
 ======================= */
 .cyber-glow {
   box-shadow:
-    0 0 0 1px rgba(16,185,129,.16),
-    0 0 35px rgba(16,185,129,.10);
+    0 0 0 1px rgba(16, 185, 129, .16),
+    0 0 35px rgba(16, 185, 129, .10);
 }
 
 .cyber-text {
-  text-shadow: 0 0 18px rgba(16,185,129,.35);
+  text-shadow: 0 0 18px rgba(16, 185, 129, .35);
 }
 
-.cyber-noise{
+.cyber-noise {
   background-image:
-    radial-gradient(rgba(255,255,255,.20) 1px, transparent 1px),
-    radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
+    radial-gradient(rgba(255, 255, 255, .20) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, .12) 1px, transparent 1px);
   background-size: 3px 3px, 6px 6px;
   background-position: 0 0, 1px 1px;
-  mix-blend-mode: normal; /* IMPORTANT: visible */
+  mix-blend-mode: normal;
+  /* IMPORTANT: visible */
 }
 
 /* =======================
@@ -68,18 +247,164 @@ html, body { min-height: 100%; }
   border: 1px solid rgba(16, 185, 129, 0.12);
 }
 
-.glass h1, .glass h2, .glass h3,
-.glass-soft h1, .glass-soft h2, .glass-soft h3 {
+.glass h1,
+.glass h2,
+.glass h3,
+.glass-soft h1,
+.glass-soft h2,
+.glass-soft h3 {
   text-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
 }
 
-
 /* =======================
-   PAGE FADE
+   ACTIVATE PORTAL PULSE (2 circles + ring pulse)
 ======================= */
-.page-fade { animation: fadeIn .6s ease-out both; }
+.portal-pulse {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  transform: translateZ(0);
+}
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* animated outer ring */
+.portal-pulse__ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  animation: portalPulse 2s infinite;
+  background: rgba(52, 211, 153, 0.18);
+  will-change: transform, opacity, box-shadow;
+}
+
+/* 1st static circle */
+.portal-pulse__outer {
+  position: absolute;
+  inset: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  background: rgba(52, 211, 153, 0.06);
+}
+
+/* 2nd static circle */
+.portal-pulse__inner {
+  position: absolute;
+  inset: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(52, 211, 153, 0.22);
+  background: rgba(52, 211, 153, 0.10);
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.20);
+}
+
+/* play icon */
+.portal-pulse__icon {
+  position: relative;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(110, 231, 183, 0.95);
+  transform: translateX(1px) scale(0.9);
+  text-shadow:
+    0 0 3px rgba(52, 211, 153, 0.7),
+    0 0 10px rgba(52, 211, 153, 0.35);
+}
+
+/* keyframes: same red pulse logic but emerald */
+@keyframes portalPulse {
+  0% {
+    transform: scale(0.78);
+    opacity: 0.9;
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55);
+  }
+
+  70% {
+    transform: scale(1);
+    opacity: 0;
+    box-shadow: 0 0 0 55px rgba(52, 211, 153, 0);
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+/* accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .portal-pulse__ring {
+    animation: none;
+    opacity: .35;
+  }
+}
+
+
+/* Splash effect overlay */
+.project-media {
+  position: relative;
+  overflow: hidden;
+}
+
+/* the "splash" */
+.project-media::after {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  pointer-events: none;
+
+  /* splash look */
+  background:
+    radial-gradient(circle at 35% 40%,
+      rgba(52, 211, 153, 0.55) 0%,
+      rgba(52, 211, 153, 0.22) 18%,
+      rgba(52, 211, 153, 0.08) 38%,
+      transparent 60%);
+
+  transform: scale(0.2) rotate(-12deg);
+  opacity: 0;
+  filter: blur(2px);
+  transition: transform 650ms cubic-bezier(.2, .9, .2, 1), opacity 650ms;
+}
+
+/* when hovering the entire card (your <a class="group ...">) */
+.group:hover .project-media::after {
+  transform: scale(1.35) rotate(8deg);
+  opacity: 1;
+}
+
+/* optional: image zoom for extra punch */
+.group:hover .project-media img {
+  transform: scale(1.06) rotate(-0.4deg);
+  transition: transform 650ms cubic-bezier(.2, .9, .2, 1);
+}
+
+.project-media img {
+  transition: transform 650ms cubic-bezier(.2, .9, .2, 1);
+}
+
+/* Counter Effect styles */
+.stat-done {
+  animation: statPop 600ms cubic-bezier(.2, .8, .2, 1) both;
+  box-shadow:
+    0 0 0 1px rgba(52, 211, 153, .25),
+    0 0 25px rgba(52, 211, 153, .25);
+}
+
+@keyframes statPop {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-done {
+    animation: none;
+    box-shadow: none;
+  }
 }

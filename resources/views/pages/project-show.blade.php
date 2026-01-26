@@ -2,7 +2,6 @@
 @section('title', $project['title'].' | Project')
 
 @section('content')
-<div class="page-fade">
     <section class="mx-auto max-w-6xl px-4 py-12">
         <a href="{{ route('projects') }}"
            class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-200 hover:text-emerald-100">
@@ -303,5 +302,4 @@
 
         </div>
     </section>
-</div>
 @endsection
