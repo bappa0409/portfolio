@@ -20,9 +20,7 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 ##Admin Routes
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::controller(DashboardController::class)->prefix('dashboard')->name('dashboard.')->group(function () {
-        Route::get('/', 'dashboard')->name('dashboard');
-    });
+    Route::get('/dashboard', [DashboardController::class, 'send'])->name('dashboard');
     
     Route::controller(ProjectsController::class)->prefix('projects')->name('projects.')->group(function () {
         Route::get('/', 'index')->name('index');

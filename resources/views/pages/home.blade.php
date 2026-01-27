@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.website')
 
 @section('title', 'Bappa Sutradhar | Home')
 @section('content')

@@ -1,48 +1,90 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title', 'Auth')</title>
 
-        <x-validation-errors class="mb-4" />
+    <!-- FAVICONS -->
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-192x192.png') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="min-h-screen bg-slate-950 text-white">
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ $value }}
-            </div>
-        @endsession
+<div class="site-bg relative min-h-screen overflow-hidden">
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+    <div class="absolute inset-0 bg-black/70"></div>
 
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
+    <div class="absolute inset-0 cyber-grid opacity-40 pointer-events-none"></div>
 
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
+    <div class="relative z-10 min-h-screen flex items-center justify-center px-4">
+        <div class="w-full max-w-sm">
+            <div class="rounded-md glass cyber-glow p-6 relative">
+                <div class="absolute inset-0 scanline rounded-md pointer-events-none"></div>
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
+                <div class="text-center">
+                    <p class="text-emerald-200/80 font-mono text-xs tracking-widest">&gt; AUTH_PROTOCOL</p>
+                    <h1 class="mt-2 text-2xl font-extrabold text-white cyber-text tracking-wide">
+                        SYSTEM_LOGIN
+                    </h1>
+                    <p class="mt-2 text-sm text-slate-400">
+                        Authorized access only.
+                    </p>
+                </div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
+                @if ($errors->any())
+                    <div class="mt-4 rounded-md border border-red-400/30 bg-red-400/10 px-3 py-2 text-sm text-red-200">
+                        {{ $errors->first() }}
+                    </div>
                 @endif
 
-                <x-button class="ms-4">
-                    {{ __('Log in') }}
-                </x-button>
+                <form method="POST" action="{{ route('login') }}" class="mt-6 space-y-5">
+                    @csrf
+
+                    <div>
+                        <label class="block text-xs font-mono text-slate-400 mb-1">
+                            EMAIL_ADDRESS
+                        </label>
+                        <input type="email" name="email" required autofocus
+                               class="w-full rounded-md border border-white/10 bg-slate-950/50 px-3 py-1 text-white">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-mono text-slate-400 mb-1">
+                            ACCESS_KEY
+                        </label>
+                        <input type="password" name="password" required
+                               class="w-full rounded-md border border-white/10 bg-slate-950/50 px-3 py-1 text-white">
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                        <label class="flex items-center gap-2">
+                            <input type="checkbox" name="remember"
+                                   class="rounded border-white/20 bg-slate-950/40 text-emerald-400">
+                            Remember session
+                        </label>
+
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}"
+                               class="hover:text-emerald-200 transition">
+                                Recover access
+                            </a>
+                        @endif
+                    </div>
+
+                    <button type="submit"
+                            class="w-full rounded-md bg-emerald-400/20 border border-emerald-400/30 px-4 py-2 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
+                        INITIATE_LOGIN
+                    </button>
+                </form>
+
+                <p class="mt-6 text-center text-xs text-slate-500 font-mono">
+                    ⌁ Secure channel • encrypted handshake
+                </p>
             </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

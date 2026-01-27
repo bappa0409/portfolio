@@ -1,5 +1,4 @@
-{{-- resources/views/contact.blade.php --}}
-@extends('layouts.app')
+@extends('layouts.website')
 
 @section('title', 'Bappa Sutradhar | Contact')
 

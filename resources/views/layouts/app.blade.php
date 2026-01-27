@@ -3,30 +3,37 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title')</title>
-    <meta name="description" content="@yield('meta_description', 'Laravel developer portfolio: web apps, APIs, admin panels, ecommerce.')">
-
-    <!-- FAVICONS -->
-    <link rel="icon" type="image/png" href="{{ asset('images/favicon-192x192.png') }}">
-    @vite(['resources/css/app.css','resources/js/app.js'])
+    <title>@yield('title', 'Admin')</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+<body class="min-h-screen bg-slate-950 text-white">
 
-<body class="min-h-screen text-slate-100">
-    <div class="site-bg relative overflow-hidden">
+<div class="relative min-h-screen">
+    <div class="absolute inset-0 cyber-grid opacity-30 pointer-events-none"></div>
 
-        <!-- GRID OVERLAY -->
-        <div class="absolute inset-0 cyber-grid opacity-60 pointer-events-none"></div>
+    <div class="site-bg relative overflow-hidden relative z-10 flex">
 
-        @include('partials.nav')
+        <!-- SIDEBAR -->
+        @include('backend.partials.sidebar')
+        
+        <!-- MAIN -->
+        <main class="flex-1">
 
-        <main class="pt-16 relative z-10">
-            @yield('content')
+            <!-- TOPBAR -->
+            @include('backend.partials.header')
+
+            <div class="max-w-6xl mx-auto px-4 py-8">
+                @if(session('success'))
+                    <div class="mb-5 rounded-md border border-emerald-400/20 bg-emerald-400/10 px-4 py-3 text-emerald-100">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
+                @yield('content')
+            </div>
         </main>
-
-        @include('partials.footer')
     </div>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</div>
 
 </body>
 </html>

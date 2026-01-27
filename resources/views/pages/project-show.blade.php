@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.website')
 @section('title', $project['title'].' | Project')
 
 @section('content')
