@@ -17,8 +17,8 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $totalProjects = Project::count();
-        $publishedProjects = Project::where('status', 'published')->count();
-        $draftProjects = Project::where('status', 'draft')->count();
+        $publishedProjects = Project::where('visibility', 1)->count();
+        $draftProjects = Project::where('visibility', 0)->count();
         $totalContacts = Contact::count();
         $recentProjects = Project::latest()->take(5)->get();
         $recentContacts = Contact::latest()->take(5)->get();
@@ -32,7 +32,7 @@ class DashboardController extends Controller
             ->orderByDesc('visits')
             ->get();
 
-        return view('pages.dashboard', compact(
+        return view('backend.pages.dashboard', compact(
             'totalProjects',
             'publishedProjects',
             'draftProjects',

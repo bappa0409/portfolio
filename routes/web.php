@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\ProjectsController;
+use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\WebsiteController;
@@ -20,9 +20,9 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 ##Admin Routes
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/dashboard', [DashboardController::class, 'send'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     
-    Route::controller(ProjectsController::class)->prefix('projects')->name('projects.')->group(function () {
+    Route::controller(ProjectController::class)->prefix('project')->name('project.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/store','store')->name('store');
