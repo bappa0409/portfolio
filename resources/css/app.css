@@ -408,3 +408,56 @@ body {
     box-shadow: none;
   }
 }
+
+
+/* ===============================
+   GLOBAL SCROLLBAR – CLEAN CYBER
+   =============================== */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(52, 211, 153, 0.6) rgba(255, 255, 255, 0.05);
+}
+
+/* Chrome / Edge / Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Hide scrollbar arrows (best possible) */
+*::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+  backdrop-filter: blur(12px);
+}
+
+/* Thumb */
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(52, 211, 153, 0.75),
+    rgba(16, 185, 129, 0.4)
+  );
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.25);
+}
+
+/* Hover */
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(52, 211, 153, 1),
+    rgba(16, 185, 129, 0.6)
+  );
+  box-shadow: 0 0 18px rgba(52, 211, 153, 0.45);
+}

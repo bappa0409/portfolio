@@ -196,7 +196,7 @@
 
             <!-- BODY (keep as you have) -->
             <div class="p-7 md:p-9">
-                <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
+                <div class="grid md:grid-cols-[7fr_3fr] gap-10 items-start">
                     <div class="max-w-3xl">
                         <p class="text-emerald-200/80 text-xs tracking-widest cyber-text">PROJECT FILE</p>
                         <h1 class="mt-2 text-3xl md:text-4xl font-extrabold text-white leading-tight">{{ $project['title'] }}</h1>
@@ -224,17 +224,6 @@
                             <p class="text-xs text-white/55">Impact</p>
                             <p class="mt-1 text-sm text-white/80 leading-relaxed">{{ $project['impact'] }}</p>
                         </div>
-
-                        <div class="mt-5 grid grid-cols-2 gap-2 text-center">
-                            <div class="rounded-md border border-white/10 bg-white/5 p-3">
-                                <p class="text-xs text-white/55">Stack</p>
-                                <p class="text-sm font-bold text-white">{{ count($project['stack']) }}</p>
-                            </div>
-                            <div class="rounded-md border border-white/10 bg-white/5 p-3">
-                                <p class="text-xs text-white/55">Features</p>
-                                <p class="text-sm font-bold text-white">{{ count($project['features']) }}</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -253,17 +242,7 @@
                         </ul>
                     </div>
                 </div>
-
-                <div class="mt-6 rounded-md p-6 glass-soft cyber-glow border border-emerald-400/10">
-                    <h2 class="font-bold text-lg text-white">Technology Stack</h2>
-                    <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 gap-3">
-                        @foreach ($project['stack'] as $tech)
-                            <div class="rounded-md bg-white/5 border border-white/10 px-4 py-3 text-sm text-white/85">
-                                {{ $tech }}
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+                
 
                 <div class="mt-6 rounded-md p-6 glass-soft cyber-glow border border-emerald-400/10">
                     <h2 class="font-bold text-lg text-white">Development Process</h2>

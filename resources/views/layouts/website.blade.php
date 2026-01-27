@@ -12,7 +12,7 @@
 </head>
 
 <body class="min-h-screen text-slate-100">
-    <div class="site-bg relative overflow-hidden">
+    <div class="site-bg relative">
 
         <!-- GRID OVERLAY -->
         <div class="absolute inset-0 cyber-grid opacity-60 pointer-events-none"></div>

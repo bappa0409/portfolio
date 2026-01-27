@@ -66,12 +66,21 @@
                     x-transition:leave="transition ease-in duration-200"
                     x-transition:leave-start="opacity-100 translate-y-0"
                     x-transition:leave-end="opacity-0 translate-y-1"
-                    class="ml-6 border-l border-white/10 pl-4">
+                    class="ml-4 border-l border-white/10 pl-4">
 
                     <ul class="space-y-1 py-1">
                         <li>
                             <a href="#"
-                            class="flex items-center gap-2 py-2 text-white/60 transition
+                            class="flex items-center gap-2 pb-1 text-white/60 transition
+                                    hover:text-emerald-200 hover:translate-x-1">
+                                <span class="text-white/40">→</span>
+                                <span>Analytics</span>
+                            </a>
+                        </li>
+
+                        <li>
+                           <a href="#"
+                            class="flex items-center gap-2 pb-1 text-white/60 transition
                                     hover:text-emerald-200 hover:translate-x-1">
                                 <span class="text-white/40">→</span>
                                 <span>Analytics</span>
@@ -80,29 +89,10 @@
 
                         <li>
                             <a href="#"
-                            class="flex items-center justify-between py-2 text-white/60 transition
+                            class="flex items-center gap-2 pb-1 text-white/60 transition
                                     hover:text-emerald-200 hover:translate-x-1">
-                                <span class="flex items-center gap-2">
-                                    <span class="text-white/40">→</span>
-                                    <span>E-Commerce</span>
-                                </span>
-                                <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-200 border border-blue-400/30">
-                                    Pro
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#"
-                            class="flex items-center justify-between py-2 text-white/60 transition
-                                    hover:text-emerald-200 hover:translate-x-1">
-                                <span class="flex items-center gap-2">
-                                    <span class="text-white/40">→</span>
-                                    <span>Crypto</span>
-                                </span>
-                                <span class="text-[10px] px-2 py-0.5 rounded bg-blue-500/20 text-blue-200 border border-blue-400/30">
-                                    Pro
-                                </span>
+                                <span class="text-white/40">→</span>
+                                <span>Analytics</span>
                             </a>
                         </li>
                     </ul>

@@ -207,159 +207,41 @@ class WebsiteController extends Controller
         ));
     }
 
-    public function projectShow(Request $request, GitHubService $github, $slug)
+    /**
+     * Single Project page
+     * URL: /projects/{slug}
+     */
+    public function projectShow(string $slug)
     {
-        // $project = collect($this->projectsData())->firstWhere('slug', $slug);
-        // abort_if(!$project, 404);
+        $p = Project::where('slug', $slug)->firstOrFail();
 
-        // $project = Cache::remember("projects.slug.{$slug}", 60 * 60, function () use ($slug) {
-        //     return Project::where('slug', $slug)->first();
-        // });
+        $project = [
+            'type'     => $p->type,
+            'featured' => (bool) $p->featured,
+            'title'    => $p->title,
+            'subtitle' => $p->subtitle,
+            'status'   => $p->status,
+            'image'    => $p->image,
+            'slug'     => $p->slug,
+            'url'      => $p->url ?? null,
 
-        // abort_if(!$project, 404);
+            'gallery'  => is_array($p->gallery)
+                            ? $p->gallery
+                            : (json_decode($p->gallery ?? '[]', true) ?: []),
 
+            'stack'    => is_array($p->stack)
+                            ? $p->stack
+                            : (json_decode($p->stack ?? '[]', true) ?: []),
 
-        // $activeFilter = $request->get('filter', 'all');
+            'features' => is_array($p->features)
+                            ? $p->features
+                            : (json_decode($p->features ?? '[]', true) ?: []),
 
-        // // Your local projects (recommended: move to DB later)
-        // $projects = [
-        //     [
-        //         'type' => 'professional',
-        //         'featured' => true,
-        //         'title' => 'Health Master',
-        //         'subtitle' => 'Healthcare landing + admin concept, responsive UI.',
-        //         'status' => 'Completed',
-        //         'image' => 'healthmaster.jpg',
-        //         'stack' => ['Laravel','Tailwind','MySQL'],
-        //         'slug' => 'health-master',
-        //     ],
-        //     [
-        //         'type' => 'professional',
-        //         'featured' => true,
-        //         'title' => 'Welcome to WeRent',
-        //         'subtitle' => 'Real estate / rental platform UI + modules.',
-        //         'status' => 'In Progress',
-        //         'image' => 'werent.jpg',
-        //         'stack' => ['Laravel','REST API','MySQL'],
-        //         'slug' => 'werent',
-        //     ],
-        //     [
-        //         'type' => 'personal',
-        //         'featured' => false,
-        //         'title' => 'Farming Solutions',
-        //         'subtitle' => 'Business website with admin + content sections.',
-        //         'status' => 'Completed',
-        //         'image' => 'farming.jpg',
-        //         'stack' => ['PHP','Bootstrap','MySQL'],
-        //         'slug' => 'farming-solutions',
-        //     ],
-        // ];
+            'overview' => $p->overview ?? '',
+            'impact'   => $p->impact ?? '',
+        ];
 
-        // $challenges = [
-        //     ['title' => 'Card Generator', 'desc' => 'Component-based UI practice', 'tags' => ['UI','Tailwind'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-1.avif'],
-        //     ['title' => 'Landing Page', 'desc' => 'Hero + pricing layout', 'tags' => ['HTML','CSS'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-2.avif'],
-        // ];
-
-        // $filters = [
-        //     ['id' => 'all', 'label' => 'All'],
-        //     ['id' => 'featured', 'label' => 'Featured'],
-        //     ['id' => 'professional', 'label' => 'Professional'],
-        //     ['id' => 'personal', 'label' => 'Personal'],
-        //     ['id' => 'github', 'label' => 'GitHub'],
-        //     ['id' => 'challenges', 'label' => 'Dev Challenges'],
-        // ];
-
-        // // GitHub repos
-        // $username = config('services.github.username');
-        // $token = config('services.github.token');
-        // $githubRepos = $username ? $github->repos($username, $token) : [];
-
-        // // Filter local projects
-        // $visibleProjects = match ($activeFilter) {
-        //     'featured' => array_values(array_filter($projects, fn($p) => !empty($p['featured']))),
-        //     'professional' => array_values(array_filter($projects, fn($p) => ($p['type'] ?? '') === 'professional')),
-        //     'personal' => array_values(array_filter($projects, fn($p) => ($p['type'] ?? '') === 'personal')),
-        //     default => $projects,
-        // };
-
-
-        $activeFilter = $request->get('filter', 'all');
-
-    $filters = [
-        ['id' => 'all',          'label' => 'All'],
-        ['id' => 'featured',     'label' => 'Featured'],
-        ['id' => 'professional', 'label' => 'Professional'],
-        ['id' => 'personal',     'label' => 'Personal'],
-        ['id' => 'github',       'label' => 'GitHub'],
-        ['id' => 'challenges',   'label' => 'Dev Challenges'],
-    ];
-
-    // ✅ DB Projects (Project model)
-    $projectsQuery = Project::query()->orderByDesc('id');
-
-    $dbProjects = match ($activeFilter) {
-        'featured' => $projectsQuery->where('featured', true)->get(),
-        'professional' => $projectsQuery->where('type', 'professional')->get(),
-        'personal' => $projectsQuery->where('type', 'personal')->get(),
-        default => $projectsQuery->get(),
-    };
-
-    // ✅ Convert Eloquent -> array (Blade uses $p['title'])
-    $visibleProjects = $dbProjects->map(fn ($p) => [
-        'type' => $p->type,
-        'featured' => (bool) $p->featured,
-        'title' => $p->title,
-        'subtitle' => $p->subtitle,
-        'status' => $p->status,
-        'image' => $p->image,
-        'stack' => is_array($p->stack) ? $p->stack : (json_decode($p->stack ?? '[]', true) ?: []),
-        'slug' => $p->slug,
-        'url' => $p->url ?? null, // optional column থাকলে
-    ])->toArray();
-
-    // ✅ GitHub repos (YOUR service)
-    $username = config('services.github.username');
-    $token    = config('services.github.token');
-    $githubRepos = $username ? $github->publicRepos($username, $token) : [];
-
-    // ✅ Challenges
-    $challenges = [
-        ['title' => 'Card Generator', 'desc' => 'Component-based UI practice', 'tags' => ['UI','Tailwind'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-1.avif'],
-        ['title' => 'Landing Page', 'desc' => 'Hero + pricing layout', 'tags' => ['HTML','CSS'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-2.avif'],
-        ['title' => 'Dashboard UI', 'desc' => 'Grid layout & stats cards', 'tags' => ['UI','Grid'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-3.avif'],
-        ['title' => 'Form UI', 'desc' => 'Validation + spacing', 'tags' => ['Forms'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-4.avif'],
-    ];
-
-    // ✅ Section flags (exactly like your Blade expects)
-    $showLocal      = in_array($activeFilter, ['all','featured','professional','personal'], true);
-    $showGithub     = in_array($activeFilter, ['all','github'], true);
-    $showChallenges = in_array($activeFilter, ['all','challenges'], true);
-
-    // ✅ Stats
-    $stats = [
-        [Project::count(), 'Projects'],
-        [count($githubRepos), 'GitHub Repos'],
-        ['24h', 'Response'],
-        ['100%', 'Quality'],
-    ];
-
-    // ✅ GitHub username for link (Blade expects $githubUsername)
-    $githubUsername = $username;
-
-   
-
-
-        return view('pages.project-show', compact( 'filters',
-            'activeFilter',
-            'stats',
-            'githubRepos',
-            'visibleProjects',
-            'challenges',
-            'showLocal',
-            'showGithub',
-            'showChallenges',
-            'githubUsername'
-        ));
+        return view('pages.project-show', compact('project'));
     }
 
     public function about()
