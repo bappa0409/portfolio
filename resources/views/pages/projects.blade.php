@@ -100,11 +100,14 @@
                             </div>
                             
                             <div class="mt-3 flex flex-wrap gap-2 text-[11px] font-mono text-slate-300">
-                                @if(!empty($r['commits']))
+                                 @if(isset($r['commits']) && $r['commits'] > 0)
                                     <span class="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-white/70">
                                         ⎇ {{ $r['commits'] }} commits
                                     </span>
+                                @elseif(isset($r['commits']))
+                                ⎇ —
                                 @endif
+                                
 
                                 @if(!empty($r['languages']) && is_array($r['languages']))
                                     @php

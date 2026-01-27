@@ -74,10 +74,14 @@ class GitHubService
         $repoCacheKey = $this->repoCacheKey($owner, $repo, $branch, $token);
 
         return Cache::remember($repoCacheKey, now()->addHours(12), function () use ($owner, $repo, $branch, $languagesUrl, $token) {
-            return [
-                'languages' => $this->fetchLanguages($languagesUrl, $token),
-                'commits'   => $this->fetchCommitCount($owner, $repo, $branch, $token),
-            ];
+
+            $languages = [];
+            $commits = 0;
+
+            try { $languages = $this->fetchLanguages($languagesUrl, $token); } catch (\Throwable $e) {}
+            try { $commits   = $this->fetchCommitCount($owner, $repo, $branch, $token); } catch (\Throwable $e) {}
+
+            return compact('languages', 'commits');
         });
     }
 
@@ -106,10 +110,15 @@ class GitHubService
 
         return Cache::remember($cacheKey, now()->addHours(12), function () use ($owner, $repo, $branch, $token) {
 
-            $res = $this->client($token)->get("https://api.github.com/repos/{$owner}/{$repo}/commits", [
-                'per_page' => 1,
-                'sha' => $branch,
-            ]);
+            try {
+                $res = $this->client($token)->get("https://api.github.com/repos/{$owner}/{$repo}/commits", [
+                    'per_page' => 1,
+                    'sha' => $branch,
+                ]);
+            } catch (\Throwable $e) {
+                // ✅ timeout/network error => don't crash page
+                return 0;
+            }
 
             if (!$res->ok()) return 0;
 
@@ -123,18 +132,14 @@ class GitHubService
 
                     if (preg_match('/<([^>]+)>/', $part, $m)) {
                         $lastUrl = $m[1];
-
                         $query = parse_url($lastUrl, PHP_URL_QUERY) ?: '';
                         parse_str($query, $qs);
 
-                        if (!empty($qs['page'])) {
-                            return (int) $qs['page'];
-                        }
+                        if (!empty($qs['page'])) return (int) $qs['page'];
                     }
                 }
             }
 
-            // Link missing => 0 or 1 commit
             $arr = $res->json();
             if (is_array($arr) && count($arr) === 0) return 0;
 
@@ -150,7 +155,10 @@ class GitHubService
         $req = Http::withHeaders([
             'Accept' => 'application/vnd.github+json',
             'User-Agent' => config('app.name', 'Laravel'),
-        ])->timeout(10);
+        ])
+        ->connectTimeout(3)     // ✅ connection establish max 3s
+        ->timeout(8)            // ✅ overall request max 8s
+        ->retry(2, 300);        // ✅ 2 retries, 300ms gap
 
         return !empty($token) ? $req->withToken($token) : $req;
     }
