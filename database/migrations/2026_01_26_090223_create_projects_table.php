@@ -24,7 +24,6 @@ return new class extends Migration
             $table->json('stack')->nullable();
             $table->enum('status', ['Live', 'Private', 'In Progress'])->default('Private');
 
-            $table->string('impact', 255)->nullable();
             $table->longText('overview')->nullable();
             $table->json('features')->nullable();
             

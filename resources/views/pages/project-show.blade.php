@@ -196,36 +196,32 @@
 
             <!-- BODY (keep as you have) -->
             <div class="p-7 md:p-9">
-                <div class="grid md:grid-cols-[7fr_3fr] gap-10 items-start">
-                    <div class="max-w-3xl">
-                        <p class="text-emerald-200/80 text-xs tracking-widest cyber-text">PROJECT FILE</p>
-                        <h1 class="mt-2 text-3xl md:text-4xl font-extrabold text-white leading-tight">{{ $project['title'] }}</h1>
-                        <p class="mt-3 text-white/70">{{ $project['subtitle'] }}</p>
+               <div class="max-w-3xl">
+                    <p class="text-emerald-200/80 text-xs tracking-widest cyber-text">PROJECT FILE</p>
 
-                        <div class="mt-5 flex flex-wrap gap-2">
-                            @foreach ($project['stack'] as $tag)
-                                <span class="text-xs rounded-full bg-white/5 border border-white/10 px-3 py-1 text-white/85">{{ $tag }}</span>
-                            @endforeach
-                        </div>
+                    <div class="mt-2 flex flex-wrap items-center gap-3">
+                        <h1 class="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                            {{ $project['title'] }}
+                        </h1>
+
+                        <span
+                            class="text-xs rounded-full bg-emerald-400/15 border border-emerald-400/25 px-3 py-1 text-emerald-200">
+                            {{ $project['status'] === 'Live' ? 'Online' : 'Private' }}
+                        </span>
                     </div>
 
-                    <div class="rounded-md glass-soft cyber-glow p-5 md:min-w-[280px] border border-emerald-400/15">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-xs text-white/55">Status</p>
-                                <p class="text-white font-bold">{{ $project['status'] }}</p>
-                            </div>
-                            <span class="text-xs rounded-full bg-emerald-400/15 border border-emerald-400/25 px-3 py-1 text-emerald-200">
-                                {{ $project['status'] === 'Live' ? 'Online' : 'Private' }}
-                            </span>
-                        </div>
+                    <p class="mt-3 text-white/70">{{ $project['subtitle'] }}</p>
 
-                        <div class="mt-4">
-                            <p class="text-xs text-white/55">Impact</p>
-                            <p class="mt-1 text-sm text-white/80 leading-relaxed">{{ $project['impact'] }}</p>
-                        </div>
+                    <div class="mt-5 flex flex-wrap gap-2">
+                        @foreach ($project['stack'] as $tag)
+                            <span
+                                class="text-xs rounded-full bg-white/5 border border-white/10 px-3 py-1 text-white/85">
+                                {{ $tag }}
+                            </span>
+                        @endforeach
                     </div>
                 </div>
+
 
                 <div class="mt-8 grid md:grid-cols-2 gap-6">
                     <div class="rounded-md p-6 glass-soft cyber-glow border border-emerald-400/10">

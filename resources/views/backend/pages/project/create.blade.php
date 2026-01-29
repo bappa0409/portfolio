@@ -19,29 +19,9 @@
             @csrf
 
             <div class="md:col-span-2">
-                <label class="text-xs font-mono text-slate-400">OVERVIEW 2</label>
-                <select name="stack"
-    class="js-cyber-select mt-2 w-full"
-    data-placeholder="Choose a stack">
-                    <option value="">Choose</option>
-                    <option value="Laravel">Laravel</option>
-                    <option value="React">React</option>
-                </select>
-            </div>
-            <div>
                 <label class="text-xs font-mono text-slate-400">TITLE</label>
                 <input id="title" name="title" value="{{ old('title') }}" required
                     class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-            </div>
-
-            <div>
-                <label class="text-xs font-mono text-slate-400">SLUG (optional)</label>
-                <input id="slug" name="slug" value="{{ old('slug') }}"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
-                    placeholder="auto-generate-from-title">
-                <p class="mt-1 text-[11px] text-slate-500 font-mono">
-                    Auto-fills from TITLE unless you manually edit it.
-                </p>
             </div>
 
             <div class="md:col-span-2">
@@ -85,7 +65,6 @@
                     <input id="main_image" type="file" name="image" accept="image/*" class="hidden">
                 </label>
 
-                {{-- Preview (Gallery-style single tile) --}}
                 <div id="mainImagePreview" class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 hidden">
 
                     <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden">
@@ -125,8 +104,6 @@
                 </select>
             </div>
 
-
-
             <div>
                 <label class="text-xs font-mono text-slate-400">SORT ORDER</label>
                 <input type="number" name="sort_order" value="{{ old('sort_order', 0) }}"
@@ -148,24 +125,13 @@
             </div>
 
             <div class="md:col-span-2">
-                <label class="text-xs font-mono text-slate-400">IMPACT</label>
-                <textarea name="impact" rows="3"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">{{ old('impact') }}</textarea>
-            </div>
-
-            <div class="md:col-span-2">
                 <label class="text-xs font-mono text-slate-400">OVERVIEW</label>
                 <textarea name="overview" rows="5"
                     class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">{{ old('overview') }}</textarea>
             </div>
 
 
-            
-            
-
-
-
-            <div>
+            <div class="md:col-span-2">
                 <label class="text-xs font-mono text-slate-400">FEATURES (one per line)</label>
                 <textarea name="features" rows="6"
                     class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"

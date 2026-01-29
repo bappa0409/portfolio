@@ -21,7 +21,6 @@ class Project extends Model
         'gallery',
         'stack',
         'features',
-        'impact',
         'overview',
         'status',
         'visibility',

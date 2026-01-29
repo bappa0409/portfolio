@@ -26,8 +26,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('/', 'index')->name('index');
         Route::get('/create','create')->name('create');
         Route::post('/store','store')->name('store');
-        Route::get('/edit/{id}','edit')->name('edit');
-        Route::post('/update/{id}', 'update')->name('update');
+
+        Route::get('/edit/{project}', 'edit')->name('edit');
+        Route::post('/update/{project}', 'update')->name('update');
         Route::delete('/destroy/{id}','destroy')->name('destroy');
         Route::delete('/multi-destroy', 'multiDestroy')->name('multi_destroy');
         Route::get('/visibility-change/{id:id}', 'visibilityChange')->name('visibility');
