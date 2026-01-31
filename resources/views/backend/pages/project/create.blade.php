@@ -18,6 +18,15 @@
             enctype="multipart/form-data">
             @csrf
 
+             <div>
+                <label class="text-xs font-mono text-slate-400">STACK</label>
+                 <select name="stack[]" multiple
+                    class="select2 mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
+                    @foreach (['Laravel', 'CodeIgniter', 'PHP', 'MySQL', 'REST API', 'WordPress', 'JavaScript', 'React', 'Bootstrap', 'Tailwind CSS'] as $st)
+                        <option value="{{ $st }}">{{ $st }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="md:col-span-2">
                 <label class="text-xs font-mono text-slate-400">TITLE</label>
                 <input id="title" name="title" value="{{ old('title') }}" required
@@ -95,19 +104,24 @@
 
 
             <div>
-                <label class="text-xs font-mono text-slate-400">STATUS</label>
-                <select name="status"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-                    @foreach (['Live', 'Private', 'In Progress'] as $st)
-                        <option value="{{ $st }}" @selected(old('status', 'Live') === $st)>{{ $st }}</option>
+                <label class="text-xs font-mono text-slate-400">STACK</label>
+                 <select name="stack[]" multiple
+                    class="select2 mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
+                    @foreach (['Laravel', 'CodeIgniter', 'PHP', 'MySQL', 'REST API', 'WordPress', 'JavaScript', 'React', 'Bootstrap', 'Tailwind CSS'] as $st)
+                        <option value="{{ $st }}">{{ $st }}</option>
                     @endforeach
                 </select>
             </div>
 
+            
             <div>
-                <label class="text-xs font-mono text-slate-400">SORT ORDER</label>
-                <input type="number" name="sort_order" value="{{ old('sort_order', 0) }}"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
+                <label class="text-xs font-mono text-slate-400">STATUS</label>
+                <select name="status" class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
+                    <option value="" selected>Select Status</option>
+                    @foreach (['Live', 'Private', 'In Progress'] as $st)
+                        <option value="{{ $st }}" @selected(old('status', 'Live') === $st)>{{ $st }}</option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="md:col-span-2 grid sm:grid-cols-2 gap-4">
