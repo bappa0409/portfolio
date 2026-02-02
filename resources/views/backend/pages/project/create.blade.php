@@ -18,15 +18,7 @@
             enctype="multipart/form-data">
             @csrf
 
-             <div>
-                <label class="text-xs font-mono text-slate-400">STACK</label>
-                 <select name="stack[]" multiple
-                    class="select2 mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-                    @foreach (['Laravel', 'CodeIgniter', 'PHP', 'MySQL', 'REST API', 'WordPress', 'JavaScript', 'React', 'Bootstrap', 'Tailwind CSS'] as $st)
-                        <option value="{{ $st }}">{{ $st }}</option>
-                    @endforeach
-                </select>
-            </div>
+         
             <div class="md:col-span-2">
                 <label class="text-xs font-mono text-slate-400">TITLE</label>
                 <input id="title" name="title" value="{{ old('title') }}" required
