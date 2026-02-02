@@ -35,52 +35,89 @@
                         </div>
                     @endif
 
-                    <form class="mt-3 space-y-2" method="POST" action="{{ route('contact.send') }}">
+                    <form id="contactForm" class="mt-3 space-y-2" method="POST" action="{{ route('contact.send') }}">
                         @csrf
 
                         <div class="grid sm:grid-cols-2 gap-4">
+                            <!-- NAME -->
                             <div>
                                 <label class="text-xs font-mono text-slate-400">NAME</label>
-                                <input name="name" value="{{ old('name') }}"
+                                <input name="name" id="name" value="{{ old('name') }}"
                                     class="mt-2 w-full rounded-md bg-slate-950/30 border border-white/10 px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-400/25"
                                     placeholder="Enter your name">
+
+                                <!-- JS error -->
+                                <p class="mt-1 text-xs text-red-300 hidden" id="error-name"></p>
+
+                                <!-- Server error (optional keep) -->
                                 @error('name')
                                     <p class="mt-2 text-xs text-red-300">{{ $message }}</p>
                                 @enderror
                             </div>
 
+                            <!-- MOBILE -->
                             <div>
-                                <label class="text-xs font-mono text-slate-400">EMAIL</label>
-                                <input name="email" value="{{ old('email') }}"
+                                <label class="text-xs font-mono text-slate-400">MOBILE</label>
+                                <input type="number" name="mobile" id="mobile" value="{{ old('mobile') }}"
+                                    inputmode="numeric" pattern="[0-9]*"
                                     class="mt-2 w-full rounded-md bg-slate-950/30 border border-white/10 px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-400/25"
-                                    placeholder="your@email.com">
-                                @error('email')
+                                    placeholder="Enter your Mobile">
+
+                                <!-- JS error -->
+                                <p class="mt-1 text-xs text-red-300 hidden" id="error-mobile"></p>
+
+                                @error('mobile')
                                     <p class="mt-2 text-xs text-red-300">{{ $message }}</p>
                                 @enderror
                             </div>
                         </div>
 
+                        <!-- EMAIL -->
+                        <div>
+                            <label class="text-xs font-mono text-slate-400">EMAIL</label>
+                            <input name="email" id="email" value="{{ old('email') }}"
+                                class="mt-2 w-full rounded-md bg-slate-950/30 border border-white/10 px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-400/25"
+                                placeholder="your@email.com">
+
+                            <!-- JS error -->
+                            <p class="mt-1 text-xs text-red-300 hidden" id="error-email"></p>
+
+                            @error('email')
+                                <p class="mt-2 text-xs text-red-300">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- SUBJECT (optional) -->
                         <div>
                             <label class="text-xs font-mono text-slate-400">SUBJECT</label>
-                            <input name="subject" value="{{ old('subject') }}"
+                            <input name="subject" id="subject" value="{{ old('subject') }}"
                                 class="mt-2 w-full rounded-md bg-slate-950/30 border border-white/10 px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-400/25"
                                 placeholder="Project discussion">
+
+                            <!-- JS error -->
+                            <p class="mt-1 text-xs text-red-300 hidden" id="error-subject"></p>
+
                             @error('subject')
                                 <p class="mt-2 text-xs text-red-300">{{ $message }}</p>
                             @enderror
                         </div>
 
+                        <!-- MESSAGE -->
                         <div>
                             <label class="text-xs font-mono text-slate-400">MESSAGE</label>
-                            <textarea name="message" rows="3"
+                            <textarea name="message" id="message" rows="3"
                                 class="mt-2 w-full rounded-md bg-slate-950/30 border border-white/10 px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-emerald-400/25"
                                 placeholder="Tell me about your project...">{{ old('message') }}</textarea>
+
+                            <!-- JS error -->
+                            <p class="mt-1 text-xs text-red-300 hidden" id="error-message"></p>
+
                             @error('message')
                                 <p class="mt-2 text-xs text-red-300">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <button type="submit"
+                        <button id="submitBtn" type="submit"
                             class="w-full rounded-md bg-emerald-400/20 border border-emerald-400/30 px-5 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
                             ✈ TRANSMIT_MESSAGE
                         </button>
@@ -260,3 +297,192 @@
         </section>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+(function () {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    const submitBtn = document.getElementById('submitBtn');
+    const originalBtnText = submitBtn ? submitBtn.innerText : '✈ TRANSMIT_MESSAGE';
+
+    const fields = {
+        name: document.getElementById('name'),
+        mobile: document.getElementById('mobile'),
+        email: document.getElementById('email'),
+        subject: document.getElementById('subject'),
+        message: document.getElementById('message'),
+    };
+
+    const patterns = {
+        email: /^\S+@\S+\.\S+$/,
+    };
+
+    const clearError = (key) => {
+        const err = document.getElementById('error-' + key);
+        if (err) {
+            err.innerText = '';
+            err.classList.add('hidden');
+        }
+        if (fields[key]) {
+            fields[key].classList.remove('border-red-400/40');
+        }
+    };
+
+    const showError = (key, message) => {
+        const err = document.getElementById('error-' + key);
+        if (err) {
+            err.innerText = message;
+            err.classList.remove('hidden');
+        }
+        if (fields[key]) {
+            fields[key].classList.add('border-red-400/40');
+        }
+    };
+
+    const sanitizeMobile = (value) => (value || '').toString().replace(/\D/g, '');
+
+    const validate = () => {
+        let ok = true;
+
+        // NAME
+        const name = (fields.name?.value || '').trim();
+        if (name.length < 2) {
+            showError('name', 'Name is required (min 2 characters).');
+            ok = false;
+        } else {
+            clearError('name');
+        }
+
+        // MOBILE (allow formatted input, validate digits length)
+        const rawMobile = (fields.mobile?.value || '').trim();
+        const mobileDigits = sanitizeMobile(rawMobile);
+        if (!mobileDigits) {
+            showError('mobile', 'Mobile number is required.');
+            ok = false;
+        } else if (mobileDigits.length < 10 || mobileDigits.length > 15) {
+            showError('mobile', 'Enter a valid mobile number (10–15 digits).');
+            ok = false;
+        } else {
+            clearError('mobile');
+        }
+
+        // EMAIL
+        const email = (fields.email?.value || '').trim();
+        if (!email) {
+            showError('email', 'Email is required.');
+            ok = false;
+        } else if (!patterns.email.test(email)) {
+            showError('email', 'Enter a valid email address.');
+            ok = false;
+        } else {
+            clearError('email');
+        }
+
+        // SUBJECT (optional)
+        const subject = (fields.subject?.value || '').trim();
+        if (subject.length > 150) {
+            showError('subject', 'Subject max 150 characters.');
+            ok = false;
+        } else {
+            clearError('subject');
+        }
+
+        // MESSAGE
+        const message = (fields.message?.value || '').trim();
+        if (message.length < 10) {
+            showError('message', 'Message must be at least 10 characters.');
+            ok = false;
+        } else if (message.length > 2000) {
+            showError('message', 'Message max 2000 characters.');
+            ok = false;
+        } else {
+            clearError('message');
+        }
+
+        return ok;
+    };
+
+    // live validation
+    Object.keys(fields).forEach((key) => {
+        if (!fields[key]) return;
+        fields[key].addEventListener('input', validate);
+        fields[key].addEventListener('blur', validate);
+    });
+
+    // AJAX submit (no reload)
+    form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // clear old errors first
+        Object.keys(fields).forEach(clearError);
+
+        if (!validate()) {
+            toast('error', 'Please fix the errors and try again.');
+            return;
+        }
+
+        // set sanitized mobile into input before sending
+        if (fields.mobile) {
+            fields.mobile.value = sanitizeMobile(fields.mobile.value);
+        }
+
+        // loading state
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'Submitting...';
+            submitBtn.classList.add('opacity-70', 'cursor-not-allowed');
+        }
+
+        try {
+            const res = await fetch(form.action, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                },
+                body: new FormData(form),
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            if (!res.ok) {
+                // Laravel validation errors
+                if (data && data.errors) {
+                    Object.keys(data.errors).forEach((key) => {
+                        showError(key, data.errors[key][0]);
+                    });
+                    toast('error', 'Please fix the errors and try again.');
+                } else {
+                    toast('error', data?.message || 'Something went wrong. Please try again.');
+                }
+                return;
+            }
+
+            // ✅ success
+            toast('success', data?.message || 'Message sent successfully!');
+
+            // ✅ clear all fields after submitted
+            form.reset();
+
+            // ✅ clear all error UI
+            Object.keys(fields).forEach(clearError);
+
+            // optional: focus back to first field
+            if (fields.name) fields.name.focus();
+
+        } catch (err) {
+            toast('error', 'Network error. Please try again.');
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerText = originalBtnText;
+                submitBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+            }
+        }
+    });
+})();
+</script>
+@endpush
+

@@ -475,6 +475,40 @@ select {
   background-size: 16px;
 }
 
+/* Chrome, Safari, Edge */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Chrome / Edge / Safari autofill fix */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+
+    /* 🔥 text color fix */
+    -webkit-text-fill-color: rgb(226, 232, 240) !important; /* slate-200 */
+    color: rgb(226, 232, 240) !important;
+
+    caret-color: rgb(226, 232, 240) !important;
+
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+.toast-close {
+  opacity: 1!important;
+}
+
 /* options (best-effort, browser dependent) */
 select option {
   background: #020617;

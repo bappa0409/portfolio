@@ -97,7 +97,7 @@
                 </a>
             </div>
 
-            <a href="{{ asset('cv/Bappa_Sutradhar_CV.pdf') }}" target="_blank"
+            <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
                class="w-full text-center inline-block mt-4 rounded-md border border-cyan-400/30
                       bg-cyan-400/10 px-4 py-2 text-sm text-cyan-200
                       hover:bg-cyan-400/20 transition font-semibold">

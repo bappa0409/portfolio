@@ -47,7 +47,7 @@
                     }}">
                     <span class="flex items-center gap-3">
                         <span>▦</span>
-                        <span>Dashboards</span>
+                        <span>Settings</span>
                     </span>
 
                     <svg class="w-4 h-4 transition-transform duration-300"

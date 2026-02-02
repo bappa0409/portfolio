@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->index();
             $table->string('mobile')->nullable();
             $table->longText('message'); 
+            $table->string('status')->default('new');
             $table->timestamps();
         });
     }

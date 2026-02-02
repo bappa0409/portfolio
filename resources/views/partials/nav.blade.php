@@ -71,7 +71,7 @@
 
             <div class="w-px h-6 bg-white/10 mx-2"></div>
 
-            <a href="{{ asset('cv/Bappa_Sutradhar_CV.pdf') }}" target="_blank"
+            <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
                 class="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 font-semibold text-cyan-200
                       hover:bg-cyan-400/20 hover:border-cyan-400/40 transition focus:outline-none focus:ring-2 focus:ring-cyan-400/30">
                 ⭳ Download CV
@@ -86,7 +86,7 @@
 
         <!-- MOBILE ACTIONS -->
         <div class="md:hidden flex items-center gap-2">
-            <a href="{{ asset('cv/Bappa_Sutradhar_CV.pdf') }}" target="_blank"
+            <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
                 class="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-xs font-semibold text-cyan-200 hover:bg-cyan-400/20 transition">
                 ⭳ CV
             </a>
@@ -156,7 +156,7 @@
 
                     <div class="my-3 h-px bg-white/10"></div>
 
-                    <a href="{{ asset('cv/Bappa_Sutradhar_CV.pdf') }}" target="_blank"
+                    <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
                         class="block rounded-md border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-center text-cyan-200">
                         ⭳ Download CV
                     </a>

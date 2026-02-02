@@ -253,7 +253,7 @@
                     class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
                         START_PROJECT
                     </a>
-                    <a href="{{ asset('cv/Bappa_Sutradhar_CV.pdf') }}" target="_blank"
+                    <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
                     class="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-6 py-3 font-semibold text-cyan-200 hover:bg-cyan-400/20 transition">
                         ⭳ DOWNLOAD_CV
                     </a>

@@ -2,27 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactMail;
+use App\Models\Contact;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
     public function send(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:80'],
-            'email' => ['required', 'email', 'max:120'],
+            'name'    => ['required', 'string', 'max:80'],
+            'mobile'  => ['required', 'string', 'max:20'],
+            'email'   => ['required', 'email', 'max:120'],
+            'subject' => ['nullable', 'string', 'max:150'],
             'message' => ['required', 'string', 'max:2000'],
         ]);
 
-        // Set your receiving email in .env as CONTACT_TO_EMAIL
-        $to = config('mail.contact_to');
+        $contact = Contact::create([
+            'name'    => $data['name'],
+            'mobile'  => $data['mobile'],
+            'email'   => $data['email'],
+            'message' => $data['message'],
+            'status'  => Contact::STATUS_NEW,
+        ]);
 
-        if ($to) {
-            Mail::to($to)->send(new ContactMail($data));
-        }
+        Mail::to(config('mail.contact_to'))->queue(new ContactMail($contact));
 
-        return back()->with('success', 'Thanks! I will contact you within 24 hours.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Thanks! I will contact you within 24 hours.',
+        ]);
     }
 }
