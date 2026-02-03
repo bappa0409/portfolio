@@ -26,7 +26,6 @@ class Project extends Model
         'visibility',
         'is_featured',
         'type',
-        'sort_order',
     ];
 
     protected $casts = [
@@ -34,7 +33,6 @@ class Project extends Model
         'stack'       => 'array',
         'features'    => 'array',
         'is_featured' => 'boolean',
-        'sort_order'  => 'integer',
     ];
 
     public function scopeActive($q)

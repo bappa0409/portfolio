@@ -91,14 +91,7 @@
                 </select>
                 @error('status') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
             </div>
-
-            <div>
-                <label class="text-xs font-mono text-slate-400">SORT ORDER</label>
-                <input type="number" name="sort_order"
-                       value="{{ old('sort_order', $project->sort_order ?? 0) }}"
-                       class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-                @error('sort_order') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
-            </div>
+            
 
             <div class="md:col-span-2 grid sm:grid-cols-2 gap-4">
                 <label class="flex items-center gap-2 text-xs font-mono text-slate-300">

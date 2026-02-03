@@ -28,7 +28,6 @@ class ProjectController extends Controller
             'subtitle'   => ['nullable', 'string', 'max:255'],
 
             'status'     => ['required', 'in:Live,Private,In Progress'],
-            'sort_order' => ['nullable', 'integer', 'min:0'],
 
             'overview'   => ['nullable', 'string'],
             'features'   => ['nullable', 'string'],
@@ -89,7 +88,6 @@ class ProjectController extends Controller
             'slug'        => $slug,
             'subtitle'    => $validated['subtitle'] ?? null,
             'status'      => $validated['status'],
-            'sort_order'  => $validated['sort_order'] ?? 0,
             'visibility'  => $visibility,
             'is_featured' => $isFeatured,
             'overview'    => $validated['overview'] ?? null,
@@ -114,7 +112,6 @@ class ProjectController extends Controller
             'title'      => ['required', 'string', 'max:255'],
             'subtitle'   => ['nullable', 'string', 'max:255'],
             'status'     => ['required', 'in:Live,Private,In Progress'],
-            'sort_order' => ['nullable', 'integer', 'min:0'],
 
             'overview'   => ['nullable', 'string'],
             'features'   => ['nullable', 'string'],
@@ -197,7 +194,6 @@ class ProjectController extends Controller
         $project->title      = $validated['title'];
         $project->subtitle   = $validated['subtitle'] ?? null;
         $project->status     = $validated['status'];
-        $project->sort_order = $validated['sort_order'] ?? 0;
         $project->overview   = $validated['overview'] ?? null;
         $project->features   = $features;
 
@@ -220,11 +216,9 @@ class ProjectController extends Controller
             'title'      => ['required', 'string', 'max:255'],
             'slug'       => ['nullable', 'string', 'max:255'],
             'subtitle'   => ['nullable', 'string', 'max:255'],
-            'image'      => ['nullable', 'string', 'max:255'], // filename only
-            'impact'     => ['nullable', 'string'],
+            'image'      => ['nullable', 'string', 'max:255'], 
             'overview'   => ['nullable', 'string'],
             'status'     => ['required', 'string', 'max:50'],
-            'sort_order' => ['nullable', 'integer'],
         ]);
     }
 

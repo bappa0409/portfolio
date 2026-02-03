@@ -27,7 +27,6 @@ return new class extends Migration
             $table->longText('overview')->nullable();
             $table->json('features')->nullable();
             
-            $table->integer('sort_order')->default(0);
             $table->boolean('is_featured')->default(false);
 
             $table->string('type', 20)->nullable();
@@ -35,7 +34,7 @@ return new class extends Migration
             $table->boolean('visibility')->default(true);
             $table->timestamps();
 
-             $table->index(['visibility', 'is_featured', 'sort_order']);
+             $table->index(['visibility', 'is_featured']);
         });
     }
 

@@ -532,7 +532,9 @@ button:focus {
 ::placeholder {
     color: rgba(148, 163, 184, 0.45); /* slate-400 but lighter */
 }
-
+input{
+  font-size: 13px !important;
+}
 .select-input {
   -webkit-appearance: none;
   -moz-appearance: none;

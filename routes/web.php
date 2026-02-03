@@ -1,12 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HomepageSettingsController;
 use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\ContactController;
-
 
 ##Frontend Routes
 Route::get('/', [WebsiteController::class, 'home'])->name('home');
@@ -21,7 +21,11 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    
+
+    Route::controller(HomepageSettingsController::class)->prefix('homepage')->name('homepage.')->group(function () {
+        Route::get('/settings', 'edit')->name('settings.edit');
+        Route::post('/settings', 'update')->name('settings.update');
+    });
     Route::controller(ProjectController::class)->prefix('project')->name('project.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create','create')->name('create');

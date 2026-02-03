@@ -10,17 +10,19 @@
         <div class="relative rounded-md p-7 glass cyber-glow scanline">
 
             <p class="text-emerald-200/90 text-sm tracking-widest cyber-text uppercase">
-                {{ $home->hero['kicker'] ?? '' }}
+                Custom Web Service Portal
             </p>
 
             <h1 class="mt-3 text-3xl md:text-5xl font-extrabold text-white leading-tight">
-                {{ $home->hero['headline'] ?? '' }}
+                Laravel Developer — Build Fast, Secure Web Apps
             </h1>
 
             <p class="mt-4 text-base text-white/70 max-w-3xl">
-                {{ $home->hero['description'] ?? '' }}
+                I build scalable Laravel web apps, APIs, admin panels, ERP solutions, news portals,
+                ecommerce platforms, business websites, and custom management systems.
+                I also work with WordPress customization and theme development.
             </p>
-{{-- 
+
             <div class="mt-6 flex flex-wrap gap-3">
                 <a href="{{ route('contact') }}"
                     class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/30 transition">
@@ -36,16 +38,8 @@
                     class="rounded-md border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition">
                     Get a Free Quote
                 </a>
-            </div> --}}
-
-            <div class="mt-6 flex flex-wrap gap-3">
-                @foreach (($home->hero['buttons'] ?? []) as $btn)
-                    <a href="{{ url($btn['url'] ?? '#') }}"
-                        class="rounded-md border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition capitalize">
-                        {{ $btn['text'] ?? '' }}
-                    </a>
-                @endforeach
             </div>
+
             <!-- ACTIVATE PORTAL -->
             <div class="mt-4 flex items-center gap-4">
                 <div class="portal-pulse">
@@ -56,16 +50,16 @@
                 </div>
 
                 <div>
-                    <p class="text-white font-semibold capitalize">{{ $home->hero['activate_title'] ?? '' }}</p>
-                    <p class="text-xs text-white/55 capitalize">{{ $home->hero['activate_subtitle'] ?? '' }}</p>
+                    <p class="text-white font-semibold">Activate Portal</p>
+                    <p class="text-xs text-white/55">Available for freelance • 24h response</p>
                 </div>
             </div>
 
             <div class="mt-6 flex flex-wrap gap-2 text-sm">
-                @foreach (($home->hero['tags'] ?? []) as $t)
-                    <span class="rounded-full border border-emerald-400/15 bg-emerald-400/5 px-3 py-1 text-emerald-100/90">
-                        {{ $t }}
-                    </span>
+                @foreach (['3+ Years', 'Laravel', 'CodeIgniter', 'PHP', 'MySQL', 'REST API', 'WordPress', 'SQA'] as $t)
+                <span class="rounded-full border border-emerald-400/15 bg-emerald-400/5 px-3 py-1 text-emerald-100/90">
+                    {{ $t }}
+                </span>
                 @endforeach
             </div>
         </div>
@@ -100,22 +94,28 @@
 
             <div class="mt-4 flex items-center justify-between">
                 <div>
-                    <p class="text-xs text-white/55">{{ $home->hero['status']['label'] ?? 'Status' }}</p>
-                    <p class="text-lg font-bold text-white">{{ $home->hero['status']['value'] ?? '' }}</p>
+                    <p class="text-xs text-white/55">Status</p>
+                    <p class="text-lg font-bold text-white">Freelance</p>
                 </div>
                 <span
                     class="text-xs rounded-full bg-emerald-400/15 border border-emerald-400/25 px-3 py-1 text-emerald-200">
-                    {{ $home->hero['status']['badge'] ?? '' }}
+                    Open
                 </span>
             </div>
 
             <div class="mt-4 grid grid-cols-3 gap-2 text-center">
-                 @foreach (($home->hero['mini_stats'] ?? []) as $s)
-                    <div class="rounded-md border border-white/10 bg-white/5 px-3 py-1">
-                        <p class="text-sm font-bold text-white">{{ $s['value'] ?? '' }}</p>
-                        <p class="text-[11px] text-white/55">{{ $s['label'] ?? '' }}</p>
-                    </div>
-                @endforeach
+                <div class="rounded-md border border-white/10 bg-white/5 px-3 py-1">
+                    <p class="text-sm font-bold text-white">20+</p>
+                    <p class="text-[11px] text-white/55">Projects</p>
+                </div>
+                <div class="rounded-md border border-white/10 bg-white/5 px-3 py-1">
+                    <p class="text-sm font-bold text-white">Fast</p>
+                    <p class="text-[11px] text-white/55">Delivery</p>
+                </div>
+                <div class="rounded-md border border-white/10 bg-white/5 px-3 py-1">
+                    <p class="text-sm font-bold text-white">Clean</p>
+                    <p class="text-[11px] text-white/55">Code</p>
+                </div>
             </div>
 
             <a href="{{ route('contact') }}"
@@ -131,8 +131,11 @@
 <!-- SERVICES -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->services_title ?? 'Services' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->services_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">Services</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+            I provide complete web development and quality assurance services,
+            focused on scalable architecture, clean code, and reliable delivery.
+        </p>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
@@ -148,19 +151,18 @@
 
 <!-- CTA -->
 <section class="mx-auto max-w-6xl px-4 py-10">
-    <div class="rounded-md glass cyber-glow p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div
+        class="rounded-md glass cyber-glow p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-            <h3 class="text-xl font-bold text-white">
-                {{ data_get($home->cta_top, 'title', '') }}
-            </h3>
+            <h3 class="text-xl font-bold text-white">Need a reliable developer for your project?</h3>
             <p class="text-white/70 mt-2">
-                {{ data_get($home->cta_top, 'subtitle', '') }}
+                Let’s discuss your requirements and build something great.
             </p>
         </div>
 
-        <a href="{{ url(data_get($home->cta_top, 'button_url', '/contact')) }}"
-           class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
-            {{ data_get($home->cta_top, 'button_text', "Let's Talk") }}
+        <a href="{{ route('contact') }}"
+            class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
+            Let’s Talk
         </a>
     </div>
 </section>
@@ -168,9 +170,9 @@
 <!-- FEATURED PROJECTS -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="flex items-end justify-between gap-4">
-        <h2 class="text-2xl font-bold text-white">{{ data_get($home->featured_projects, 'title', 'Featured Projects') }}</h2>
+        <h2 class="text-2xl font-bold text-white">Featured Projects</h2>
         <a href="{{ route('projects') }}" class="text-sm font-semibold text-emerald-200 hover:text-emerald-100">
-            {{ data_get($home->featured_projects, 'button_text', 'See all') }} →
+            See all →
         </a>
     </div>
 
@@ -217,8 +219,10 @@
 <!-- WHY CHOOSE ME -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white"> {{ $home->why_choose_title ?? 'Why Choose Me' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->why_choose_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">Why Choose Me</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+            I focus on clean code, security, performance, and clear communication.
+        </p>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
@@ -236,8 +240,10 @@
 <!-- PROCESS -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->process_title ?? 'How I Work' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->process_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">How I Work</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+            A smooth workflow to deliver quality products—on time.
+        </p>
     </div>
 
     <div class="grid md:grid-cols-5 gap-4">
@@ -257,8 +263,10 @@
 <!-- TECH STACK -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->tech_stack_title ?? 'Tech Stack' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->tech_stack_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">Tech Stack</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+            Tools and technologies I use to build scalable and maintainable applications.
+        </p>
     </div>
 
     <div class="grid md:grid-cols-5 gap-6">
@@ -267,9 +275,9 @@
             <h3 class="text-white font-semibold">Backend</h3>
             <div class="mt-4 flex flex-wrap gap-2 text-xs">
                 @foreach (['Laravel', 'PHP', 'CodeIgniter', 'MySQL', 'Redis', 'Queues', 'Sanctum'] as $t)
-                    <span class="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-white/85">
-                        {{ $t }}
-                    </span>
+                <span class="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-white/85">
+                    {{ $t }}
+                </span>
                 @endforeach
             </div>
         </div>
@@ -390,30 +398,28 @@
 
 <!-- CTA -->
 <section class="mx-auto max-w-6xl px-4 py-10">
-    <div class="rounded-md glass cyber-glow p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div
+        class="rounded-md glass cyber-glow p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
-            <h3 class="text-xl font-bold text-white">
-                {{ data_get($home->cta_bottom, 'title', '') }}
-            </h3>
+            <h3 class="text-xl font-bold text-white">Need a reliable developer for your project?</h3>
             <p class="text-white/70 mt-2">
-                {{ data_get($home->cta_bottom, 'subtitle', '') }}
+                Let’s discuss your requirements and build something great.
             </p>
         </div>
 
-        <a href="{{ url(data_get($home->cta_bottom, 'button_url', '/contact')) }}"
-           class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
-            {{ data_get($home->cta_bottom, 'button_text', "Let's Talk") }}
+        <a href="{{ route('contact') }}"
+            class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
+            Let’s Talk
         </a>
     </div>
 </section>
 
 
-
 <!-- TESTIMONIALS -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->testimonials_title ?? 'Testimonials' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->testimonials_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">Testimonials</h2>
+        <p class="mt-2 text-white/70 max-w-2xl">What clients say about working with me.</p>
     </div>
 
     @php
@@ -481,9 +487,9 @@
 <!-- FAQ -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->faq_title ?? 'FAQ' }}</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">FAQ</h2>
         <p class="mt-2 text-white/70 max-w-2xl">
-            {{ $home->faq_subtitle ?? 'Answers to common questions clients ask before starting.' }}
+            Answers to common questions clients ask before starting.
         </p>
     </div>
 

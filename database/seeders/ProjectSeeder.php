@@ -22,8 +22,6 @@ class ProjectSeeder extends Seeder
                 'visibility' => Project::VIS_INACTIVE,
                 'is_featured' => true,
                 'type' => 'professional',
-                'sort_order' => 1,
-                'impact' => 'Reduced manual inventory work by ~60% with automation and reports.',
                 'overview' => 'A full inventory system with suppliers, products, purchase/sales, stock alerts, and reporting.',
                 'features' => [
                     'Role-based access (Admin/Manager/Staff)',
@@ -44,8 +42,6 @@ class ProjectSeeder extends Seeder
                 'visibility' => Project::VIS_ACTIVE,
                 'type' => 'professional',
                 'is_featured' => true,
-                'sort_order' => 2, 
-                'impact' => 'Improved checkout conversion with streamlined UX and faster load time.',
                 'overview' => 'An ecommerce site with product catalog, cart, checkout, and admin order management.',
                 'features' => [
                     'Product catalog & search',
@@ -66,8 +62,6 @@ class ProjectSeeder extends Seeder
                 'visibility' => Project::VIS_ACTIVE,
                 'type' => 'professional',
                 'is_featured' => true,
-                'sort_order' => 3,
-                'impact' => 'Enabled mobile app integration with secure, documented endpoints.',
                 'overview' => 'A booking API with authentication, slots, bookings, cancellations, and admin endpoints.',
                 'features' => [
                     'Token auth (Sanctum)',
@@ -88,8 +82,6 @@ class ProjectSeeder extends Seeder
                 'visibility' => Project::VIS_ACTIVE,
                 'is_featured' => false,
                 'type' => 'professional',
-                'sort_order' => 4,
-                'impact' => 'Streamlined business operations with centralized modules and reporting.',
                 'overview' => 'An ERP solution built for managing core business operations with role-based access.',
                 'features' => [
                     'HR & employee management',
@@ -110,8 +102,6 @@ class ProjectSeeder extends Seeder
                 'visibility' => Project::VIS_ACTIVE,
                 'is_featured' => false,
                 'type' => 'professional',
-                'sort_order' => 5,
-                'impact' => 'Improved content publishing flow with role-based editors and optimized SEO structure.',
                 'overview' => 'A news portal CMS with admin panel, editor roles, and publishing workflow.',
                 'features' => [
                     'Category, tag, and post management',
@@ -132,8 +122,6 @@ class ProjectSeeder extends Seeder
                 'visibility' => Project::VIS_ACTIVE,
                 'is_featured' => false,
                 'type' => 'professional',
-                'sort_order' => 6,
-                'impact' => 'Delivered a fast, responsive business website with easy content management.',
                 'overview' => 'A business website built with WordPress theme customization and performance optimization.',
                 'features' => [
                     'Custom theme development',
