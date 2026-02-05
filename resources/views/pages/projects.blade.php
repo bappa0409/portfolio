@@ -9,11 +9,17 @@
             <!-- HEADER -->
             <div class="text-center">
                 <p class="text-emerald-200/80 font-mono text-sm tracking-widest">&gt; PROJECT_PROTOCOL</p>
+
                 <h1 class="mt-3 text-4xl md:text-5xl font-extrabold text-white cyber-text tracking-wider">
-                    PROJECT_NEXUS
+                    {{ data_get($meta, 'projects.title', 'PROJECT_NEXUS') }}
                 </h1>
+
                 <p class="mt-4 text-slate-300 max-w-2xl mx-auto text-sm">
-                    Personal + Professional + GitHub public repositories — clean builds, scalable systems, and UI experiments.
+                    {{ data_get(
+                        $meta,
+                        'projects.subtitle',
+                        'Personal + professional projects including client work, experiments, and open-source builds.'
+                    ) }}
                 </p>
             </div>
 

@@ -12,17 +12,6 @@ class WebsiteController extends Controller
 {
     public function home()
     {
-        // $projects = Project::get()->take(6);
-
-        // $services = [
-        //     ['Laravel Web Apps', 'Custom dashboards, RBAC, business modules.'],
-        //     ['REST API Development', 'Secure APIs for mobile apps & integrations.'],
-        //     ['Admin Panels', 'Filament/Nova CRUD, reports, exports.'],
-        //     ['Payment Integration', 'Stripe/PayPal/SSLCommerz, checkout flows.'],
-        //     ['Bug Fixing', 'Fix errors, refactor, upgrade Laravel versions.'],
-        //     ['Performance Optimization', 'Query tuning, caching, speed improvements.'],
-        // ];
-
         $home = HomePageSetting::firstOrFail();
         $limit = (int) data_get($home->featured_projects, 'limit', 6);
 
@@ -32,13 +21,14 @@ class WebsiteController extends Controller
             ->latest()
             ->take($limit)
             ->get();
-
-            // dd($home);
-        return view('pages.home', compact('home', 'projects'));
+        $meta = $home->sections_meta ?? [];
+        return view('pages.home', compact('home', 'projects', 'meta'));
     }
 
     public function projects(Request $request, GitHubService $github)
     {
+        $home = HomePageSetting::firstOrFail();
+        $meta = $home->sections_meta ?? [];
         $activeFilter = $request->get('filter', 'all');
 
         $filters = [
@@ -106,7 +96,7 @@ class WebsiteController extends Controller
             'showLocal',
             'showGithub',
             'showChallenges',
-            'githubUsername'
+            'githubUsername', 'meta'
         ));
     }
 

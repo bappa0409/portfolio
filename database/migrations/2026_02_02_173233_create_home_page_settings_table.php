@@ -16,12 +16,12 @@ return new class extends Migration
             $table->json('sections_meta')->nullable();
             $table->json('hero')->nullable();
             $table->json('services')->nullable();
-            $table->json('cta_top')->nullable();
+            $table->json('cta_1')->nullable();
+            $table->json('cta_2')->nullable();
             $table->json('why_choose_me')->nullable();
             $table->json('process')->nullable();
             $table->json('tech_stack')->nullable();
             $table->json('stats')->nullable();
-            $table->json('cta_bottom')->nullable();
             $table->json('testimonials')->nullable();
             $table->json('faq')->nullable();
             $table->json('featured_projects')->nullable();

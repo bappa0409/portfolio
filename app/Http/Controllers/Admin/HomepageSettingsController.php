@@ -9,228 +9,79 @@ use Illuminate\Support\Facades\Storage;
 
 class HomepageSettingsController extends Controller
 {
+   /* ============================================================
+     | HOMEPAGE SETTINGS CONTROLLER
+     | ------------------------------------------------------------
+     | Admin panel: Homepage section-wise content management.
+     | This controller is designed for AJAX (multipart/form-data)
+     | section-wise updates to avoid full page refresh.
+     | ------------------------------------------------------------
+     | Sections:
+     | - Section Meta
+     | - Hero (with profile image upload)
+     | - Services
+     | - Featured Projects
+     | - CTA 1 / CTA 2
+     | - Why Choose
+     | - Process
+     | - Tech Stack
+     | - Stats
+     | - Testimonials
+     | - FAQ
+     * ============================================================ */
+
+    /* ------------------------------------------------------------
+     | EDIT PAGE
+     | ------------------------------------------------------------
+     | Renders the settings editor page.
+     | Ensures a single row exists in DB (firstOrCreate).
+     * ------------------------------------------------------------ */
     public function edit()
     {
-        $settings = HomePageSetting::firstOrFail();
+        $settings = HomepageSetting::firstOrCreate([]);
         return view('backend.pages.home_page_settings.edit', compact('settings'));
     }
 
-    // public function update(Request $request)
-    // {
-    //     $settings = HomePageSetting::current();
 
-    //     $request->validate([
-    //         // SECTION META
-    //         'sections_meta' => ['nullable','array'],
-
-    //         'sections_meta.services.title' => ['nullable','string','max:255'],
-    //         'sections_meta.services.subtitle' => ['nullable','string','max:255'],
-
-    //         'sections_meta.why_choose.title' => ['nullable','string','max:255'],
-    //         'sections_meta.why_choose.subtitle' => ['nullable','string','max:255'],
-
-    //         'sections_meta.process.title' => ['nullable','string','max:255'],
-    //         'sections_meta.process.subtitle' => ['nullable','string','max:255'],
-
-    //         'sections_meta.tech_stack.title' => ['nullable','string','max:255'],
-    //         'sections_meta.tech_stack.subtitle' => ['nullable','string','max:255'],
-
-    //         'sections_meta.testimonials.title' => ['nullable','string','max:255'],
-    //         'sections_meta.testimonials.subtitle' => ['nullable','string','max:255'],
-
-    //         'sections_meta.faq.title' => ['nullable','string','max:255'],
-    //         'sections_meta.faq.subtitle' => ['nullable','string','max:255'],
-
-    //         'sections_meta.featured_projects.title' => ['nullable','string','max:255'],
-    //         'sections_meta.featured_projects.button_text' => ['nullable','string','max:50'],
-
-    //         // HERO
-    //         'hero.kicker' => ['nullable','string','max:255'],
-    //         'hero.headline' => ['nullable','string','max:255'],
-    //         'hero.description' => ['nullable','string'],
-    //         'hero.activate_title' => ['nullable','string','max:255'],
-    //         'hero.activate_subtitle' => ['nullable','string','max:255'],
-
-    //         'hero.status.label' => ['nullable','string','max:50'],
-    //         'hero.status.value' => ['nullable','string','max:50'],
-    //         'hero.status.badge' => ['nullable','string','max:50'],
-
-    //         'hero.tags' => ['nullable','array'],
-    //         'hero.tags.*' => ['nullable','string','max:50'],
-
-    //         'hero.buttons' => ['nullable','array'],
-    //         'hero.buttons.*.text' => ['nullable','string','max:50'],
-    //         'hero.buttons.*.url' => ['nullable','string','max:255'],
-
-    //         'hero.mini_stats' => ['nullable','array'],
-    //         'hero.mini_stats.*.value' => ['nullable','string','max:20'],
-    //         'hero.mini_stats.*.label' => ['nullable','string','max:50'],
-
-    //         'hero_profile_image' => ['nullable','image','max:2048'],
-
-    //         // SERVICES
-    //         'services' => ['nullable','array'],
-    //         'services.*.icon' => ['nullable','string','max:10'],
-    //         'services.*.title' => ['nullable','string','max:255'],
-    //         'services.*.desc' => ['nullable','string'],
-
-    //         // CTA TOP
-    //         'cta_top.title' => ['nullable','string','max:255'],
-    //         'cta_top.subtitle' => ['nullable','string'],
-    //         'cta_top.button_text' => ['nullable','string','max:50'],
-    //         'cta_top.button_url' => ['nullable','string','max:255'],
-
-    //         // WHY
-    //         'why_choose_me' => ['nullable','array'],
-    //         'why_choose_me.*.icon' => ['nullable','string','max:10'],
-    //         'why_choose_me.*.title' => ['nullable','string','max:255'],
-    //         'why_choose_me.*.desc' => ['nullable','string'],
-
-    //         // PROCESS
-    //         'process' => ['nullable','array'],
-    //         'process.*.step' => ['nullable','string','max:10'],
-    //         'process.*.title' => ['nullable','string','max:255'],
-    //         'process.*.desc' => ['nullable','string'],
-
-    //         // TECH STACK (ARRAY INPUTS from admin page)
-    //         'tech_stack' => ['nullable','array'],
-
-    //         'tech_stack.backend' => ['nullable','array'],
-    //         'tech_stack.backend.*' => ['nullable','string','max:80'],
-
-    //         'tech_stack.frontend' => ['nullable','array'],
-    //         'tech_stack.frontend.*' => ['nullable','string','max:80'],
-
-    //         'tech_stack.wordpress' => ['nullable','array'],
-    //         'tech_stack.wordpress.*' => ['nullable','string','max:80'],
-
-    //         'tech_stack.tools' => ['nullable','array'],
-    //         'tech_stack.tools.*' => ['nullable','string','max:80'],
-
-    //         'tech_stack.sqa' => ['nullable','array'],
-    //         'tech_stack.sqa.*' => ['nullable','string','max:80'],
-
-    //         // STATS
-    //         'stats' => ['nullable','array'],
-    //         'stats.*.value' => ['nullable','numeric','min:0'],
-    //         'stats.*.suffix' => ['nullable','string','max:5'],
-    //         'stats.*.label' => ['nullable','string','max:255'],
-
-    //         // TESTIMONIALS
-    //         'testimonials' => ['nullable','array'],
-    //         'testimonials.*.text' => ['nullable','string'],
-    //         'testimonials.*.name' => ['nullable','string','max:80'],
-    //         'testimonials.*.role' => ['nullable','string','max:80'],
-
-    //         // FAQ
-    //         'faq' => ['nullable','array'],
-    //         'faq.*.q' => ['nullable','string','max:255'],
-    //         'faq.*.a' => ['nullable','string'],
-
-    //         // CTA BOTTOM
-    //         'cta_bottom.title' => ['nullable','string','max:255'],
-    //         'cta_bottom.subtitle' => ['nullable','string'],
-    //         'cta_bottom.button_text' => ['nullable','string','max:50'],
-    //         'cta_bottom.button_url' => ['nullable','string','max:255'],
-
-    //         // FEATURED PROJECTS CONFIG
-    //         'featured_projects.title' => ['nullable','string','max:255'],
-    //         'featured_projects.button_text' => ['nullable','string','max:50'],
-    //         'featured_projects.limit' => ['nullable','integer','min:1','max:24'],
-    //     ]);
-
-    //     // HERO
-    //     $hero = $request->input('hero', $settings->hero ?? []);
-
-    //     // Clean empty hero tags/buttons/ministats (optional but good)
-    //     $hero['tags'] = array_values(array_filter($hero['tags'] ?? [], fn($v) => is_string($v) && trim($v) !== ''));
-    //     $hero['buttons'] = array_values(array_filter($hero['buttons'] ?? [], function($b){
-    //         $text = trim((string)($b['text'] ?? ''));
-    //         $url  = trim((string)($b['url'] ?? ''));
-    //         return $text !== '' || $url !== '';
-    //     }));
-    //     $hero['mini_stats'] = array_values(array_filter($hero['mini_stats'] ?? [], function($m){
-    //         $v = trim((string)($m['value'] ?? ''));
-    //         $l = trim((string)($m['label'] ?? ''));
-    //         return $v !== '' || $l !== '';
-    //     }));
-
-    //     if ($request->hasFile('hero_profile_image')) {
-    //         $path = $request->file('hero_profile_image')->store('homepage', 'public');
-
-    //         $old = data_get($hero, 'profile_image');
-    //         if ($old && Storage::disk('public')->exists($old)) {
-    //             Storage::disk('public')->delete($old);
-    //         }
-
-    //         $hero['profile_image'] = $path;
-    //     }
-
-    //     // TECH STACK (array input)
-    //     $ts = $request->input('tech_stack', []);
-    //     $cleanList = fn($arr) => array_values(array_filter((array)$arr, fn($v) => is_string($v) && trim($v) !== ''));
-
-    //     $techStack = [
-    //         'backend'   => $cleanList($ts['backend'] ?? []),
-    //         'frontend'  => $cleanList($ts['frontend'] ?? []),
-    //         'wordpress' => $cleanList($ts['wordpress'] ?? []),
-    //         'tools'     => $cleanList($ts['tools'] ?? []),
-    //         'sqa'       => $cleanList($ts['sqa'] ?? []),
-    //     ];
-
-    //     // SECTIONS META (new)
-    //     $sectionsMeta = $request->input('sections_meta', $settings->sections_meta ?? []);
-
-    //     // SAVE fixed sections
-    //     $settings->sections_meta     = $sectionsMeta; // NEW
-    //     $settings->hero              = $hero;
-    //     $settings->services          = $request->input('services', []);
-    //     $settings->cta_top           = $request->input('cta_top', []);
-    //     $settings->featured_projects = $request->input('featured_projects', []);
-    //     $settings->why_choose_me     = $request->input('why_choose_me', []);
-    //     $settings->process           = $request->input('process', []);
-    //     $settings->tech_stack        = $techStack;
-    //     $settings->stats             = $request->input('stats', []);
-    //     $settings->cta_bottom        = $request->input('cta_bottom', []);
-    //     $settings->testimonials      = $request->input('testimonials', []);
-    //     $settings->faq               = $request->input('faq', []);
-
-    //     $settings->save();
-
-    //     return back()->with('success', 'HOMEPAGE_SETTINGS_UPDATED');
-    // }
-
+    /* ============================================================
+     | SECTION META
+     | ------------------------------------------------------------
+     | Controls headings/subheadings for fixed sections
+     * ============================================================ */
     public function updateSectionMeta(Request $request)
     {
         $validated = $request->validate([
-            'sections_meta' => ['nullable','array'],
+            'sections_meta' => ['nullable', 'array'],
 
-            'sections_meta.services.title' => ['nullable','string','max:120'],
-            'sections_meta.services.subtitle' => ['nullable','string','max:255'],
+            'sections_meta.services.title' => ['nullable', 'string', 'max:120'],
+            'sections_meta.services.subtitle' => ['nullable', 'string', 'max:255'],
 
-            'sections_meta.why_choose.title' => ['nullable','string','max:120'],
-            'sections_meta.why_choose.subtitle' => ['nullable','string','max:255'],
+            'sections_meta.why_choose.title' => ['nullable', 'string', 'max:120'],
+            'sections_meta.why_choose.subtitle' => ['nullable', 'string', 'max:255'],
 
-            'sections_meta.process.title' => ['nullable','string','max:120'],
-            'sections_meta.process.subtitle' => ['nullable','string','max:255'],
+            'sections_meta.process.title' => ['nullable', 'string', 'max:120'],
+            'sections_meta.process.subtitle' => ['nullable', 'string', 'max:255'],
 
-            'sections_meta.tech_stack.title' => ['nullable','string','max:120'],
-            'sections_meta.tech_stack.subtitle' => ['nullable','string','max:255'],
+            'sections_meta.tech_stack.title' => ['nullable', 'string', 'max:120'],
+            'sections_meta.tech_stack.subtitle' => ['nullable', 'string', 'max:255'],
 
-            'sections_meta.testimonials.title' => ['nullable','string','max:120'],
-            'sections_meta.testimonials.subtitle' => ['nullable','string','max:255'],
+            'sections_meta.testimonials.title' => ['nullable', 'string', 'max:120'],
+            'sections_meta.testimonials.subtitle' => ['nullable', 'string', 'max:255'],
 
-            'sections_meta.faq.title' => ['nullable','string','max:120'],
-            'sections_meta.faq.subtitle' => ['nullable','string','max:255'],
+            'sections_meta.faq.title' => ['nullable', 'string', 'max:120'],
+            'sections_meta.faq.subtitle' => ['nullable', 'string', 'max:255'],
 
-            'sections_meta.featured_projects.title' => ['nullable','string','max:120'],
-            'sections_meta.featured_projects.button_text' => ['nullable','string','max:80'],
+            // NOTE: If you want meta title/subtitle for featured projects:
+            'sections_meta.featured_projects.title' => ['nullable', 'string', 'max:120'],
+            'sections_meta.featured_projects.button_text' => ['nullable', 'string', 'max:80'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
 
         $existing = (array) ($settings->sections_meta ?? []);
-        $merged = array_replace_recursive($existing, $validated['sections_meta'] ?? []);
+        $incoming = (array) ($validated['sections_meta'] ?? []);
+
+        $merged = array_replace_recursive($existing, $incoming);
 
         $settings->update(['sections_meta' => $merged]);
 
@@ -241,57 +92,86 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
+    /* ============================================================
+     | HERO
+     | ------------------------------------------------------------
+     | Updates hero content + uploads profile image.
+     | Important:
+     | - Accepts multipart/form-data
+     | - Buttons: only text (no url). Keeps existing order/length.
+     * ============================================================ */
     public function updateHero(Request $request)
     {
         $validated = $request->validate([
-            'hero.kicker' => ['nullable','string','max:255'],
-            'hero.headline' => ['nullable','string','max:255'],
-            'hero.description' => ['nullable','string','max:2000'],
+            'hero.kicker' => ['nullable', 'string', 'max:255'],
+            'hero.headline' => ['nullable', 'string', 'max:255'],
+            'hero.description' => ['nullable', 'string', 'max:2000'],
 
-            'hero.activate_title' => ['nullable','string','max:255'],
-            'hero.activate_subtitle' => ['nullable','string','max:255'],
+            'hero.activate_title' => ['nullable', 'string', 'max:255'],
+            'hero.activate_subtitle' => ['nullable', 'string', 'max:255'],
 
-            'hero.status.label' => ['nullable','string','max:100'],
-            'hero.status.value' => ['nullable','string','max:100'],
-            'hero.status.badge' => ['nullable','string','max:50'],
+            'hero.status.label' => ['nullable', 'string', 'max:100'],
+            'hero.status.value' => ['nullable', 'string', 'max:100'],
+            'hero.status.badge' => ['nullable', 'string', 'max:50'],
 
-            // buttons: ONLY TEXT (no url)
-            'hero.buttons' => ['nullable','array','max:10'],
-            'hero.buttons.0.text' => ['required','string','max:50'],
-            'hero.buttons.*.text' => ['nullable','string','max:50'],
+            // Buttons (TEXT only)
+            'hero.buttons' => ['nullable', 'array', 'max:10'],
+            'hero.buttons.0.text' => ['required', 'string', 'max:50'], // first button required
+            'hero.buttons.*.text' => ['nullable', 'string', 'max:50'],
 
-            'hero.tags' => ['nullable','array','max:20'],
-            'hero.tags.*' => ['nullable','string','max:30'],
+            // Tags
+            'hero.tags' => ['nullable', 'array', 'max:20'],
+            'hero.tags.*' => ['nullable', 'string', 'max:30'],
 
-            'hero.mini_stats' => ['nullable','array','max:10'],
-            'hero.mini_stats.*.value' => ['nullable','string','max:30'],
-            'hero.mini_stats.*.label' => ['nullable','string','max:50'],
+            // Mini stats
+            'hero.mini_stats' => ['nullable', 'array', 'max:10'],
+            'hero.mini_stats.*.value' => ['nullable', 'string', 'max:30'],
+            'hero.mini_stats.*.label' => ['nullable', 'string', 'max:50'],
 
-            'hero_profile_image' => ['nullable','image','max:4096'],
+            // Image
+            'hero_profile_image' => ['nullable', 'image', 'max:4096'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
 
         $heroExisting = (array) ($settings->hero ?? []);
-        $heroNew = array_replace_recursive($heroExisting, $validated['hero'] ?? []);
+        $heroIncoming = (array) ($validated['hero'] ?? []);
 
-        // ✅ fixed buttons: keep existing length/order, update only text
+        // Merge base fields
+        $heroNew = array_replace_recursive($heroExisting, $heroIncoming);
+
+        /* ------------------------------------------------------------
+         | Buttons Handling (Fixed Order / Fixed Count)
+         | ------------------------------------------------------------
+         | Keeps existing buttons length/order.
+         | Updates only text from incoming.
+         * ------------------------------------------------------------ */
         $existingButtons = (array) data_get($heroExisting, 'buttons', []);
         $incomingButtons = (array) data_get($validated, 'hero.buttons', []);
 
-        $finalButtons = [];
-        foreach ($existingButtons as $i => $btn) {
-            $finalButtons[] = [
-                'text' => trim((string) data_get($incomingButtons, "{$i}.text", data_get($btn, 'text', ''))),
-            ];
+        if (!empty($existingButtons)) {
+            $finalButtons = [];
+            foreach ($existingButtons as $i => $btn) {
+                $finalButtons[] = [
+                    'text' => trim((string) data_get($incomingButtons, "{$i}.text", data_get($btn, 'text', ''))),
+                ];
+            }
+            $heroNew['buttons'] = $finalButtons;
+        } else {
+            // If no existing buttons, just save incoming buttons (normalized)
+            $heroNew['buttons'] = array_values(array_map(function ($b) {
+                return ['text' => trim((string) ($b['text'] ?? ''))];
+            }, $incomingButtons));
         }
-        $heroNew['buttons'] = $finalButtons;
 
-        // ✅ Image upload
+        /* ------------------------------------------------------------
+         | Profile Image Upload
+         | ------------------------------------------------------------ */
         if ($request->hasFile('hero_profile_image')) {
             if (!empty($heroExisting['profile_image'])) {
                 Storage::disk('public')->delete($heroExisting['profile_image']);
             }
+
             $path = $request->file('hero_profile_image')->store('homepage', 'public');
             $heroNew['profile_image'] = $path;
         }
@@ -305,13 +185,16 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
+    /* ============================================================
+     | SERVICES
+     * ============================================================ */
     public function updateServices(Request $request)
     {
         $validated = $request->validate([
-            'services' => ['nullable','array','max:30'],
-            'services.*.icon' => ['nullable','string','max:10'],
-            'services.*.title' => ['required','string','max:100'],
-            'services.*.desc' => ['nullable','string','max:500'],
+            'services' => ['nullable', 'array', 'max:30'],
+            'services.*.icon' => ['nullable', 'string', 'max:10'],
+            'services.*.title' => ['required', 'string', 'max:100'],
+            'services.*.desc' => ['nullable', 'string', 'max:500'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
@@ -324,18 +207,23 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
+    /* ============================================================
+     | FEATURED PROJECTS
+     * ============================================================ */
     public function updateFeaturedProjects(Request $request)
     {
         $validated = $request->validate([
-            'featured_projects.title' => ['nullable','string','max:120'],
-            'featured_projects.limit' => ['nullable','integer','min:1','max:24'],
-            'featured_projects.button_text' => ['nullable','string','max:80'],
+            'featured_projects.title' => ['nullable', 'string', 'max:120'],
+            'featured_projects.limit' => ['nullable', 'integer', 'min:1', 'max:24'],
+            'featured_projects.button_text' => ['nullable', 'string', 'max:80'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
 
         $existing = (array) ($settings->featured_projects ?? []);
-        $merged = array_replace_recursive($existing, $validated['featured_projects'] ?? []);
+        $incoming = (array) ($validated['featured_projects'] ?? []);
+
+        $merged = array_replace_recursive($existing, $incoming);
 
         $settings->update(['featured_projects' => $merged]);
 
@@ -346,36 +234,43 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
-    public function updateCtaTop(Request $request)
+    /* ============================================================
+     | CTA 1 (TOP)
+     * ============================================================ */
+    public function updateCta1(Request $request)
     {
         $validated = $request->validate([
-            'cta_top.title' => ['nullable','string','max:160'],
-            'cta_top.subtitle' => ['nullable','string','max:500'],
-            'cta_top.button_text' => ['nullable','string','max:80'],
-            'cta_top.button_url' => ['nullable','string','max:255'],
+            'cta_1.title' => ['nullable', 'string', 'max:160'],
+            'cta_1.subtitle' => ['nullable', 'string', 'max:500'],
+            'cta_1.button_text' => ['nullable', 'string', 'max:80'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
 
-        $existing = (array) ($settings->cta_top ?? []);
-        $merged = array_replace_recursive($existing, $validated['cta_top'] ?? []);
+        $existing = (array) ($settings->cta_1 ?? []);
+        $incoming = (array) ($validated['cta_1'] ?? []);
 
-        $settings->update(['cta_top' => $merged]);
+        $merged = array_replace_recursive($existing, $incoming);
+
+        $settings->update(['cta_1' => $merged]);
 
         return response()->json([
             'ok' => true,
-            'message' => 'CTA Top updated successfully.',
-            'cta_top' => $merged,
+            'message' => 'CTA 1 updated successfully.',
+            'cta_1' => $merged,
         ]);
     }
 
+    /* ============================================================
+     | WHY CHOOSE
+     * ============================================================ */
     public function updateWhyChoose(Request $request)
     {
         $validated = $request->validate([
-            'why_choose_me' => ['nullable','array','max:30'],
-            'why_choose_me.*.icon' => ['nullable','string','max:10'],
-            'why_choose_me.*.title' => ['required','string','max:120'],
-            'why_choose_me.*.desc' => ['nullable','string','max:600'],
+            'why_choose_me' => ['nullable', 'array', 'max:30'],
+            'why_choose_me.*.icon' => ['nullable', 'string', 'max:10'],
+            'why_choose_me.*.title' => ['required', 'string', 'max:120'],
+            'why_choose_me.*.desc' => ['nullable', 'string', 'max:600'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
@@ -388,13 +283,16 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
+    /* ============================================================
+     | PROCESS
+     * ============================================================ */
     public function updateProcess(Request $request)
     {
         $validated = $request->validate([
-            'process' => ['nullable','array','max:30'],
-            'process.*.step' => ['required','string','max:10'], // আপনি numeric চাইলে integer দিয়ে দিতে পারেন
-            'process.*.title' => ['required','string','max:120'],
-            'process.*.desc' => ['nullable','string','max:600'],
+            'process' => ['nullable', 'array', 'max:30'],
+            'process.*.step' => ['required', 'string', 'max:10'], // numeric only চাইলে integer rule দিতে পারো
+            'process.*.title' => ['required', 'string', 'max:120'],
+            'process.*.desc' => ['nullable', 'string', 'max:600'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
@@ -407,36 +305,45 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
+    /* ============================================================
+     | TECH STACK
+     | ------------------------------------------------------------
+     | Saves tags by category. Cleans empty values.
+     * ============================================================ */
     public function updateTechStack(Request $request)
     {
         $validated = $request->validate([
-            'tech_stack' => ['nullable','array'],
+            'tech_stack' => ['nullable', 'array'],
 
-            'tech_stack.backend' => ['nullable','array','max:50'],
-            'tech_stack.backend.*' => ['nullable','string','max:50'],
+            'tech_stack.backend' => ['nullable', 'array', 'max:50'],
+            'tech_stack.backend.*' => ['nullable', 'string', 'max:50'],
 
-            'tech_stack.frontend' => ['nullable','array','max:50'],
-            'tech_stack.frontend.*' => ['nullable','string','max:50'],
+            'tech_stack.frontend' => ['nullable', 'array', 'max:50'],
+            'tech_stack.frontend.*' => ['nullable', 'string', 'max:50'],
 
-            'tech_stack.wordpress' => ['nullable','array','max:50'],
-            'tech_stack.wordpress.*' => ['nullable','string','max:50'],
+            'tech_stack.wordpress' => ['nullable', 'array', 'max:50'],
+            'tech_stack.wordpress.*' => ['nullable', 'string', 'max:50'],
 
-            'tech_stack.tools' => ['nullable','array','max:50'],
-            'tech_stack.tools.*' => ['nullable','string','max:50'],
+            'tech_stack.tools' => ['nullable', 'array', 'max:50'],
+            'tech_stack.tools.*' => ['nullable', 'string', 'max:50'],
 
-            'tech_stack.sqa' => ['nullable','array','max:50'],
-            'tech_stack.sqa.*' => ['nullable','string','max:50'],
+            'tech_stack.sqa' => ['nullable', 'array', 'max:50'],
+            'tech_stack.sqa.*' => ['nullable', 'string', 'max:50'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
 
         $existing = (array) ($settings->tech_stack ?? []);
-        $merged = array_replace_recursive($existing, $validated['tech_stack'] ?? []);
+        $incoming = (array) ($validated['tech_stack'] ?? []);
 
-        // clean empty values (optional but recommended)
-        foreach (['backend','frontend','wordpress','tools','sqa'] as $k) {
+        $merged = array_replace_recursive($existing, $incoming);
+
+        // Clean empty values + reindex arrays
+        foreach (['backend', 'frontend', 'wordpress', 'tools', 'sqa'] as $k) {
             if (isset($merged[$k]) && is_array($merged[$k])) {
-                $merged[$k] = array_values(array_filter($merged[$k], fn($v) => is_string($v) && trim($v) !== ''));
+                $merged[$k] = array_values(array_filter($merged[$k], function ($v) {
+                    return is_string($v) && trim($v) !== '';
+                }));
             }
         }
 
@@ -449,13 +356,16 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
+    /* ============================================================
+     | STATS
+     * ============================================================ */
     public function updateStats(Request $request)
     {
         $validated = $request->validate([
-            'stats' => ['nullable','array','max:20'],
-            'stats.*.value' => ['required','numeric','min:0'],
-            'stats.*.suffix' => ['nullable','string','max:10'],
-            'stats.*.label' => ['required','string','max:120'],
+            'stats' => ['nullable', 'array', 'max:20'],
+            'stats.*.value' => ['required', 'numeric', 'min:0'],
+            'stats.*.suffix' => ['nullable', 'string', 'max:10'],
+            'stats.*.label' => ['required', 'string', 'max:120'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
@@ -468,36 +378,44 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
-    public function updateCtaBottom(Request $request)
+    /* ============================================================
+     | CTA 2 (BOTTOM)
+     * ============================================================ */
+    public function updateCta2(Request $request)
     {
         $validated = $request->validate([
-            'cta_bottom.title' => ['nullable','string','max:160'],
-            'cta_bottom.subtitle' => ['nullable','string','max:500'],
-            'cta_bottom.button_text' => ['nullable','string','max:80'],
-            'cta_bottom.button_url' => ['nullable','string','max:255'],
+            'cta_2.title' => ['nullable', 'string', 'max:160'],
+            'cta_2.subtitle' => ['nullable', 'string', 'max:500'],
+            'cta_2.button_text_1' => ['nullable', 'string', 'max:80'],
+            'cta_2.button_text_2' => ['nullable', 'string', 'max:80'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
 
-        $existing = (array) ($settings->cta_bottom ?? []);
-        $merged = array_replace_recursive($existing, $validated['cta_bottom'] ?? []);
+        $existing = (array) ($settings->cta_2 ?? []);
+        $incoming = (array) ($validated['cta_2'] ?? []);
 
-        $settings->update(['cta_bottom' => $merged]);
+        $merged = array_replace_recursive($existing, $incoming);
+
+        $settings->update(['cta_2' => $merged]);
 
         return response()->json([
             'ok' => true,
-            'message' => 'CTA Bottom updated successfully.',
-            'cta_bottom' => $merged,
+            'message' => 'CTA 2 Bottom updated successfully.',
+            'cta_2' => $merged,
         ]);
     }
 
+    /* ============================================================
+     | TESTIMONIALS
+     * ============================================================ */
     public function updateTestimonials(Request $request)
     {
         $validated = $request->validate([
-            'testimonials' => ['nullable','array','max:30'],
-            'testimonials.*.text' => ['required','string','max:1200'],
-            'testimonials.*.name' => ['required','string','max:120'],
-            'testimonials.*.role' => ['nullable','string','max:120'],
+            'testimonials' => ['nullable', 'array', 'max:30'],
+            'testimonials.*.text' => ['required', 'string', 'max:1200'],
+            'testimonials.*.name' => ['required', 'string', 'max:120'],
+            'testimonials.*.role' => ['nullable', 'string', 'max:120'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);
@@ -510,12 +428,15 @@ class HomepageSettingsController extends Controller
         ]);
     }
 
+    /* ============================================================
+     | FAQ
+     * ============================================================ */
     public function updateFaq(Request $request)
     {
         $validated = $request->validate([
-            'faq' => ['nullable','array','max:50'],
-            'faq.*.q' => ['required','string','max:180'],
-            'faq.*.a' => ['required','string','max:1200'],
+            'faq' => ['nullable', 'array', 'max:50'],
+            'faq.*.q' => ['required', 'string', 'max:180'],
+            'faq.*.a' => ['required', 'string', 'max:1200'],
         ]);
 
         $settings = HomepageSetting::firstOrCreate([]);

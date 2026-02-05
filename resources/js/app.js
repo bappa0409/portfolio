@@ -1,5 +1,12 @@
 // app.js
 import './bootstrap';
+import Alpine from 'alpinejs'
+
+window.Alpine = Alpine
+
+import '@tailwindplus/elements'
+import Toastify from 'toastify-js'
+import 'toastify-js/src/toastify.css'
 
 window.sidebarCollapse = function ({ defaultOpen = false } = {}) {
   return {
@@ -16,8 +23,38 @@ window.sidebarDropdownMenu = function () {
   };
 };
 
+// ---- Toastify helper
+window.Toastify = Toastify 
+window.toast = (type, message) => {
+  const isSuccess = type === 'success'
 
-// ✅ Reusable Tag Input (Alpine)
+  Toastify({
+    text: `
+      <div style="display:flex;align-items:baseline;gap:6px;">
+        <span style="font-size:15px;">
+          ${isSuccess ? '✔️' : '⚠️'}
+        </span>
+        <span>${message}</span>
+      </div>
+    `,
+    duration: 5000,
+    gravity: "bottom",
+    position: "right",
+    close: false,
+    stopOnFocus: true,
+    escapeMarkup: false,
+    style: {
+      background: isSuccess ? '#16a34a' : '#dc2626',
+      color: '#ffffff',
+      borderRadius: '0.375rem',
+      fontSize: '14px',
+    },
+  }).showToast()
+}
+
+// ==================================================
+// ✅ GLOBAL REUSABLE TAG INPUT (Alpine)
+// ==================================================
 window.tagInput = function ({
   initial = [],
   namePrefix = 'tags',
@@ -27,13 +64,14 @@ window.tagInput = function ({
   unique = true,
 } = {}) {
   return {
-    tags: Array.isArray(initial) ? [...initial].filter(Boolean) : [],
+    // --- STATE ---
+    tags: Array.isArray(initial) ? [...initial].filter(v => v !== null && v !== undefined && v !== '') : [],
     q: '',
     namePrefix,
     placeholder,
-
     error: '',
 
+    // --- HELPERS ---
     normalize(v) {
       let s = String(v ?? '');
       if (trim) s = s.trim();
@@ -41,17 +79,18 @@ window.tagInput = function ({
       return s;
     },
 
+    // --- ACTIONS ---
     add() {
       const t = this.normalize(this.q);
 
-      // empty input
+      // empty
       if (!t) {
         this.q = '';
         this.error = '';
         return;
       }
 
-      // unique check
+      // unique
       if (unique && this.tags.includes(t)) {
         this.error = 'This tag already exists.';
         this.q = '';
@@ -66,6 +105,7 @@ window.tagInput = function ({
     },
 
     remove(i) {
+      if (i < 0 || i >= this.tags.length) return;
       this.tags.splice(i, 1);
       this.error = '';
       this.$nextTick(() => this.$refs?.input?.focus());
@@ -73,6 +113,8 @@ window.tagInput = function ({
   };
 };
 
+
+Alpine.start()
 
 /* ===============================
    SIMPLE SELECT2-LIKE (VANILLA) - FINAL FIX

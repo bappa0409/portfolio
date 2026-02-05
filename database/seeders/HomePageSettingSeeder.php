@@ -21,6 +21,15 @@ class HomePageSettingSeeder extends Seeder
                         'title' => 'Why Choose Me',
                         'subtitle' => 'I focus on clean code, security, performance, and clear communication.',
                     ],
+                    'projects' => [
+                        'title' => 'Projects',
+                        'subtitle' => 'Personal + professional projects including client work, experiments, and open-source builds.',
+                    ],
+                    'featured_projects' => [
+                        'title' => 'Featured Projects',
+                        'subtitle' => 'A selection of recent work showcasing quality, performance, and clean architecture.',
+                        'button_text' => 'See all →',
+                    ],
                     'process' => [
                         'title' => 'How I Work',
                         'subtitle' => 'A smooth workflow to deliver quality products—on time.',
@@ -37,10 +46,7 @@ class HomePageSettingSeeder extends Seeder
                         'title' => 'FAQ',
                         'subtitle' => 'Answers to common questions clients ask before starting.',
                     ],
-                    'featured_projects' => [
-                        'title' => 'Featured Projects',
-                        'button_text' => 'See all →',
-                    ],
+                  
                 ],
 
                 // HERO
@@ -105,12 +111,11 @@ class HomePageSettingSeeder extends Seeder
                     ],
                 ],
 
-                // CTA TOP
-                'cta_top' => [
+                // CTA 1
+                'cta_1' => [
                     'title' => 'Need a reliable developer for your project?',
                     'subtitle' => 'Let’s discuss your requirements and build something great.',
                     'button_text' => 'Let’s Talk',
-                    'button_url' => '/contact',
                 ],
 
                 // WHY CHOOSE ME (cards)
@@ -158,12 +163,12 @@ class HomePageSettingSeeder extends Seeder
                     ['value' => 100,'suffix' => '%', 'label' => 'Quality Focus'],
                 ],
 
-                // CTA BOTTOM
-                'cta_bottom' => [
+                // CTA 2
+                'cta_2' => [
                     'title' => 'Need a reliable developer for your project?',
                     'subtitle' => 'Let’s discuss your requirements and build something great.',
-                    'button_text' => 'Let’s Talk',
-                    'button_url' => '/contact',
+                    'button_text_1' => 'Let’s Talk',
+                    'button_text_2' => 'View Projects',
                 ],
 
                 // TESTIMONIALS
@@ -184,10 +189,9 @@ class HomePageSettingSeeder extends Seeder
                     ['q' => 'Do you ensure security?', 'a' => 'Yes. Validation, authorization, rate limiting, and security best practices are applied.'],
                 ],
 
-                // FEATURED PROJECTS SETTINGS (limit used in controller)
+                // FEATURED PROJECTS SETTINGS
                 'featured_projects' => [
-                    'title' => 'Featured Projects',
-                    'button_text' => 'See all →',
+                    'button_text' => 'See all',
                     'limit' => 6,
                 ],
             ]

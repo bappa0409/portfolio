@@ -20,7 +20,7 @@
             <a href="{{ route('admin.dashboard') }}"
                class="block px-4 py-2 rounded-md border transition
                {{ request()->routeIs('admin.dashboard')
-                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/10'
+                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/25'
                     : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
                }}">
                 ▦ Dashboard
@@ -30,7 +30,7 @@
             <a href="{{ route('admin.project.index') }}"
                class="block px-4 py-2 rounded-md border transition
                {{ request()->routeIs('admin.project.*')
-                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/10'
+                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/20'
                     : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
                }}">
                 ▣ Projects
@@ -39,14 +39,14 @@
             {{-- Projects --}}
             <a href="{{ route('admin.homepage.settings.edit') }}"
                class="block px-4 py-2 rounded-md border transition
-               {{ request()->routeIs('admin.project.*')
-                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/10'
+               {{ request()->routeIs('admin.homepage.settings.edit')
+                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/25'
                     : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
                }}">
                 ⛭ Homepage Settings
             </a>
             
-            @php $dashOpen = request()->routeIs('admin.dashboards.*'); @endphp
+            {{-- @php $dashOpen = request()->routeIs('admin.dashboards.*'); @endphp
 
             <div x-data="sidebarCollapse({ defaultOpen: {{ $dashOpen ? 'true' : 'false' }} })" class="space-y-2">
 
@@ -69,7 +69,7 @@
                     </svg>
                 </button>
 
-                {{-- Submenu --}}
+                
                 <div x-show="open" x-cloak
                     x-transition:enter="transition ease-out duration-300"
                     x-transition:enter-start="opacity-0 translate-y-1"
@@ -108,7 +108,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
 
             {{-- View Site --}}
             <a href="{{ url('/') }}" target="_blank"

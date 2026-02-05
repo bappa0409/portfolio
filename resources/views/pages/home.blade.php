@@ -115,10 +115,14 @@
 <!-- SERVICES -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->services_title ?? 'Services' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->services_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+            {{ data_get($meta, 'services.title', 'Services') }}
+        </h2>
+        <p class="mt-2 text-white/70 max-w-2xl">
+            {{ data_get($meta, 'services.subtitle', '') }}
+        </p>
     </div>
-
+    
     <div class="grid md:grid-cols-3 gap-6">
         @foreach (($home->services ?? []) as $srv)
             <div class="rounded-md p-6 glass-soft cyber-glow hover:border-emerald-400/25 transition">
@@ -130,31 +134,41 @@
     </div>
 </section>
 
-<!-- CTA -->
+<!-- CTA 1 -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="rounded-md glass cyber-glow p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
             <h3 class="text-xl font-bold text-white">
-                {{ data_get($home->cta_top, 'title', '') }}
+                {{ data_get($home->cta_1, 'title', '') }}
             </h3>
             <p class="text-white/70 mt-2">
-                {{ data_get($home->cta_top, 'subtitle', '') }}
+                {{ data_get($home->cta_1, 'subtitle', '') }}
             </p>
         </div>
 
-        <a href="{{ url(data_get($home->cta_top, 'button_url', '/contact')) }}"
+        <a href="{{ route('contact') }}"
            class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
-            {{ data_get($home->cta_top, 'button_text', "Let's Talk") }}
+            {{ data_get($home->cta_1, 'button_text', "Let's Talk") }}
         </a>
     </div>
 </section>
 
 <!-- FEATURED PROJECTS -->
 <section class="mx-auto max-w-6xl px-4 py-10">
-    <div class="flex items-end justify-between gap-4">
-        <h2 class="text-2xl font-bold text-white">{{ data_get($home->featured_projects, 'title', 'Featured Projects') }}</h2>
-        <a href="{{ route('projects') }}" class="text-sm font-semibold text-emerald-200 hover:text-emerald-100">
-            {{ data_get($home->featured_projects, 'button_text', 'See all →') }}
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div>
+            <h2 class="text-2xl font-bold text-white">
+                {{ data_get($meta, 'featured_projects.title', 'Featured Projects') }}
+            </h2>
+
+            <p class="mt-2 text-white/70 max-w-2xl">
+                {{ data_get($meta, 'featured_projects.subtitle', '') }}
+            </p>
+        </div>
+
+        <a href="{{ route('projects') }}"
+        class="text-sm font-semibold text-emerald-200 hover:text-emerald-100 whitespace-nowrap">
+            {{ data_get($meta, 'featured_projects.button_text', 'See all') }} →
         </a>
     </div>
 
@@ -201,8 +215,13 @@
 <!-- WHY CHOOSE ME -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white"> {{ $home->why_choose_title ?? 'Why Choose Me' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->why_choose_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+            {{ data_get($meta, 'why_choose.title', 'Why Choose Me') }}
+        </h2>
+
+        <p class="mt-2 text-white/70 max-w-2xl">
+            {{ data_get($meta, 'why_choose.subtitle', '') }}
+        </p>
     </div>
 
     <div class="grid md:grid-cols-3 gap-6">
@@ -220,8 +239,13 @@
 <!-- PROCESS -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->process_title ?? 'How I Work' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->process_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+            {{ data_get($meta, 'process.title', 'How I Work') }}
+        </h2>
+
+        <p class="mt-2 text-white/70 max-w-2xl">
+            {{ data_get($meta, 'process.subtitle', '') }}
+        </p>
     </div>
 
     <div class="grid md:grid-cols-5 gap-4">
@@ -241,8 +265,13 @@
 <!-- TECH STACK -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->tech_stack_title ?? 'Tech Stack' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->tech_stack_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+            {{ data_get($meta, 'tech_stack.title', 'Tech Stack') }}
+        </h2>
+
+        <p class="mt-2 text-white/70 max-w-2xl">
+            {{ data_get($meta, 'tech_stack.subtitle', '') }}
+        </p>
     </div>
 
     <div class="grid md:grid-cols-5 gap-6">
@@ -372,21 +401,21 @@
 </section>
 
 
-<!-- CTA -->
+<!-- CTA 1-->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="rounded-md glass cyber-glow p-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
             <h3 class="text-xl font-bold text-white">
-                {{ data_get($home->cta_bottom, 'title', '') }}
+                {{ data_get($home->cta_1, 'title', '') }}
             </h3>
             <p class="text-white/70 mt-2">
-                {{ data_get($home->cta_bottom, 'subtitle', '') }}
+                {{ data_get($home->cta_1, 'subtitle', '') }}
             </p>
         </div>
 
-        <a href="{{ url(data_get($home->cta_bottom, 'button_url', '/contact')) }}"
+        <a href="{{route('contact') }}"
            class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/25 transition cyber-glow">
-            {{ data_get($home->cta_bottom, 'button_text', "Let's Talk") }}
+            {{ data_get($home->cta_1, 'button_text', "Let's Talk") }}
         </a>
     </div>
 </section>
@@ -396,8 +425,13 @@
 <!-- TESTIMONIALS -->
 <section class="mx-auto max-w-6xl px-4 py-10">
     <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->testimonials_title ?? 'Testimonials' }}</h2>
-        <p class="mt-2 text-white/70 max-w-2xl">{{ $home->testimonials_subtitle ?? '' }}</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+            {{ data_get($meta, 'testimonials.title', 'Testimonials') }}
+        </h2>
+
+        <p class="mt-2 text-white/70 max-w-2xl">
+            {{ data_get($meta, 'testimonials.subtitle', '') }}
+        </p>
     </div>
 
     @php
@@ -464,10 +498,13 @@
 
 <!-- FAQ -->
 <section class="mx-auto max-w-6xl px-4 py-10">
-    <div class="mb-8">
-        <h2 class="text-2xl md:text-3xl font-bold text-white">{{ $home->faq_title ?? 'FAQ' }}</h2>
+   <div class="mb-8">
+        <h2 class="text-2xl md:text-3xl font-bold text-white">
+            {{ data_get($meta, 'faq.title', 'FAQ') }}
+        </h2>
+
         <p class="mt-2 text-white/70 max-w-2xl">
-            {{ $home->faq_subtitle ?? 'Answers to common questions clients ask before starting.' }}
+            {{ data_get($meta, 'faq.subtitle', 'Answers to common questions clients ask before starting.') }}
         </p>
     </div>
 
@@ -478,9 +515,9 @@
     @endphp
 
     <div class="grid md:grid-cols-2 gap-6 items-start">
-        <div class="space-y-6">
+        <div class="space-y-4">
             @foreach ($leftFaqs as $faq)
-                <div x-data="{ open: false }" class="rounded-md p-6 glass-soft cyber-glow h-fit">
+                <div x-data="{ open: false }" class="rounded-md p-4 glass-soft cyber-glow h-fit">
                     <button @click="open = !open" class="w-full flex items-start justify-between gap-4 text-left">
                         <h3 class="text-white font-semibold">{{ $faq['q'] ?? '' }}</h3>
                         <span class="text-white/60 text-xl" x-text="open ? '−' : '+'"></span>
@@ -492,9 +529,9 @@
             @endforeach
         </div>
 
-        <div class="space-y-6">
+        <div class="space-y-4">
             @foreach ($rightFaqs as $faq)
-                <div x-data="{ open: false }" class="rounded-md p-6 glass-soft cyber-glow h-fit">
+                <div x-data="{ open: false }" class="rounded-md p-4 glass-soft cyber-glow h-fit">
                     <button @click="open = !open" class="w-full flex items-start justify-between gap-4 text-left">
                         <h3 class="text-white font-semibold">{{ $faq['q'] ?? '' }}</h3>
                         <span class="text-white/60 text-xl" x-text="open ? '−' : '+'"></span>

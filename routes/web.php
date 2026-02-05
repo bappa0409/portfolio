@@ -34,12 +34,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::post('/settings/hero', 'updateHero')->name('settings.hero');
         Route::post('/settings/services', 'updateServices')->name('settings.services');
         Route::post('/settings/featured-projects', 'updateFeaturedProjects')->name('settings.featured_projects');
-        Route::post('/settings/cta-top', 'updateCtaTop')->name('settings.cta_top');
+        Route::post('/settings/cta-1', 'updateCta1')->name('settings.cta_1');
         Route::post('/settings/why-choose', 'updateWhyChoose')->name('settings.why_choose');
         Route::post('/settings/process', 'updateProcess')->name('settings.process');
         Route::post('/settings/tech-stack', 'updateTechStack')->name('settings.tech_stack');
         Route::post('/settings/stats', 'updateStats')->name('settings.stats');
-        Route::post('/settings/cta-bottom', 'updateCtaBottom')->name('settings.cta_bottom');
+        Route::post('/settings/cta-2', 'updateCta2')->name('settings.cta_2');
         Route::post('/settings/testimonials', 'updateTestimonials')->name('settings.testimonials');
         Route::post('/settings/faq', 'updateFaq')->name('settings.faq');
 
