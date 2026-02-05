@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\HomepageSettingsController;
-use App\Http\Controllers\Admin\ProjectController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
+
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HomepageSettingsController;
+use App\Http\Controllers\Admin\AboutSettingsController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\ContactController;
 
 ##Frontend Routes
@@ -22,9 +24,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::controller(HomepageSettingsController::class)->prefix('homepage')->name('homepage.')->group(function () {
+    Route::controller(HomepageSettingsController::class)->prefix('homepage-settings')->name('homepage.')->group(function () {
         Route::get('/settings', 'edit')->name('settings.edit');
-        // Route::post('/settings', 'update')->name('settings.update');
 
         // =========================
         // SECTION-WISE AJAX UPDATES
@@ -43,6 +44,23 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::post('/settings/testimonials', 'updateTestimonials')->name('settings.testimonials');
         Route::post('/settings/faq', 'updateFaq')->name('settings.faq');
 
+    });
+
+    Route::controller(AboutSettingsController::class)->prefix('about-settings')->name('about.')->group(function () {
+        Route::get('/settings', 'edit')->name('settings.edit');
+
+        // section saves
+        Route::post('/header',  'header')->name('settings.header');
+        Route::post('/terminal', 'terminal')->name('settings.terminal');
+        Route::post('/tags', 'tags')->name('settings.tags');
+        Route::post('/profile', 'profile')->name('settings.profile');
+        Route::post('/journey', 'journey')->name('settings.journey');
+        Route::post('/education', 'education')->name('settings.education');
+        Route::post('/training', 'training')->name('settings.training');
+        Route::post('/experience','experience')->name('settings.experience');
+        Route::post('/skills',   'skills')->name('settings.skills');
+        Route::post('/philosophy', 'philosophy')->name('settings.philosophy');
+        Route::post('/passions', 'passions')->name('settings.passions');
     });
     Route::controller(ProjectController::class)->prefix('project')->name('project.')->group(function () {
         Route::get('/', 'index')->name('index');

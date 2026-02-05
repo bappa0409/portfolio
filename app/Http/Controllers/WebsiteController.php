@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutSetting;
 use App\Models\HomePageSetting;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -138,14 +139,17 @@ class WebsiteController extends Controller
 
     public function about()
     {
-        $skills = [
-            'Backend' => ['Laravel', 'PHP', 'MySQL', 'Redis', 'Queues', 'Auth/RBAC'],
-            'Frontend' => ['Blade', 'Tailwind', 'Alpine.js', 'Livewire (optional)'],
-            'Tools' => ['Git', 'Postman', 'Docker (basic)', 'Linux', 'Nginx (basic)'],
-            'Deployment' => ['cPanel', 'VPS', 'SSL', 'Basic CI/CD'],
-        ];
+        // $skills = [
+        //     'Backend' => ['Laravel', 'PHP', 'MySQL', 'Redis', 'Queues', 'Auth/RBAC'],
+        //     'Frontend' => ['Blade', 'Tailwind', 'Alpine.js', 'Livewire (optional)'],
+        //     'Tools' => ['Git', 'Postman', 'Docker (basic)', 'Linux', 'Nginx (basic)'],
+        //     'Deployment' => ['cPanel', 'VPS', 'SSL', 'Basic CI/CD'],
+        // ];
 
-        return view('pages.about', compact('skills'));
+        // return view('pages.about', compact('skills'));
+
+        $settings = AboutSetting::firstOrCreate([]);
+        return view('pages.about', compact('settings'));
     }
 
     public function contact()
