@@ -24,7 +24,25 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
     Route::controller(HomepageSettingsController::class)->prefix('homepage')->name('homepage.')->group(function () {
         Route::get('/settings', 'edit')->name('settings.edit');
-        Route::post('/settings', 'update')->name('settings.update');
+        // Route::post('/settings', 'update')->name('settings.update');
+
+        // =========================
+        // SECTION-WISE AJAX UPDATES
+        // =========================
+
+        Route::post('/settings/section-meta', 'updateSectionMeta')->name('settings.section_meta');
+        Route::post('/settings/hero', 'updateHero')->name('settings.hero');
+        Route::post('/settings/services', 'updateServices')->name('settings.services');
+        Route::post('/settings/featured-projects', 'updateFeaturedProjects')->name('settings.featured_projects');
+        Route::post('/settings/cta-top', 'updateCtaTop')->name('settings.cta_top');
+        Route::post('/settings/why-choose', 'updateWhyChoose')->name('settings.why_choose');
+        Route::post('/settings/process', 'updateProcess')->name('settings.process');
+        Route::post('/settings/tech-stack', 'updateTechStack')->name('settings.tech_stack');
+        Route::post('/settings/stats', 'updateStats')->name('settings.stats');
+        Route::post('/settings/cta-bottom', 'updateCtaBottom')->name('settings.cta_bottom');
+        Route::post('/settings/testimonials', 'updateTestimonials')->name('settings.testimonials');
+        Route::post('/settings/faq', 'updateFaq')->name('settings.faq');
+
     });
     Route::controller(ProjectController::class)->prefix('project')->name('project.')->group(function () {
         Route::get('/', 'index')->name('index');

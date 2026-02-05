@@ -35,5 +35,4 @@ class HomePageSetting extends Model
         'faq' => 'array',
         'featured_projects' => 'array',
     ];
-
 }

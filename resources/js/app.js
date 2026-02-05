@@ -17,6 +17,63 @@ window.sidebarDropdownMenu = function () {
 };
 
 
+// ✅ Reusable Tag Input (Alpine)
+window.tagInput = function ({
+  initial = [],
+  namePrefix = 'tags',
+  placeholder = 'Write here..',
+  trim = true,
+  lowercase = false,
+  unique = true,
+} = {}) {
+  return {
+    tags: Array.isArray(initial) ? [...initial].filter(Boolean) : [],
+    q: '',
+    namePrefix,
+    placeholder,
+
+    error: '',
+
+    normalize(v) {
+      let s = String(v ?? '');
+      if (trim) s = s.trim();
+      if (lowercase) s = s.toLowerCase();
+      return s;
+    },
+
+    add() {
+      const t = this.normalize(this.q);
+
+      // empty input
+      if (!t) {
+        this.q = '';
+        this.error = '';
+        return;
+      }
+
+      // unique check
+      if (unique && this.tags.includes(t)) {
+        this.error = 'This tag already exists.';
+        this.q = '';
+        return;
+      }
+
+      this.tags.push(t);
+      this.q = '';
+      this.error = '';
+
+      this.$nextTick(() => this.$refs?.input?.focus());
+    },
+
+    remove(i) {
+      this.tags.splice(i, 1);
+      this.error = '';
+      this.$nextTick(() => this.$refs?.input?.focus());
+    },
+  };
+};
+
+
 /* ===============================
    SIMPLE SELECT2-LIKE (VANILLA) - FINAL FIX
 ================================ */
@@ -58,7 +115,7 @@ function initSelect2Like() {
 
     const control = document.createElement('div');
     control.className =
-      'min-h-[44px] w-full rounded-md border border-white/10 bg-slate-950/40 px-2 py-2 flex flex-wrap gap-1.5 items-center text-white';
+      'select2-like-control min-h-[44px] w-full rounded-md border border-white/10 bg-slate-950/40 px-2 py-2 flex flex-wrap gap-1.5 items-center text-white';
 
     const input = document.createElement('input');
     input.type = 'text';
@@ -274,3 +331,213 @@ function initSelect2Like() {
 }
 
 document.addEventListener('DOMContentLoaded', initSelect2Like);
+
+
+/* ===============================
+   VALIDATION (GLOBAL)
+================================ */
+(function () {
+  const SELECTOR_INVALID = 'input:invalid, select:invalid, textarea:invalid';
+  const SELECTOR_FIELD   = 'input, select, textarea';
+
+  function isJquerySelect2(selectEl) {
+    return !!(window.jQuery &&
+      selectEl &&
+      selectEl.tagName === 'SELECT' &&
+      window.jQuery(selectEl).hasClass('select2-hidden-accessible'));
+  }
+
+  // ✅ your vanilla select2-like
+  function isSelect2Like(selectEl) {
+    return !!(
+      selectEl &&
+      selectEl.tagName === 'SELECT' &&
+      selectEl.classList.contains('select2') &&
+      selectEl.multiple &&
+      selectEl.dataset.enhanced === '1'
+    );
+  }
+
+  // 🔥 IMPORTANT: আপনার initSelect2Like() এ control এ একটা class দিন:
+  // control.className = 'select2-like-control ...'
+  function getSelect2LikeControl(selectEl) {
+    const wrapper = selectEl?.nextElementSibling;
+    if (!wrapper) return null;
+    return wrapper.querySelector('.select2-like-control');
+  }
+
+  function markOne(el, force = false) {
+    if (!el) return;
+
+    const form = el.form;
+    const touched = el.dataset.touched === '1';
+    const submitted = !!form?.dataset.submitted;
+
+    // ✅ force = submit time (mark all)
+    // ✅ otherwise: only mark if touched or submitted
+    const shouldValidateNow = force || touched || submitted;
+
+    // ignore disabled fields
+    if (el.disabled) return;
+
+    if (!shouldValidateNow) return;
+
+    if (!el.checkValidity()) {
+      el.classList.add('is-invalid');
+
+      // jQuery select2
+      if (isJquerySelect2(el)) {
+        const $sel = window.jQuery(el);
+        $sel.next('.select2-container').find('.select2-selection').addClass('is-invalid');
+      }
+
+      // select2-like
+      if (isSelect2Like(el)) {
+        const control = getSelect2LikeControl(el);
+        control?.classList.add('is-invalid');
+      }
+    } else {
+      el.classList.remove('is-invalid');
+
+      // jQuery select2
+      if (isJquerySelect2(el)) {
+        const $sel = window.jQuery(el);
+        $sel.next('.select2-container').find('.select2-selection').removeClass('is-invalid');
+      }
+
+      // select2-like
+      if (isSelect2Like(el)) {
+        const control = getSelect2LikeControl(el);
+        control?.classList.remove('is-invalid');
+      }
+    }
+  }
+
+  function clearInvalid(form) {
+    if (!form) return;
+
+    form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    form.querySelectorAll('.select2-selection.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+    form.querySelectorAll('.select2-like-control.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+  }
+
+  function markInvalid(form) {
+    if (!form) return null;
+
+    const invalids = form.querySelectorAll(SELECTOR_INVALID);
+    invalids.forEach(el => markOne(el, true));
+    return invalids[0] || null;
+  }
+
+  function attachLiveCleanup(form) {
+    if (!form || form.__invalidBound) return;
+    form.__invalidBound = true;
+
+    // user typed/changed => live validate (touched/submitted হলে)
+    form.addEventListener('input', (e) => {
+      const el = e.target;
+      if (!(el instanceof HTMLElement)) return;
+      if (!el.matches(SELECTOR_FIELD)) return;
+      markOne(el, false);
+    }, true);
+
+    form.addEventListener('change', (e) => {
+      const el = e.target;
+      if (!(el instanceof HTMLElement)) return;
+      if (!el.matches(SELECTOR_FIELD)) return;
+      markOne(el, false);
+    }, true);
+
+    // blur => touched = true => এরপর থেকে live validate হবে
+    form.addEventListener('blur', (e) => {
+      const el = e.target;
+      if (!(el instanceof HTMLElement)) return;
+      if (!el.matches(SELECTOR_FIELD)) return;
+      el.dataset.touched = '1';
+      markOne(el, false);
+    }, true);
+
+    // jQuery select2 events
+    if (window.jQuery) {
+      window.jQuery(form).on('select2:select select2:unselect', 'select', function () {
+        this.dataset.touched = '1';
+        markOne(this, false);
+      });
+    }
+  }
+
+  function handleInvalidSubmit(e) {
+    const form = e.target;
+    if (!(form instanceof HTMLFormElement)) return;
+
+    attachLiveCleanup(form);
+    form.dataset.submitted = '1';
+
+    clearInvalid(form);
+    const firstInvalid = markInvalid(form);
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+
+      const label =
+        firstInvalid?.closest('div')?.querySelector('label')?.innerText?.trim() || 'This field';
+
+      window.dispatchEvent(new CustomEvent('global-form-invalid', {
+        detail: { message: `${label} is required.` }
+      }));
+    }
+  }
+
+  // invalid event (mainly submit time)
+  document.addEventListener('invalid', function (e) {
+    const el = e.target;
+    const form = el?.form;
+    if (!form) return;
+
+    attachLiveCleanup(form);
+    form.dataset.submitted = '1';
+    markOne(el, true);
+  }, true);
+
+  // submit attempt -> mark all invalid
+  document.addEventListener('submit', function (e) {
+    const form = e.target;
+    if (!(form instanceof HTMLFormElement)) return;
+
+    attachLiveCleanup(form);
+
+    if (!form.checkValidity()) {
+      e.preventDefault();
+      handleInvalidSubmit(e);
+    }
+  }, true);
+
+  // helper for AJAX/Alpine submit (@submit.prevent)
+  window.validateFormAndMark = function (formElOrId) {
+    const form = typeof formElOrId === 'string'
+      ? document.getElementById(formElOrId)
+      : formElOrId;
+
+    if (!form) return true;
+
+    attachLiveCleanup(form);
+    form.dataset.submitted = '1';
+
+    clearInvalid(form);
+
+    if (!form.checkValidity()) {
+      const firstInvalid = markInvalid(form);
+      form.reportValidity();
+
+      const label =
+        firstInvalid?.closest('div')?.querySelector('label')?.innerText?.trim() || 'This field';
+
+      window.dispatchEvent(new CustomEvent('global-form-invalid', {
+        detail: { message: `${label} is required.` }
+      }));
+
+      return false;
+    }
+    return true;
+  };
+})();

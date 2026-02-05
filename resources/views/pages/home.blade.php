@@ -20,23 +20,6 @@
             <p class="mt-4 text-base text-white/70 max-w-3xl">
                 {{ $home->hero['description'] ?? '' }}
             </p>
-{{-- 
-            <div class="mt-6 flex flex-wrap gap-3">
-                <a href="{{ route('contact') }}"
-                    class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-6 py-3 font-semibold text-emerald-100 hover:bg-emerald-400/30 transition">
-                    Hire Me
-                </a>
-
-                <a href="{{ route('projects') }}"
-                    class="rounded-md border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition">
-                    View Projects
-                </a>
-
-                <a href="{{ route('contact') }}"
-                    class="rounded-md border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white hover:border-emerald-400/30 transition">
-                    Get a Free Quote
-                </a>
-            </div> --}}
 
             <div class="mt-6 flex flex-wrap gap-3">
                 @foreach (($home->hero['buttons'] ?? []) as $btn)
@@ -46,6 +29,7 @@
                     </a>
                 @endforeach
             </div>
+
             <!-- ACTIVATE PORTAL -->
             <div class="mt-4 flex items-center gap-4">
                 <div class="portal-pulse">
@@ -170,7 +154,7 @@
     <div class="flex items-end justify-between gap-4">
         <h2 class="text-2xl font-bold text-white">{{ data_get($home->featured_projects, 'title', 'Featured Projects') }}</h2>
         <a href="{{ route('projects') }}" class="text-sm font-semibold text-emerald-200 hover:text-emerald-100">
-            {{ data_get($home->featured_projects, 'button_text', 'See all') }} →
+            {{ data_get($home->featured_projects, 'button_text', 'See all →') }}
         </a>
     </div>
 

@@ -23,7 +23,7 @@
                     ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/10'
                     : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
                }}">
-                ⛭ Dashboard
+                ▦ Dashboard
             </a>
 
             {{-- Projects --}}
@@ -43,7 +43,7 @@
                     ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/10'
                     : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
                }}">
-                ▦ Homepage Settings
+                ⛭ Homepage Settings
             </a>
             
             @php $dashOpen = request()->routeIs('admin.dashboards.*'); @endphp

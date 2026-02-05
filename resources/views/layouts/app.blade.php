@@ -9,6 +9,7 @@
 
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-192x192.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
 <body class="h-screen overflow-hidden bg-slate-950 text-white">
@@ -42,6 +43,36 @@
 
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script> 
+     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
      @stack('scripts')
+        <script>
+        // ---- Toastify helper
+        const toast = (type, message) => {
+            const isSuccess = type === 'success';
+
+            Toastify({
+                text: `
+                    <div style="display:flex;align-items:baseline;gap:6px;">
+                        <span style="font-size:15px;">
+                            ${isSuccess ? '✔️' : '⚠️'}
+                        </span>
+                        <span>${message}</span>
+                    </div>
+                `,
+                duration: 5000,
+                gravity: "bottom",
+                position: "right",
+                close: false,
+                stopOnFocus: true,
+                escapeMarkup: false,
+                style: {
+                    background: isSuccess ? '#16a34a' : '#dc2626',
+                    color: '#ffffff',
+                    borderRadius: '0.375rem',
+                    fontSize: '14px',
+                },
+            }).showToast();
+        };
+    </script>
 </body>
 </html>

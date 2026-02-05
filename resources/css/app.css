@@ -528,11 +528,25 @@ select:focus,
 button:focus {
     box-shadow: none !important;
 }
+.is-invalid{
+    border-color: rgb(248 113 113 / 0.7) !important; /* red-400 */
+    box-shadow: 0 0 0 1px rgb(248 113 113 / 0.35) !important;
+  }
 
+  /* select2 border */
+  .select2-container--default .select2-selection--single.is-invalid,
+  .select2-container--default .select2-selection--multiple.is-invalid{
+    border-color: rgb(248 113 113 / 0.7) !important;
+    box-shadow: 0 0 0 1px rgb(248 113 113 / 0.35) !important;
+  }
+  
 ::placeholder {
     color: rgba(148, 163, 184, 0.45); /* slate-400 but lighter */
 }
-input{
+
+input,
+textarea,
+select{
   font-size: 13px !important;
 }
 .select-input {
