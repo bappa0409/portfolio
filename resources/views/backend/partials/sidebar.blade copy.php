@@ -27,7 +27,7 @@
             </a>
 
             {{-- Projects --}}
-            <a href="{{ route('admin.project.index') }}"
+            <a href="{{ route('admin.projects.index') }}"
                class="block px-4 py-2 rounded-md border transition
                {{ request()->routeIs('admin.project.*')
                     ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/20'

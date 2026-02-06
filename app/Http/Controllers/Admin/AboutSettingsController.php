@@ -17,7 +17,7 @@ class AboutSettingsController extends Controller
     public function edit()
     {
         $settings = AboutSetting::firstOrCreate([]);
-        return view('backend.pages.about_us.edit', compact('settings'));
+        return view('backend.pages.about_us', compact('settings'));
     }
     
     public function header(Request $request)

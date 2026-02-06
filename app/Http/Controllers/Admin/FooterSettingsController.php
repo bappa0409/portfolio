@@ -7,7 +7,7 @@ use App\Models\HomePageSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class HomepageSettingsController extends Controller
+class FooterSettingsController extends Controller
 {
    /* ============================================================
      | HOMEPAGE SETTINGS CONTROLLER
@@ -39,7 +39,7 @@ class HomepageSettingsController extends Controller
     public function edit()
     {
         $settings = HomePageSetting::firstOrCreate(['id' => 1]);
-        return view('backend.pages.home_page', compact('settings'));
+        return view('backend.pages.home_page_settings.edit', compact('settings'));
     }
 
 
@@ -71,9 +71,7 @@ class HomepageSettingsController extends Controller
             'sections_meta.faq.title' => ['nullable', 'string', 'max:120'],
             'sections_meta.faq.subtitle' => ['nullable', 'string', 'max:255'],
 
-            'sections_meta.projects.title' => ['nullable', 'string', 'max:120'],
-            'sections_meta.projects.subtitle' => ['nullable', 'string', 'max:255'],
-
+            // NOTE: If you want meta title/subtitle for featured projects:
             'sections_meta.featured_projects.title' => ['nullable', 'string', 'max:120'],
             'sections_meta.featured_projects.button_text' => ['nullable', 'string', 'max:80'],
         ]);

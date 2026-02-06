@@ -290,41 +290,58 @@
         </div>
 
         <!-- CODE PHILOSOPHY + PASSION MODULES -->
-        <div class="mt-10 grid md:grid-cols-12 gap-6 items-start">
+        <div class="mt-10 rounded-md glass cyber-glow p-6 relative">
+            <div class="absolute inset-0 scanline rounded-md pointer-events-none"></div>
 
-            <div class="md:col-span-7 rounded-md glass cyber-glow p-6 relative">
-                <div class="absolute inset-0 scanline rounded-md pointer-events-none"></div>
+            <div class="grid md:grid-cols-12 gap-6 items-start">
 
-                <div class="flex items-center gap-2">
-                    <span class="text-emerald-200 font-mono">&gt;</span>
-                    <h2 class="text-white font-bold tracking-wide">CODE_PHILOSOPHY</h2>
+                {{-- LEFT : CODE PHILOSOPHY --}}
+                <div class="md:col-span-6">
+                    <div class="flex items-center gap-2">
+                        <span class="text-emerald-200 font-mono">&gt;</span>
+                        <h2 class="text-white font-bold tracking-wide">CODE_PHILOSOPHY</h2>
+                    </div>
+
+                    <div class="mt-5 text-slate-300 text-sm leading-relaxed space-y-3">
+                        @forelse ($settings?->philosophy ?? [] as $p)
+                            @if(!empty($p))
+                                <p>• {{ $p }}</p>
+                            @endif
+                        @empty
+                            <p class="text-white/40 text-xs font-mono">No philosophy added.</p>
+                        @endforelse
+                    </div>
                 </div>
 
-                <div class="mt-5 text-slate-300 text-sm leading-relaxed space-y-3">
-                    @foreach ($settings?->philosophy ?? [] as $p)
-                        <p>• {{ $p }}</p>
-                    @endforeach
-                </div>
-            </div>
+                {{-- RIGHT : PASSION MODULES --}}
+                <div class="md:col-span-6">
+                    <div class="flex items-center gap-2">
+                        <span class="text-emerald-200">⌁</span>
+                        <h2 class="text-white font-bold tracking-wide">PASSION_MODULES</h2>
+                    </div>
 
-            <div class="md:col-span-5 rounded-md glass cyber-glow p-6 relative">
-                <div class="absolute inset-0 scanline rounded-md pointer-events-none"></div>
-
-                <div class="flex items-center gap-2">
-                    <span class="text-emerald-200">⌁</span>
-                    <h2 class="text-white font-bold tracking-wide">PASSION_MODULES</h2>
-                </div>
-
-                <div class="mt-6 grid grid-cols-2 gap-4">
-                    @foreach ($settings?->passions ?? [] as $ps)
-                        <div class="rounded-md border border-white/10 bg-slate-950/30 p-5">
-                            <p class="text-white font-semibold">{{ data_get($ps,'title') }}</p>
-                            <p class="mt-2 text-xs text-slate-400">{{ data_get($ps,'desc') }}</p>
-                        </div>
-                    @endforeach
+                    <div class="mt-4 grid grid-cols-2 gap-3">
+                        @forelse ($settings?->passions ?? [] as $ps)
+                            @if(!empty(data_get($ps,'title')) && !empty(data_get($ps,'desc')))
+                                <div class="rounded-md border border-white/10 bg-slate-950/30 p-4">
+                                    <p class="text-white font-semibold text-sm">
+                                        {{ data_get($ps,'title') }}
+                                    </p>
+                                    <p class="mt-2 text-xs text-slate-400 leading-relaxed">
+                                        {{ data_get($ps,'desc') }}
+                                    </p>
+                                </div>
+                            @endif
+                        @empty
+                            <p class="col-span-2 text-white/40 text-xs font-mono">
+                                No passion modules added.
+                            </p>
+                        @endforelse
+                    </div>
                 </div>
             </div>
         </div>
+
 
         <!-- FINAL CTA (static fallback — if you later store final_cta, this can be dynamic too) -->
         <div class="mt-10 rounded-md glass cyber-glow p-8 text-center relative">

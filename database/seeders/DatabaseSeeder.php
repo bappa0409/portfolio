@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             HomePageSettingSeeder::class,
             AboutSettingsSeeder::class,
+            ContactSettingSeeder::class,
         ]);
     }
 }

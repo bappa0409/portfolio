@@ -60,8 +60,13 @@
                 <div
                     class="relative w-full max-h-[380px] md:max-h-[260px] overflow-hidden rounded-md border border-emerald-400/15">
 
-                    <img src="{{ asset('images/profile.jpg') }}" alt="Bappa Sutradhar"
-                        class="w-full max-h-[380px] md:max-h-[260px] object-cover" />
+                    <img
+                        src="{{ $heroImage }}"
+                        alt="{{ $home->hero['headline'] ?? 'Profile Image' }}"
+                        class="w-full max-h-[380px] md:max-h-[260px] object-cover"
+                        loading="lazy"
+                    />
+
 
                     <!-- DARK OVERLAY -->
                     <div class="absolute inset-0 bg-black/30"></div>
@@ -93,14 +98,16 @@
                 </span>
             </div>
 
-            <div class="mt-4 grid grid-cols-3 gap-2 text-center">
-                 @foreach (($home->hero['mini_stats'] ?? []) as $s)
-                    <div class="rounded-md border border-white/10 bg-white/5 px-3 py-1">
-                        <p class="text-sm font-bold text-white">{{ $s['value'] ?? '' }}</p>
-                        <p class="text-[11px] text-white/55">{{ $s['label'] ?? '' }}</p>
-                    </div>
-                @endforeach
-            </div>
+            @if(!empty($miniStats))
+                <div class="mt-4 grid grid-cols-3 gap-2 text-center">
+                    @foreach ($miniStats as $stat)
+                        <div class="rounded-md border border-white/10 bg-white/5 px-3 py-1">
+                            <p class="text-sm font-bold text-white">{{ $stat['value'] }}</p>
+                            <p class="text-[11px] text-white/55">{{ $stat['label'] }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
 
             <a href="{{ route('contact') }}"
                 class="mt-4 block text-center rounded-md bg-white text-slate-950 font-semibold px-4 py-2 hover:bg-white/90">
@@ -168,7 +175,7 @@
 
         <a href="{{ route('projects') }}"
         class="text-sm font-semibold text-emerald-200 hover:text-emerald-100 whitespace-nowrap">
-            {{ data_get($meta, 'featured_projects.button_text', 'See all') }} →
+             {{ $featuredBtnText }} →
         </a>
     </div>
 

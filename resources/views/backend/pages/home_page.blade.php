@@ -398,42 +398,81 @@
             </div>
 
             {{-- HERO IMAGE --}}
-            <div class="md:col-span-2">
-                <label class="text-xs font-mono text-slate-400">PROFILE IMAGE</label>
+            <div class="md:col-span-2 grid md:grid-cols-12 gap-4 items-start">
 
-                <label for="hero_profile_image" class="mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden">
-                    <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
+                {{-- LEFT : UPLOAD + PREVIEW --}}
+                <div class="md:col-span-9">
+                    <label class="text-xs font-mono text-slate-400">PROFILE IMAGE</label>
 
-                    <div class="flex items-center justify-between gap-4">
-                        <div class="flex items-center gap-3">
-                            <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">⧉</div>
-                            <div>
-                                <p class="text-sm text-white/85 font-semibold">Drag & Drop image</p>
-                                <p class="text-[11px] text-slate-400 font-mono">or click to upload (only one)</p>
+                    <label for="hero_profile_image"
+                        class="js-image-upload mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden"
+                        data-preview="#heroImagePreview">
+
+                        <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
+
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">
+                                    ⧉
+                                </div>
+                                <div>
+                                    <p class="text-sm text-white/85 font-semibold">Drag & Drop image</p>
+                                    <p class="text-[11px] text-slate-400 font-mono">
+                                        or click to upload (only one)
+                                    </p>
+                                </div>
                             </div>
+
+                            <span
+                                class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">
+                                HERO
+                            </span>
                         </div>
 
-                        <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">HERO</span>
+                        <input id="hero_profile_image"
+                            type="file"
+                            name="hero_profile_image"
+                            accept="image/*"
+                            class="hidden">
+                    </label>
+
+                    {{-- PREVIEW --}}
+                    <div id="heroImagePreview"
+                        class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 hidden">
+                        <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden">
+                            <img data-preview-img
+                                src=""
+                                class="w-full h-24 object-cover"
+                                alt="Hero preview">
+                            <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+                            <div data-preview-cap
+                                class="px-2 py-1 text-[10px] font-mono text-slate-300 truncate"></div>
+                        </div>
                     </div>
 
-                    <input id="hero_profile_image" type="file" name="hero_profile_image" accept="image/*" class="hidden">
-                </label>
-
-                <div id="heroImagePreview" class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 hidden">
-                    <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden">
-                        <img id="heroImagePreviewImg" src="" class="w-full h-24 object-cover" alt="Hero preview">
-                        <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
-                        <div id="heroImagePreviewCap" class="px-2 py-1 text-[10px] font-mono text-slate-300 truncate"></div>
-                    </div>
+                    {{-- ERROR --}}
+                    <p class="mt-1 text-[11px] text-red-300 font-mono"
+                    x-text="err('hero_profile_image')"></p>
                 </div>
 
-                @if(data_get($settings->hero,'profile_image'))
-                    <p class="mt-2 text-[11px] text-slate-500 font-mono">Current:</p>
-                    <img class="mt-2 h-24 rounded-md border border-white/10"
-                        src="{{ asset('storage/'.data_get($settings->hero,'profile_image')) }}" alt="Current hero image">
-                @endif
+                {{-- RIGHT : CURRENT IMAGE --}}
+                <div class="md:col-span-3 flex flex-col items-center">
+                    @if(data_get($settings->hero,'profile_image'))
+                        <p class="mb-2 text-[11px] text-slate-500 font-mono">CURRENT IMAGE</p>
+                        <img
+                            src="{{ asset('storage/'.data_get($settings->hero,'profile_image')) }}"
+                            alt="Current hero image"
+                            class="h-28 w-28 rounded-md object-cover border border-white/10 shadow-md">
+                    @else
+                        <div
+                            class="h-28 w-28 rounded-md flex items-center justify-center
+                                border border-white/10 bg-white/5 text-slate-500
+                                text-xs font-mono">
+                            NO IMAGE
+                        </div>
+                    @endif
+                </div>
 
-                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('hero_profile_image')"></p>
             </div>
         </form>
     </section>
@@ -1133,62 +1172,6 @@ PROCESS TAB (STATS STYLE)
 @endsection
 
 @push('scripts')
-<script>
-(() => {
-    // HERO IMAGE PREVIEW
-    const input = document.getElementById('hero_profile_image');
-    const wrap  = input?.closest('label');
-    const prev  = document.getElementById('heroImagePreview');
-    const img   = document.getElementById('heroImagePreviewImg');
-    const cap   = document.getElementById('heroImagePreviewCap');
-
-    const bindDropZone = (zoneEl, inputEl) => {
-        if (!zoneEl || !inputEl) return;
-
-        const setActive = (on) => {
-            zoneEl.classList.toggle('border-emerald-400/50', on);
-            zoneEl.classList.toggle('bg-emerald-400/5', on);
-        };
-
-        ['dragenter', 'dragover'].forEach(evt => {
-            zoneEl.addEventListener(evt, (e) => {
-                e.preventDefault(); e.stopPropagation();
-                setActive(true);
-            });
-        });
-
-        ['dragleave', 'drop'].forEach(evt => {
-            zoneEl.addEventListener(evt, (e) => {
-                e.preventDefault(); e.stopPropagation();
-                setActive(false);
-            });
-        });
-
-        zoneEl.addEventListener('drop', (e) => {
-            const files = Array.from(e.dataTransfer.files || []).filter(f => f.type.startsWith('image/'));
-            if (!files.length) return;
-            const dt = new DataTransfer();
-            dt.items.add(files[0]);
-            inputEl.files = dt.files;
-            inputEl.dispatchEvent(new Event('change', { bubbles: true }));
-        });
-    };
-
-    if (input && prev && img && cap) {
-        input.addEventListener('change', () => {
-            const file = input.files?.[0];
-            if (!file || !file.type.startsWith('image/')) {
-                prev.classList.add('hidden');
-                return;
-            }
-            img.src = URL.createObjectURL(file);
-            cap.textContent = file.name;
-            prev.classList.remove('hidden');
-        });
-        bindDropZone(wrap, input);
-    }
-})();
-</script>
 
 <script>
 function hpSettings(){
@@ -1255,18 +1238,18 @@ function hpSettings(){
         },
 
         // Save handlers
-        saveMeta(){ return this.handleSave('meta', "{{ route('admin.homepage.settings.section_meta') }}", 'metaForm'); },
-        saveHero(){ return this.handleSave('hero', "{{ route('admin.homepage.settings.hero') }}", 'heroForm'); },
-        saveServices(){ return this.handleSave('services', "{{ route('admin.homepage.settings.services') }}", 'servicesForm'); },
-        saveFeaturedProjects(){ return this.handleSave('featured_projects', "{{ route('admin.homepage.settings.featured_projects') }}", 'featuredProjectsForm'); },
-        saveCtaTop(){ return this.handleSave('cta_1', "{{ route('admin.homepage.settings.cta_1') }}", 'ctaTopForm'); },
-        saveWhyChoose(){ return this.handleSave('why_choose', "{{ route('admin.homepage.settings.why_choose') }}", 'whyChooseForm'); },
-        saveProcess(){ return this.handleSave('process', "{{ route('admin.homepage.settings.process') }}", 'processForm'); },
-        saveTechStack(){ return this.handleSave('tech_stack', "{{ route('admin.homepage.settings.tech_stack') }}", 'techStackForm'); },
-        saveStats(){ return this.handleSave('stats', "{{ route('admin.homepage.settings.stats') }}", 'statsForm'); },
-        saveCtaBottom(){ return this.handleSave('cta_2', "{{ route('admin.homepage.settings.cta_2') }}", 'ctaBottomForm'); },
-        saveTestimonials(){ return this.handleSave('testimonials', "{{ route('admin.homepage.settings.testimonials') }}", 'testimonialsForm'); },
-        saveFaq(){ return this.handleSave('faq', "{{ route('admin.homepage.settings.faq') }}", 'faqForm'); },
+        saveMeta(){ return this.handleSave('meta', "{{ route('admin.homepage.section_meta') }}", 'metaForm'); },
+        saveHero(){ return this.handleSave('hero', "{{ route('admin.homepage.hero') }}", 'heroForm'); },
+        saveServices(){ return this.handleSave('services', "{{ route('admin.homepage.services') }}", 'servicesForm'); },
+        saveFeaturedProjects(){ return this.handleSave('featured_projects', "{{ route('admin.homepage.featured_projects') }}", 'featuredProjectsForm'); },
+        saveCtaTop(){ return this.handleSave('cta_1', "{{ route('admin.homepage.cta_1') }}", 'ctaTopForm'); },
+        saveWhyChoose(){ return this.handleSave('why_choose', "{{ route('admin.homepage.why_choose') }}", 'whyChooseForm'); },
+        saveProcess(){ return this.handleSave('process', "{{ route('admin.homepage.process') }}", 'processForm'); },
+        saveTechStack(){ return this.handleSave('tech_stack', "{{ route('admin.homepage.tech_stack') }}", 'techStackForm'); },
+        saveStats(){ return this.handleSave('stats', "{{ route('admin.homepage.stats') }}", 'statsForm'); },
+        saveCtaBottom(){ return this.handleSave('cta_2', "{{ route('admin.homepage.cta_2') }}", 'ctaBottomForm'); },
+        saveTestimonials(){ return this.handleSave('testimonials', "{{ route('admin.homepage.testimonials') }}", 'testimonialsForm'); },
+        saveFaq(){ return this.handleSave('faq', "{{ route('admin.homepage.faq') }}", 'faqForm'); },
     }
 }
 </script>

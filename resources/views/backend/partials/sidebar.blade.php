@@ -26,9 +26,9 @@
             </a>
 
             {{-- Projects --}}
-            <a href="{{ route('admin.project.index') }}"
+            <a href="{{ route('admin.projects.index') }}"
                class="flex items-center gap-2 px-4 py-2 rounded-md border transition
-               {{ request()->routeIs('admin.project.*')
+               {{ request()->routeIs('admin.projects.*')
                     ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/20'
                     : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
                }}">
@@ -36,27 +36,62 @@
                 <span>Projects</span>
             </a>
 
-            {{-- Homepage Settings --}}
-            <a href="{{ route('admin.homepage.settings.edit') }}"
-               class="flex items-center gap-2 px-4 py-2 rounded-md border transition
-               {{ request()->routeIs('admin.homepage.settings.edit')
-                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/25'
-                    : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
-               }}">
-                <span class="text-base">🛠️</span>
-                <span>Homepage Settings</span>
-            </a>
+           {{-- Website Settings --}}
+            @php
+                $websiteOpen = request()->routeIs('admin.website.*')
+                            || request()->routeIs('admin.homepage.*')
+                            || request()->routeIs('admin.about.*')
+                            || request()->routeIs('admin.contact.*');
+            @endphp
 
-            {{-- About Settings --}}
-            <a href="{{ route('admin.about.settings.edit') }}"
-               class="flex items-center gap-2 px-4 py-2 rounded-md border transition
-               {{ request()->routeIs('admin.about.settings.edit')
-                    ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/25'
-                    : 'border-white/10 bg-white/5 hover:border-emerald-400/25 hover:text-emerald-200'
-               }}">
-                <span class="text-base">👤</span>
-                <span>About Settings</span>
-            </a>
+            <div x-data="{ open: {{ $websiteOpen ? 'true' : 'false' }} }">
+                <button @click="open = !open"
+                    class="w-full flex items-center justify-between px-4 py-2 rounded-md border
+                    {{ $websiteOpen
+                        ? 'border-emerald-400/40 text-emerald-200 bg-emerald-400/25'
+                        : 'border-white/10 bg-white/5 hover:border-emerald-400/25'
+                    }}">
+                    <span class="flex items-center gap-2">
+                        🛠️ <span>Website Settings</span>
+                    </span>
+                    <span x-text="open ? '−' : '+'"></span>
+                </button>
+
+                <div x-show="open" x-collapse class="mt-2 ml-3 space-y-1">
+                    {{-- Homepage --}}
+                    <a href="{{ route('admin.homepage.edit') }}"
+                    class="group flex items-center gap-2 px-3 py-1 text-sm rounded transition
+                            {{ request()->routeIs('admin.homepage.*')
+                                    ? 'text-emerald-300'
+                                    : 'text-white/60 hover:text-emerald-200'
+                            }}">
+                        <span class="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                        <span>Homepage</span>
+                    </a>
+
+                    {{-- About --}}
+                    <a href="{{ route('admin.about.edit') }}"
+                    class="group flex items-center gap-2 px-3 py-1 text-sm rounded transition
+                            {{ request()->routeIs('admin.about.*')
+                                    ? 'text-emerald-300'
+                                    : 'text-white/60 hover:text-emerald-200'
+                            }}">
+                        <span class="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                        <span>About Page</span>
+                    </a>
+
+                    {{-- Contact --}}
+                    <a href="{{ route('admin.contact.edit') }}"
+                    class="group flex items-center gap-2 px-3 py-1 text-sm rounded transition
+                            {{ request()->routeIs('admin.contact.*')
+                                    ? 'text-emerald-300'
+                                    : 'text-white/60 hover:text-emerald-200'
+                            }}">
+                        <span class="transition-transform duration-200 group-hover:translate-x-1">→</span>
+                        <span>Contact Page</span>
+                    </a>
+                </div>
+            </div>
 
             {{-- Divider --}}
             <div class="my-3 border-t border-white/10"></div>

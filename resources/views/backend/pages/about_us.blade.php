@@ -304,56 +304,53 @@
 
             {{-- PROFILE IMAGE --}}
             <div class="md:col-span-2 grid md:grid-cols-12 gap-4 items-start">
-
-                {{-- INPUT (8 COL) --}}
-                <div class="md:col-span-8">
+                <div class="md:col-span-9">
                     <label class="text-xs font-mono text-slate-400">PROFILE IMAGE</label>
 
                     <label for="about_profile_image"
-                        class="mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden">
+                        class="js-image-upload mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden"
+                        data-preview="#aboutProfileImagePreview">
+
                         <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
 
                         <div class="flex items-center justify-between gap-4">
                             <div class="flex items-center gap-3">
-                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">
-                                    ⧉
-                                </div>
+                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">⧉</div>
                                 <div>
                                     <p class="text-sm text-white/85 font-semibold">Drag & Drop image</p>
                                     <p class="text-[11px] text-slate-400 font-mono">or click to upload (only one)</p>
                                 </div>
                             </div>
 
-                            <span
-                                class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">
-                                PROFILE
-                            </span>
+                            <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">HERO</span>
                         </div>
 
-                        <input id="about_profile_image" type="file" name="profile_image" accept="image/*" class="hidden">
+                        <input id="about_profile_image" type="file" name="about_profile_image" accept="image/*" class="hidden">
                     </label>
 
-                    {{-- Validation --}}
-                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile_image')"></p>
+                    <div id="aboutProfileImagePreview" class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 hidden">
+                        <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden">
+                            <img data-preview-img src="" class="w-full h-24 object-cover" alt="Hero preview">
+                            <div class="absolute inset-0 bg-black/20 pointer-events-none"></div>
+                            <div data-preview-cap class="px-2 py-1 text-[10px] font-mono text-slate-300 truncate"></div>
+                        </div>
+                    </div>
+
+                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('about_profile_image')"></p>
                 </div>
 
-                {{-- CURRENT IMAGE (4 COL) --}}
-                <div class="md:col-span-4 flex flex-col items-center">
+                <div class="md:col-span-3 flex flex-col items-center">
                     @if(data_get($settings->profile,'profile_image'))
                         <img
                             src="{{ asset('storage/'.data_get($settings->profile,'profile_image')) }}"
                             alt="Profile image"
                             class="h-28 w-28 rounded-full object-cover border border-white/10 shadow-md">
                     @else
-                        {{-- DEFAULT THUMBNAIL --}}
-                        <div
-                            class="h-28 w-28 rounded-full flex items-center justify-center
-                                border border-white/10 bg-white/5 text-slate-500 text-xs font-mono">
+                        <div class="h-28 w-28 rounded-full flex items-center justify-center border border-white/10 bg-white/5 text-slate-500 text-xs font-mono">
                             NO IMAGE
                         </div>
                     @endif
                 </div>
-
             </div>
         </form>
     </section>
@@ -702,63 +699,6 @@
 @endsection
 
 @push('scripts')
-<script>
-(() => {
-    // ABOUT PROFILE IMAGE PREVIEW
-    const input = document.getElementById('about_profile_image');
-    const wrap  = input?.closest('label');
-    const prev  = document.getElementById('aboutProfileImagePreview');
-    const img   = document.getElementById('aboutProfileImagePreviewImg');
-    const cap   = document.getElementById('aboutProfileImagePreviewCap');
-
-    const bindDropZone = (zoneEl, inputEl) => {
-        if (!zoneEl || !inputEl) return;
-
-        const setActive = (on) => {
-            zoneEl.classList.toggle('border-emerald-400/50', on);
-            zoneEl.classList.toggle('bg-emerald-400/5', on);
-        };
-
-        ['dragenter', 'dragover'].forEach(evt => {
-            zoneEl.addEventListener(evt, (e) => {
-                e.preventDefault(); e.stopPropagation();
-                setActive(true);
-            });
-        });
-
-        ['dragleave', 'drop'].forEach(evt => {
-            zoneEl.addEventListener(evt, (e) => {
-                e.preventDefault(); e.stopPropagation();
-                setActive(false);
-            });
-        });
-
-        zoneEl.addEventListener('drop', (e) => {
-            const files = Array.from(e.dataTransfer.files || []).filter(f => f.type.startsWith('image/'));
-            if (!files.length) return;
-            const dt = new DataTransfer();
-            dt.items.add(files[0]);
-            inputEl.files = dt.files;
-            inputEl.dispatchEvent(new Event('change', { bubbles: true }));
-        });
-    };
-
-    if (input && prev && img && cap) {
-        input.addEventListener('change', () => {
-            const file = input.files?.[0];
-            if (!file || !file.type.startsWith('image/')) {
-                prev.classList.add('hidden');
-                return;
-            }
-            img.src = URL.createObjectURL(file);
-            cap.textContent = file.name;
-            prev.classList.remove('hidden');
-        });
-
-        bindDropZone(wrap, input);
-    }
-})();
-</script>
 
 <script>
 function aboutSettings(){
@@ -825,17 +765,17 @@ function aboutSettings(){
         },
 
         // Save handlers (routes)
-        saveHeader(){ return this.handleSave('header', "{{ route('admin.about.settings.header') }}", 'headerForm'); },
-        saveTerminal(){ return this.handleSave('terminal', "{{ route('admin.about.settings.terminal') }}", 'terminalForm'); },
-        saveTags(){ return this.handleSave('tags', "{{ route('admin.about.settings.tags') }}", 'tagsForm'); },
-        saveProfile(){ return this.handleSave('profile', "{{ route('admin.about.settings.profile') }}", 'profileForm'); },
-        saveJourney(){ return this.handleSave('journey', "{{ route('admin.about.settings.journey') }}", 'journeyForm'); },
-        saveEducation(){ return this.handleSave('education', "{{ route('admin.about.settings.education') }}", 'educationForm'); },
-        saveTraining(){ return this.handleSave('training', "{{ route('admin.about.settings.training') }}", 'trainingForm'); },
-        saveExperience(){ return this.handleSave('experience', "{{ route('admin.about.settings.experience') }}", 'experienceForm'); },
-        saveSkills(){ return this.handleSave('skills', "{{ route('admin.about.settings.skills') }}", 'skillsForm'); },
-        savePhilosophy(){ return this.handleSave('philosophy', "{{ route('admin.about.settings.philosophy') }}", 'philosophyForm'); },
-        savePassions(){ return this.handleSave('passions', "{{ route('admin.about.settings.passions') }}", 'passionsForm'); },
+        saveHeader(){ return this.handleSave('header', "{{ route('admin.about.header') }}", 'headerForm'); },
+        saveTerminal(){ return this.handleSave('terminal', "{{ route('admin.about.terminal') }}", 'terminalForm'); },
+        saveTags(){ return this.handleSave('tags', "{{ route('admin.about.tags') }}", 'tagsForm'); },
+        saveProfile(){ return this.handleSave('profile', "{{ route('admin.about.profile') }}", 'profileForm'); },
+        saveJourney(){ return this.handleSave('journey', "{{ route('admin.about.journey') }}", 'journeyForm'); },
+        saveEducation(){ return this.handleSave('education', "{{ route('admin.about.education') }}", 'educationForm'); },
+        saveTraining(){ return this.handleSave('training', "{{ route('admin.about.training') }}", 'trainingForm'); },
+        saveExperience(){ return this.handleSave('experience', "{{ route('admin.about.experience') }}", 'experienceForm'); },
+        saveSkills(){ return this.handleSave('skills', "{{ route('admin.about.skills') }}", 'skillsForm'); },
+        savePhilosophy(){ return this.handleSave('philosophy', "{{ route('admin.about.philosophy') }}", 'philosophyForm'); },
+        savePassions(){ return this.handleSave('passions', "{{ route('admin.about.passions') }}", 'passionsForm'); },
     }
 }
 </script>

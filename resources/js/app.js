@@ -113,6 +113,76 @@ window.tagInput = function ({
   };
 };
 
+// ==================================================
+// ✅ GLOBAL IMAGE UPLOAD (preview + drag/drop)
+// ==================================================
+function initImageUploads() {
+  document.querySelectorAll('.js-image-upload').forEach((root) => {
+    if (root.dataset.bound === '1') return; // prevent double bind
+    root.dataset.bound = '1';
+
+    const input = root.querySelector('input[type="file"]');
+    if (!input) return;
+
+    const previewSel = root.getAttribute('data-preview');
+    if (!previewSel) return;
+
+    const prev = document.querySelector(previewSel);
+    const img = prev?.querySelector('[data-preview-img]');
+    const cap = prev?.querySelector('[data-preview-cap]');
+
+    const setActive = (on) => {
+      root.classList.toggle('border-emerald-400/50', on);
+      root.classList.toggle('bg-emerald-400/5', on);
+    };
+
+    ['dragenter', 'dragover'].forEach((evt) => {
+      root.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setActive(true);
+      });
+    });
+
+    ['dragleave', 'drop'].forEach((evt) => {
+      root.addEventListener(evt, (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setActive(false);
+      });
+    });
+
+    root.addEventListener('drop', (e) => {
+      const files = Array.from(e.dataTransfer?.files || []).filter((f) =>
+        f.type.startsWith('image/')
+      );
+      if (!files.length) return;
+
+      const dt = new DataTransfer();
+      dt.items.add(files[0]);
+      input.files = dt.files;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+
+    input.addEventListener('change', () => {
+      const file = input.files?.[0];
+      if (!file || !file.type.startsWith('image/')) {
+        prev?.classList.add('hidden');
+        return;
+      }
+
+      if (img) img.src = URL.createObjectURL(file);
+      if (cap) cap.textContent = file.name;
+
+      prev?.classList.remove('hidden');
+    });
+  });
+}
+
+// global expose (optional)
+window.initImageUploads = initImageUploads;
+document.addEventListener('DOMContentLoaded', initImageUploads);
+
 
 Alpine.start()
 

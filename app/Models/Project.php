@@ -33,6 +33,7 @@ class Project extends Model
         'stack'       => 'array',
         'features'    => 'array',
         'is_featured' => 'boolean',
+        'visibility'  => 'boolean',
     ];
 
     public function scopeActive($q)

@@ -28,7 +28,6 @@ class HomePageSettingSeeder extends Seeder
                     'featured_projects' => [
                         'title' => 'Featured Projects',
                         'subtitle' => 'A selection of recent work showcasing quality, performance, and clean architecture.',
-                        'button_text' => 'See all →',
                     ],
                     'process' => [
                         'title' => 'How I Work',
@@ -118,6 +117,12 @@ class HomePageSettingSeeder extends Seeder
                     'button_text' => 'Let’s Talk',
                 ],
 
+                // FEATURED PROJECTS SETTINGS
+                'featured_projects' => [
+                    'button_text' => 'See all',
+                    'limit' => 6,
+                ],
+                
                 // WHY CHOOSE ME (cards)
                 'why_choose_me' => [
                     [
@@ -187,12 +192,6 @@ class HomePageSettingSeeder extends Seeder
                     ['q' => 'Do you work with WordPress too?', 'a' => 'Yes. Theme development, customization, speed optimization, and business websites.'],
                     ['q' => 'Can you build APIs for mobile apps?', 'a' => 'Yes. I build secure REST APIs with authentication, versioning, and documentation.'],
                     ['q' => 'Do you ensure security?', 'a' => 'Yes. Validation, authorization, rate limiting, and security best practices are applied.'],
-                ],
-
-                // FEATURED PROJECTS SETTINGS
-                'featured_projects' => [
-                    'button_text' => 'See all',
-                    'limit' => 6,
                 ],
             ]
         );

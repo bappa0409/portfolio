@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Services\GitHubService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
@@ -26,8 +25,10 @@ class ProjectController extends Controller
         $validated = $request->validate([
             'title'      => ['required', 'string', 'max:255'],
             'subtitle'   => ['nullable', 'string', 'max:255'],
-
             'status'     => ['required', 'in:Live,Private,In Progress'],
+
+            'stack'      => ['required', 'array', 'min:1'],
+            'stack.*'    => ['string', 'max:50'],
 
             'overview'   => ['nullable', 'string'],
             'features'   => ['nullable', 'string'],
@@ -37,7 +38,7 @@ class ProjectController extends Controller
             'gallery.*'  => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
         ]);
 
-        // ✅ Backend slug from title (unique)
+        // unique slug
         $baseSlug = Str::slug($validated['title']);
         $slug = $baseSlug;
         $i = 1;
@@ -45,24 +46,22 @@ class ProjectController extends Controller
             $slug = $baseSlug . '-' . $i++;
         }
 
-        // ✅ Features: one per line -> array
-        $features = collect(preg_split("/\r\n|\n|\r/", $request->input('features', '')))
+        // features => array
+        $features = collect(preg_split("/\r\n|\n|\r/", (string) $request->input('features', '')))
             ->map(fn ($x) => trim($x))
             ->filter()
             ->values()
             ->all();
 
-        // ✅ Checkboxes (unchecked হলে request এ আসে না)
+        // checkboxes
         $visibility = $request->boolean('visibility', true);
         $isFeatured = $request->boolean('is_featured', false);
 
-        // ✅ Upload folder (matches your frontend: asset('images/projects/...'))
+        // upload dir
         $dir = public_path('images/projects');
-        if (!is_dir($dir)) {
-            @mkdir($dir, 0755, true);
-        }
+        if (!is_dir($dir)) @mkdir($dir, 0755, true);
 
-        // ✅ Main image upload
+        // main image
         $mainFilename = null;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -70,7 +69,7 @@ class ProjectController extends Controller
             $file->move($dir, $mainFilename);
         }
 
-        // ✅ Gallery upload (multiple)
+        // gallery images
         $galleryFiles = [];
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $g) {
@@ -82,23 +81,27 @@ class ProjectController extends Controller
             }
         }
 
-        // ✅ INSERT
         Project::create([
             'title'       => $validated['title'],
             'slug'        => $slug,
             'subtitle'    => $validated['subtitle'] ?? null,
             'status'      => $validated['status'],
+
+            'stack'       => array_values(array_unique($validated['stack'])),
+
             'visibility'  => $visibility,
             'is_featured' => $isFeatured,
+
             'overview'    => $validated['overview'] ?? null,
             'features'    => $features,
             'image'       => $mainFilename,
             'gallery'     => $galleryFiles,
         ]);
 
-        return redirect()
-            ->route('admin.project.index')
-            ->with('success', 'Project created successfully!');
+        return response()->json([
+            'message'  => 'Project created successfully..!!',
+            'redirect' => route('admin.projects.index'),
+        ]);
     }
 
     public function edit(Project $project)
@@ -113,6 +116,9 @@ class ProjectController extends Controller
             'subtitle'   => ['nullable', 'string', 'max:255'],
             'status'     => ['required', 'in:Live,Private,In Progress'],
 
+            'stack'      => ['required', 'array', 'min:1'],
+            'stack.*'    => ['string', 'max:50'],
+
             'overview'   => ['nullable', 'string'],
             'features'   => ['nullable', 'string'],
 
@@ -120,15 +126,14 @@ class ProjectController extends Controller
             'gallery'    => ['nullable', 'array'],
             'gallery.*'  => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
 
-            // optional switches
-            'regenerate_slug' => ['nullable'], // checkbox
-            'replace_gallery' => ['nullable'], // checkbox
+            'regenerate_slug' => ['nullable'],
+            'replace_gallery' => ['nullable'],
         ]);
 
         $dir = public_path('images/projects');
         if (!is_dir($dir)) @mkdir($dir, 0755, true);
 
-        // ✅ slug: default keep old, regenerate only if checkbox checked
+        // slug regenerate optional
         if ($request->boolean('regenerate_slug')) {
             $baseSlug = Str::slug($validated['title']);
             $slug = $baseSlug;
@@ -139,20 +144,19 @@ class ProjectController extends Controller
             $project->slug = $slug;
         }
 
-        // ✅ features lines -> array
-        $features = collect(preg_split("/\r\n|\n|\r/", $request->input('features', '')))
+        // features => array
+        $features = collect(preg_split("/\r\n|\n|\r/", (string) $request->input('features', '')))
             ->map(fn ($x) => trim($x))
             ->filter()
             ->values()
             ->all();
 
-        // ✅ checkboxes
+        // checkboxes (unchecked হলে false হবে)
         $project->visibility  = $request->boolean('visibility', false);
         $project->is_featured = $request->boolean('is_featured', false);
 
-        // ✅ main image replace
+        // main image replace
         if ($request->hasFile('image')) {
-            // delete old
             if (!empty($project->image)) {
                 $old = $dir . '/' . $project->image;
                 if (is_file($old)) @unlink($old);
@@ -164,11 +168,11 @@ class ProjectController extends Controller
             $project->image = $mainFilename;
         }
 
-        // ✅ gallery: append OR replace (based on checkbox)
-        $existingGallery = is_array($project->gallery) ? $project->gallery : [];
+        // gallery existing
+        $existingGallery = is_array($project->gallery) ? $project->gallery : (json_decode($project->gallery, true) ?: []);
 
+        // replace gallery optional
         if ($request->boolean('replace_gallery')) {
-            // delete old gallery files
             foreach ($existingGallery as $g) {
                 $p = $dir . '/' . $g;
                 if (is_file($p)) @unlink($p);
@@ -176,6 +180,7 @@ class ProjectController extends Controller
             $existingGallery = [];
         }
 
+        // new gallery upload
         $newGalleryFiles = [];
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $g) {
@@ -187,72 +192,99 @@ class ProjectController extends Controller
             }
         }
 
-        // merge + unique
         $project->gallery = array_values(array_unique(array_merge($existingGallery, $newGalleryFiles)));
 
-        // ✅ simple fields
-        $project->title      = $validated['title'];
-        $project->subtitle   = $validated['subtitle'] ?? null;
-        $project->status     = $validated['status'];
-        $project->overview   = $validated['overview'] ?? null;
-        $project->features   = $features;
+        // fields
+        $project->title    = $validated['title'];
+        $project->subtitle = $validated['subtitle'] ?? null;
+        $project->status   = $validated['status'];
+
+        $project->stack    = array_values(array_unique($validated['stack']));
+
+        $project->overview = $validated['overview'] ?? null;
+        $project->features = $features;
 
         $project->save();
 
-        return redirect()
-            ->route('admin.project.index')
-            ->with('success', 'Project updated successfully!');
+        // ✅ AJAX friendly response
+        return response()->json([
+            'message'  => 'Project updated successfully!',
+            'redirect' => route('admin.projects.index'),
+        ]);
     }
 
     public function destroy(Project $project)
     {
-        $project->delete();
-        return back()->with('success', 'Project deleted successfully!');
-    }
+        $dir = public_path('images/projects');
+        if (!is_dir($dir)) @mkdir($dir, 0755, true);
 
-    private function validated(Request $request, ?int $ignoreId = null): array
-    {
-        return $request->validate([
-            'title'      => ['required', 'string', 'max:255'],
-            'slug'       => ['nullable', 'string', 'max:255'],
-            'subtitle'   => ['nullable', 'string', 'max:255'],
-            'image'      => ['nullable', 'string', 'max:255'], 
-            'overview'   => ['nullable', 'string'],
-            'status'     => ['required', 'string', 'max:50'],
+        // delete main image
+        if (!empty($project->image)) {
+            $old = $dir . '/' . $project->image;
+            if (is_file($old)) @unlink($old);
+        }
+
+        // delete gallery images
+        $gallery = is_array($project->gallery) ? $project->gallery : (json_decode($project->gallery, true) ?: []);
+        foreach ($gallery as $g) {
+            $p = $dir . '/' . $g;
+            if (is_file($p)) @unlink($p);
+        }
+
+        $project->delete();
+
+        // ✅ AJAX friendly response
+        return response()->json([
+            'message' => 'Project deleted successfully!',
         ]);
     }
 
-    private function linesToArray($value): array
-    {
-        if (is_array($value)) return array_values(array_filter($value));
-
-        $lines = preg_split("/\r\n|\n|\r/", (string) $value);
-        $lines = array_map(fn($x) => trim($x), $lines);
-        return array_values(array_filter($lines, fn($x) => $x !== ''));
-    }
-
+    // ✅ MULTI DELETE
     public function multiDestroy(Request $request)
     {
         $ids = $request->input('ids', []);
-
         if (!is_array($ids) || count($ids) === 0) {
-            return response()->json(['status' => false, 'message' => 'No items selected.'], 422);
+            return response()->json(['message' => 'No project selected.'], 422);
         }
 
-        Project::whereIn('id', $ids)->delete();
+        $dir = public_path('images/projects');
+        if (!is_dir($dir)) @mkdir($dir, 0755, true);
 
-        return response()->json(['status' => true, 'message' => 'Selected projects deleted successfully.']);
-    }
+        $projects = Project::whereIn('id', $ids)->get();
 
-    public function visibilityChange(Project $id) // route: /visibility-change/{id:id}
-    {
-        $id->visibility = !$id->visibility;
-        $id->save();
+        foreach ($projects as $project) {
+            // delete main image
+            if (!empty($project->image)) {
+                $old = $dir . '/' . $project->image;
+                if (is_file($old)) @unlink($old);
+            }
+
+            // delete gallery
+            $gallery = is_array($project->gallery) ? $project->gallery : (json_decode($project->gallery, true) ?: []);
+            foreach ($gallery as $g) {
+                $p = $dir . '/' . $g;
+                if (is_file($p)) @unlink($p);
+            }
+
+            $project->delete();
+        }
 
         return response()->json([
-            'status' => true,
-            'message' => 'Visibility updated.',
-            'visibility' => (bool) $id->visibility
+            'message' => 'Selected projects deleted successfully!',
+        ]);
+    }
+
+    // ✅ VISIBILITY TOGGLE (axios)
+    public function toggleVisibility($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->visibility = !$project->visibility;
+        $project->save();
+
+        return response()->json([
+            'status'     => true,
+            'visibility' => (bool) $project->visibility,
+            'message'    => 'Visibility updated',
         ]);
     }
 }

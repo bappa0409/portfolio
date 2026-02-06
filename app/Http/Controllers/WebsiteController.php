@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AboutSetting;
+use App\Models\ContactSetting;
 use App\Models\HomePageSetting;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -14,16 +15,30 @@ class WebsiteController extends Controller
     public function home()
     {
         $home = HomePageSetting::firstOrFail();
-        $limit = (int) data_get($home->featured_projects, 'limit', 6);
+
+        $featuredLimit = (int) data_get($home->featured_projects, 'limit', 6);
+        $featuredBtnText = (string) data_get($home->featured_projects, 'button_text', 'See all');
 
         $projects = Project::query()
             ->where('visibility', true)
             ->where('is_featured', true)
             ->latest()
-            ->take($limit)
+            ->take($featuredLimit)
             ->get();
+
         $meta = $home->sections_meta ?? [];
-        return view('pages.home', compact('home', 'projects', 'meta'));
+        $miniStats = collect(data_get($home->hero, 'mini_stats', []))
+            ->filter(fn ($item) =>
+                !empty($item['value']) &&
+                !empty($item['label'])
+            )
+            ->values()
+            ->all();
+        $heroImage = data_get($home->hero, 'profile_image')
+        ? asset('storage/' . data_get($home->hero, 'profile_image'))
+        : asset('images/profile.jpg');
+
+        return view('pages.home', compact('home', 'projects', 'meta', 'featuredBtnText','miniStats','heroImage'));
     }
 
     public function projects(Request $request, GitHubService $github)
@@ -139,21 +154,13 @@ class WebsiteController extends Controller
 
     public function about()
     {
-        // $skills = [
-        //     'Backend' => ['Laravel', 'PHP', 'MySQL', 'Redis', 'Queues', 'Auth/RBAC'],
-        //     'Frontend' => ['Blade', 'Tailwind', 'Alpine.js', 'Livewire (optional)'],
-        //     'Tools' => ['Git', 'Postman', 'Docker (basic)', 'Linux', 'Nginx (basic)'],
-        //     'Deployment' => ['cPanel', 'VPS', 'SSL', 'Basic CI/CD'],
-        // ];
-
-        // return view('pages.about', compact('skills'));
-
-        $settings = AboutSetting::firstOrCreate([]);
+        $settings = AboutSetting::firstOrFail();
         return view('pages.about', compact('settings'));
     }
 
     public function contact()
     {
-        return view('pages.contact');
+        $settings = ContactSetting::firstOrFail(); 
+        return view('pages.contact', compact('settings'));
     }
 }
