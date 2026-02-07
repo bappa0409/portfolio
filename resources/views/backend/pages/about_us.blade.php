@@ -248,33 +248,6 @@
                 <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile.title')"></p>
             </div>
 
-            <div>
-                <label class="text-xs font-mono text-slate-400">LOCATION</label>
-                <input name="profile[location]" value="{{ data_get($profile,'location') }}"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile.location')"></p>
-            </div>
-            <div>
-                <label class="text-xs font-mono text-slate-400">MOBILE</label>
-                <input name="profile[mobile]" value="{{ data_get($profile,'mobile') }}"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile.mobile')"></p>
-            </div>
-
-            <div>
-                <label class="text-xs font-mono text-slate-400">EMAIL</label>
-                <input name="profile[email]" value="{{ data_get($profile,'email') }}"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile.email')"></p>
-            </div>
-
-            <div>
-                <label class="text-xs font-mono text-slate-400">GITHUB URL</label>
-                <input name="profile[github]" value="{{ data_get($profile,'github') }}"
-                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
-                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile.github')"></p>
-            </div>
-
             <div class="md:col-span-2 rounded-md border border-white/10 bg-slate-950/30 p-4">
                 <p class="text-xs font-mono text-slate-400 mb-2">STATUS BLOCK</p>
 
@@ -299,6 +272,159 @@
                             class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
                         <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile.status.collab')"></p>
                     </div>
+                </div>
+            </div>
+
+            {{-- CV UPLOAD (PDF ONLY) --}}
+            {{-- <div class="md:col-span-2 grid md:grid-cols-12 gap-4 items-start">
+                <div class="md:col-span-9">
+                    <label class="text-xs font-mono text-slate-400">CV (PDF)</label>
+
+                    <label for="about_cv_file"
+                        class="mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden">
+
+                        <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
+
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">⧉</div>
+                                <div>
+                                    <p class="text-sm text-white/85 font-semibold">Upload CV (PDF)</p>
+                                    <p class="text-[11px] text-slate-400 font-mono">click to upload • only .pdf • max 5MB</p>
+                                </div>
+                            </div>
+
+                            <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">PDF</span>
+                        </div>
+
+                        <input id="about_cv_file" type="file" name="cv_file" accept="application/pdf" class="hidden">
+                    </label>
+
+                    
+                    <div id="aboutCvPreview" class="mt-3 hidden">
+                        <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden p-3">
+                            <div class="flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-9 w-9 rounded-md border border-white/10 bg-slate-950/40 flex items-center justify-center text-white/70">PDF</div>
+                                    <div>
+                                        <p id="aboutCvName" class="text-sm text-white/85 font-semibold truncate max-w-[260px]"></p>
+                                        <p id="aboutCvSize" class="text-[11px] text-slate-400 font-mono"></p>
+                                    </div>
+                                </div>
+
+                                <button type="button"
+                                    class="text-[11px] font-mono text-red-300 hover:text-red-200"
+                                    onclick="window.__cvClear && window.__cvClear()">
+                                    REMOVE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('cv_file')"></p>
+                </div>
+
+                <div class="md:col-span-3 flex flex-col items-center">
+                    @if(data_get($settings,'cv.path'))
+                        <a href="{{ asset('storage/'.data_get($settings,'cv.path')) }}"
+                           target="_blank"
+                           class="w-full text-center rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs font-mono text-emerald-200 hover:text-emerald-100">
+                           VIEW_CURRENT_CV
+                        </a>
+
+                        <p class="mt-2 text-[10px] font-mono text-slate-400 break-all">
+                            {{ data_get($settings,'cv.original_name') }}
+                        </p>
+                    @else
+                        <div class="w-full text-center rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs font-mono text-slate-500">
+                            NO CV
+                        </div>
+                    @endif
+                </div>
+            </div> --}}
+            {{-- CV UPLOAD (PDF ONLY) - ALPINE --}}
+            <div class="md:col-span-2 grid md:grid-cols-12 gap-4 items-start"
+                x-data="cvUploader({
+                    inputId: 'about_cv_file',
+                    maxMB: 5,
+                    existingUrl: @js(data_get($settings,'cv.path') ? asset('storage/'.data_get($settings,'cv.path')) : ''),
+                    existingName: @js(data_get($settings,'cv.original_name') ?? ''),
+                })">
+
+                <div class="md:col-span-9">
+                    <label class="text-xs font-mono text-slate-400">CV (PDF)</label>
+
+                    <label for="about_cv_file"
+                        class="mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden">
+
+                        <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
+
+                        <div class="flex items-center justify-between gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">⧉</div>
+                                <div>
+                                    <p class="text-sm text-white/85 font-semibold">Upload CV (PDF)</p>
+                                    <p class="text-[11px] text-slate-400 font-mono">click to upload • only .pdf • max 5MB</p>
+                                </div>
+                            </div>
+
+                            <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">PDF</span>
+                        </div>
+
+                        <input id="about_cv_file"
+                            type="file"
+                            name="cv_file"
+                            accept="application/pdf"
+                            class="hidden"
+                            @change="onPick($event)">
+                    </label>
+
+                    {{-- Selected preview --}}
+                    <div class="mt-3" x-show="picked" x-transition x-cloak>
+                        <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden p-3">
+                            <div class="flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="h-9 w-9 rounded-md border border-white/10 bg-slate-950/40 flex items-center justify-center text-white/70">PDF</div>
+                                    <div>
+                                        <p class="text-sm text-white/85 font-semibold truncate max-w-[260px]" x-text="pickedName"></p>
+                                        <p class="text-[11px] text-slate-400 font-mono" x-text="pickedSize"></p>
+                                        <p class="text-[11px] text-red-300 font-mono mt-1" x-show="pickedError" x-text="pickedError"></p>
+                                    </div>
+                                </div>
+
+                                <button type="button"
+                                    class="text-[11px] font-mono text-red-300 hover:text-red-200"
+                                    @click="clear()">
+                                    REMOVE
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="$root.err('cv_file')"></p>
+                </div>
+
+                {{-- Current CV --}}
+                <div class="md:col-span-3 flex flex-col items-center">
+                    <template x-if="existingUrl">
+                        <div class="w-full">
+                            <a :href="existingUrl" target="_blank"
+                                class="block w-full text-center rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs font-mono text-emerald-200 hover:text-emerald-100">
+                                VIEW_CURRENT_CV
+                            </a>
+
+                            <p class="mt-2 text-[10px] font-mono text-slate-400 break-all" x-text="existingName"></p>
+                        </div>
+                    </template>
+
+                    <template x-if="!existingUrl">
+                        <div
+                            class="h-28 w-28 rounded-md border border-white/10 bg-white/5 shadow-md
+                                flex items-center justify-center
+                                text-xs font-mono text-slate-400">
+                            NO CV
+                        </div>
+                    </template>
                 </div>
             </div>
 
@@ -346,8 +472,11 @@
                             alt="Profile image"
                             class="h-28 w-28 rounded-full object-cover border border-white/10 shadow-md">
                     @else
-                        <div class="h-28 w-28 rounded-full flex items-center justify-center border border-white/10 bg-white/5 text-slate-500 text-xs font-mono">
-                            NO IMAGE
+                        <div
+                            class="h-28 w-28 rounded-md border border-white/10 bg-white/5 shadow-md
+                                flex items-center justify-center
+                                text-xs font-mono text-slate-400">
+                            NO CV
                         </div>
                     @endif
                 </div>
@@ -776,6 +905,61 @@ function aboutSettings(){
         saveSkills(){ return this.handleSave('skills', "{{ route('admin.about.skills') }}", 'skillsForm'); },
         savePhilosophy(){ return this.handleSave('philosophy', "{{ route('admin.about.philosophy') }}", 'philosophyForm'); },
         savePassions(){ return this.handleSave('passions', "{{ route('admin.about.passions') }}", 'passionsForm'); },
+    }
+}
+</script>
+
+<script>
+function cvUploader({ existingUrl = '', existingName = '' } = {}) {
+    return {
+        existingUrl,
+        existingName,
+
+        picked: false,
+        pickedName: '',
+        pickedSize: '',
+        pickedError: '',
+
+        onPick(e) {
+            this.pickedError = '';
+            const input = e.target;
+            const file = input.files && input.files[0] ? input.files[0] : null;
+
+            if (!file) {
+                this.clear();
+                return;
+            }
+
+            const isPdf = file.type === 'application/pdf' || (file.name || '').toLowerCase().endsWith('.pdf');
+            if (!isPdf) {
+                this.pickedError = 'Only PDF files are allowed.';
+                input.value = '';
+                this.picked = false;
+                return;
+            }
+
+            // 5MB client check (backend also validates)
+            const maxBytes = 5 * 1024 * 1024;
+            if (file.size > maxBytes) {
+                this.pickedError = 'Max allowed size is 5MB.';
+                input.value = '';
+                this.picked = false;
+                return;
+            }
+
+            this.picked = true;
+            this.pickedName = file.name;
+            this.pickedSize = `Size: ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+        },
+
+        clear() {
+            const input = document.getElementById('about_cv_file');
+            if (input) input.value = '';
+            this.picked = false;
+            this.pickedName = '';
+            this.pickedSize = '';
+            this.pickedError = '';
+        },
     }
 }
 </script>

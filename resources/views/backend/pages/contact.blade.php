@@ -16,8 +16,6 @@
     $page_meta     = $settings->page_meta ?? [];
     $contact_cards = $settings->contact_cards ?? [];
     $social_links  = $settings->social_links ?? [];
-    $system_status = $settings->system_status ?? [];
-    $availability  = $settings->availability ?? [];
 @endphp
 
 <div class="mt-4 rounded-md glass cyber-glow p-6 relative" x-data="contactSettings()" x-init="init()" x-cloak>
@@ -30,8 +28,6 @@
                 'page_meta' => 'PAGE_META',
                 'contact_cards' => 'CONTACT_CARDS',
                 'social_links' => 'SOCIAL_LINKS',
-                'system_status' => 'SYSTEM_STATUS',
-                'availability' => 'AVAILABILITY',
             ];
         @endphp
 
@@ -173,8 +169,7 @@ function contactSettings(){
     return {
         tab: 'page_meta',
         saving: {
-            page_meta:false, contact_cards:false, social_links:false,
-            system_status:false, availability:false
+            page_meta:false, contact_cards:false, social_links:false
         },
         errors: {},
 

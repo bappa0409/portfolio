@@ -69,30 +69,18 @@ class AboutSettingsController extends Controller
         $validated = $request->validate([
             'profile.name' => ['nullable', 'string', 'max:255'],
             'profile.title' => ['nullable', 'string', 'max:255'],
-            'profile.location' => ['nullable', 'string', 'max:255'],
-            'profile.email' => ['nullable', 'email', 'max:255'],
-            'profile.mobile' => ['nullable', 'string', 'max:255'],
-            'profile.github' => ['nullable', 'url', 'max:255'],
-
             'profile.status.available' => ['nullable', 'string', 'max:255'],
             'profile.status.response' => ['nullable', 'string', 'max:255'],
             'profile.status.collab' => ['nullable', 'string', 'max:255'],
-
-            // optional image
             'profile_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
-        // ✅ existing profile (json)
         $profile = $settings->profile ?? [];
 
-        // ✅ merge new profile inputs (so old keys are not lost)
         $incoming = $validated['profile'] ?? [];
         $profile = array_replace_recursive($profile, $incoming);
 
-        // ✅ optional image upload -> save into profile json
         if ($request->hasFile('profile_image')) {
-
-            // delete old image from json (optional)
             $oldPath = data_get($profile, 'profile_image');
             if ($oldPath && Storage::disk('public')->exists($oldPath)) {
                 Storage::disk('public')->delete($oldPath);

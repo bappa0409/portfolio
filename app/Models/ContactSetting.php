@@ -10,15 +10,11 @@ class ContactSetting extends Model
         'page_meta',
         'contact_cards',
         'social_links',
-        'system_status',
-        'availability',
     ];
 
     protected $casts = [
         'page_meta'      => 'array',
         'contact_cards'  => 'array',
         'social_links'   => 'array',
-        'system_status'  => 'array',
-        'availability'   => 'array',
     ];
 }

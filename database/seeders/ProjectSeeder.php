@@ -10,7 +10,6 @@ class ProjectSeeder extends Seeder
     public function run(): void
     {
         $projects = [
-
             [
                 'slug' => 'inventory-management-system',
                 'title' => 'Inventory Management System',
@@ -23,6 +22,12 @@ class ProjectSeeder extends Seeder
                 'is_featured' => true,
                 'type' => 'professional',
                 'overview' => 'A full inventory system with suppliers, products, purchase/sales, stock alerts, and reporting.',
+                'process' => [
+                    ['title' => 'Planning',    'desc' => 'Requirements & architecture'],
+                    ['title' => 'Development', 'desc' => 'Modules, APIs, integrations'],
+                    ['title' => 'Testing',     'desc' => 'Manual & regression checks'],
+                    ['title' => 'Deploy',      'desc' => 'Production + support'],
+                ],
                 'features' => [
                     'Role-based access (Admin/Manager/Staff)',
                     'Stock in/out and low-stock alerts',
@@ -43,6 +48,13 @@ class ProjectSeeder extends Seeder
                 'type' => 'professional',
                 'is_featured' => true,
                 'overview' => 'An ecommerce site with product catalog, cart, checkout, and admin order management.',
+                
+                'process' => [
+                    ['title' => 'Planning',    'desc' => 'Requirements & architecture'],
+                    ['title' => 'Development', 'desc' => 'Modules, APIs, integrations'],
+                    ['title' => 'Testing',     'desc' => 'Manual & regression checks'],
+                    ['title' => 'Deploy',      'desc' => 'Production + support'],
+                ],
                 'features' => [
                     'Product catalog & search',
                     'Cart and checkout flow',
@@ -63,6 +75,12 @@ class ProjectSeeder extends Seeder
                 'type' => 'professional',
                 'is_featured' => true,
                 'overview' => 'A booking API with authentication, slots, bookings, cancellations, and admin endpoints.',
+                'process' => [
+                    ['title' => 'Planning',    'desc' => 'Requirements & architecture'],
+                    ['title' => 'Development', 'desc' => 'Modules, APIs, integrations'],
+                    ['title' => 'Testing',     'desc' => 'Manual & regression checks'],
+                    ['title' => 'Deploy',      'desc' => 'Production + support'],
+                ],
                 'features' => [
                     'Token auth (Sanctum)',
                     'Rate limiting and request validation',
@@ -83,6 +101,13 @@ class ProjectSeeder extends Seeder
                 'is_featured' => false,
                 'type' => 'professional',
                 'overview' => 'An ERP solution built for managing core business operations with role-based access.',
+                
+                'process' => [
+                    ['title' => 'Planning',    'desc' => 'Requirements & architecture'],
+                    ['title' => 'Development', 'desc' => 'Modules, APIs, integrations'],
+                    ['title' => 'Testing',     'desc' => 'Manual & regression checks'],
+                    ['title' => 'Deploy',      'desc' => 'Production + support'],
+                ],
                 'features' => [
                     'HR & employee management',
                     'Inventory & stock management',
@@ -103,6 +128,12 @@ class ProjectSeeder extends Seeder
                 'is_featured' => false,
                 'type' => 'professional',
                 'overview' => 'A news portal CMS with admin panel, editor roles, and publishing workflow.',
+                'process' => [
+                    ['title' => 'Planning',    'desc' => 'Requirements & architecture'],
+                    ['title' => 'Development', 'desc' => 'Modules, APIs, integrations'],
+                    ['title' => 'Testing',     'desc' => 'Manual & regression checks'],
+                    ['title' => 'Deploy',      'desc' => 'Production + support'],
+                ],
                 'features' => [
                     'Category, tag, and post management',
                     'Editor & admin roles',
@@ -123,6 +154,12 @@ class ProjectSeeder extends Seeder
                 'is_featured' => false,
                 'type' => 'professional',
                 'overview' => 'A business website built with WordPress theme customization and performance optimization.',
+                'process' => [
+                    ['title' => 'Planning',    'desc' => 'Requirements & architecture'],
+                    ['title' => 'Development', 'desc' => 'Modules, APIs, integrations'],
+                    ['title' => 'Testing',     'desc' => 'Manual & regression checks'],
+                    ['title' => 'Deploy',      'desc' => 'Production + support'],
+                ],
                 'features' => [
                     'Custom theme development',
                     'Responsive pages (Home, About, Services, Contact)',

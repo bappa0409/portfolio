@@ -22,6 +22,7 @@ class Project extends Model
         'stack',
         'features',
         'overview',
+        'process',
         'status',
         'visibility',
         'is_featured',
@@ -31,6 +32,7 @@ class Project extends Model
     protected $casts = [
         'gallery'     => 'array',
         'stack'       => 'array',
+        'process' => 'array',
         'features'    => 'array',
         'is_featured' => 'boolean',
         'visibility'  => 'boolean',

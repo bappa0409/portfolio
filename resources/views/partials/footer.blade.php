@@ -1,4 +1,4 @@
-<footer class="relative border-t border-emerald-400/15 bg-black/50 backdrop-blur-lg mt-20">
+<footer class="relative border-t border-emerald-400/15 bg-black/50 backdrop-blur-lg">
     <div class="absolute inset-0 cyber-grid opacity-20 pointer-events-none"></div>
 
     <div class="relative z-10 mx-auto max-w-6xl px-4 py-12

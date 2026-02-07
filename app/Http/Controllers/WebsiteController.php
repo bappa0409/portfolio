@@ -116,37 +116,56 @@ class WebsiteController extends Controller
         ));
     }
 
-    /**
-     * Single Project page
-     * URL: /projects/{slug}
-     */
     public function projectShow(string $slug)
     {
-        $p = Project::where('slug', $slug)->firstOrFail();
+        $p = Project::active()->where('slug', $slug)->firstOrFail();
+
+        // ---------- normalize helpers ----------
+        $arr = fn ($v) => is_array($v)
+            ? array_values(array_filter($v, fn($x) => !is_null($x) && $x !== ''))
+            : (json_decode($v ?? '[]', true) ?: []);
+
+        // ---------- core ----------
+        $mainImage = $p->image ?: null;
+
+        $gallery = $arr($p->gallery);
+        if ($mainImage) {
+            $gallery = array_values(array_filter($gallery, fn ($g) => $g !== $mainImage));
+        }
+
+        // gallery thumbnails (main image first)
+        $galleryThumbs = array_values(array_filter(array_merge([$mainImage], $gallery)));
+
+        // ✅ process normalize (array of {title, desc})
+        $process = collect($arr($p->process ?? '[]'))
+            ->map(function ($row) {
+                if (!is_array($row)) return null;
+                $title = trim((string)($row['title'] ?? ''));
+                $desc  = trim((string)($row['desc'] ?? ''));
+                if ($title === '' && $desc === '') return null;
+                return ['title' => $title, 'desc' => $desc];
+            })
+            ->filter()
+            ->values()
+            ->all();
 
         $project = [
-            'type'     => $p->type,
-            'featured' => (bool) $p->featured,
-            'title'    => $p->title,
-            'subtitle' => $p->subtitle,
-            'status'   => $p->status,
-            'image'    => $p->image,
-            'slug'     => $p->slug,
-            'url'      => $p->url ?? null,
+            'id'          => $p->id,
+            'slug'        => $p->slug,
+            'type'        => $p->type,
+            'is_featured' => (bool) $p->is_featured,
+            'title'       => (string) $p->title,
+            'subtitle'    => (string) ($p->subtitle ?? ''),
+            'overview'    => (string) ($p->overview ?? ''),
+            'status'      => (string) $p->status,
+            'image'       => $mainImage,
+            'gallery'     => $gallery,
+            'thumbnails'  => $galleryThumbs,
+            'stack'       => $arr($p->stack),
+            'features'    => $arr($p->features),
 
-            'gallery'  => is_array($p->gallery)
-                            ? $p->gallery
-                            : (json_decode($p->gallery ?? '[]', true) ?: []),
-
-            'stack'    => is_array($p->stack)
-                            ? $p->stack
-                            : (json_decode($p->stack ?? '[]', true) ?: []),
-
-            'features' => is_array($p->features)
-                            ? $p->features
-                            : (json_decode($p->features ?? '[]', true) ?: []),
-
-            'overview' => $p->overview ?? '',
+            // ✅ add
+            'process'     => $process,
         ];
 
         return view('pages.project-show', compact('project'));

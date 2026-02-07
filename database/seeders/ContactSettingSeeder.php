@@ -22,6 +22,7 @@ class ContactSettingSeeder extends Seeder
                     'phone' => '+880 1928040976',
                     'location' => 'Dhaka, Bangladesh',
                     'timezone' => 'BST (UTC+6)',
+                    'github' => 'https://github.com/bappa0409',
                 ],
                 'social_links' => [
                     'linkedin' => 'https://www.linkedin.com/in/bappa-sutradhar-94261b160',

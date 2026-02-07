@@ -13,37 +13,17 @@
            class="text-xs font-mono text-emerald-200 hover:text-emerald-100">← Back</a>
     </div>
 
-    @php
-        // stack as array
-        $stackOld = old(
-            'stack',
-            is_array($project->stack) ? $project->stack : (json_decode($project->stack, true) ?: [])
-        );
-
-        // features textarea text
-        $featuresText = old(
-            'features',
-            is_array($project->features)
-                ? implode("\n", $project->features)
-                : (string) $project->features
-        );
-
-        // gallery as array
-        $gal = is_array($project->gallery) ? $project->gallery : (json_decode($project->gallery, true) ?: []);
-    @endphp
-
     <div class="mt-4 rounded-md glass cyber-glow p-6 relative" x-data="projectEditForm()" x-cloak>
         <div class="absolute inset-0 scanline rounded-md pointer-events-none"></div>
 
         <form id="projectEditForm"
               method="POST"
               action="{{ route('admin.projects.update', $project->id) }}"
-              class="mt-6 grid md:grid-cols-2 gap-5"
+              class="mt-6 grid md:grid-cols-2 gap-3"
               enctype="multipart/form-data"
               @submit.prevent="submit()">
 
             @csrf
-            {{-- FIX: @method('PUT') removed to avoid "method_field" error --}}
             <input type="hidden" name="_method" value="PUT">
 
             {{-- TITLE --}}
@@ -92,7 +72,7 @@
                     <input id="main_image" type="file" name="image" accept="image/*" class="hidden">
                 </label>
 
-                {{-- Existing image --}}
+                {{-- Existing + New preview --}}
                 <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                     <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden">
                         @if($project->image)
@@ -101,12 +81,9 @@
                         @else
                             <div class="w-full h-24 bg-gradient-to-br from-emerald-400/15 to-white/0"></div>
                         @endif
-                        <div class="px-2 py-1 text-[10px] font-mono text-slate-300 truncate">
-                            Current
-                        </div>
+                        <div class="px-2 py-1 text-[10px] font-mono text-slate-300 truncate">Current</div>
                     </div>
 
-                    {{-- New preview (hidden initially) --}}
                     <div id="mainImagePreviewBox" class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden hidden">
                         <img id="mainImagePreviewImg" src="" class="w-full h-24 object-cover" alt="New main">
                         <div id="mainImagePreviewCap" class="px-2 py-1 text-[10px] font-mono text-slate-300 truncate"></div>
@@ -125,7 +102,7 @@
                 <select name="stack[]" multiple required
                         class="select2 mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">
                     @foreach (['Laravel', 'CodeIgniter', 'PHP', 'MySQL', 'REST API', 'WordPress', 'JavaScript', 'React', 'Bootstrap', 'Tailwind CSS'] as $st)
-                        <option value="{{ $st }}" @selected(collect($stackOld)->contains($st))>{{ $st }}</option>
+                        <option value="{{ $st }}" @selected(collect(old('stack', $stackOld))->contains($st))>{{ $st }}</option>
                     @endforeach
                 </select>
 
@@ -147,43 +124,6 @@
 
                 <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('status')"></p>
                 @error('status') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
-            </div>
-
-            {{-- CHECKBOXES --}}
-            <div class="md:col-span-2 grid sm:grid-cols-2 gap-4">
-                <label class="flex items-center gap-2 text-xs font-mono text-slate-300">
-                    <input type="checkbox" name="visibility" value="1"
-                           @checked(old('visibility', $project->visibility) ? true : false)
-                           class="rounded border-white/20 bg-slate-950/40 text-emerald-400">
-                    Visible (show on website)
-                </label>
-
-                <label class="flex items-center gap-2 text-xs font-mono text-slate-300">
-                    <input type="checkbox" name="is_featured" value="1"
-                           @checked(old('is_featured', $project->is_featured) ? true : false)
-                           class="rounded border-white/20 bg-slate-950/40 text-emerald-400">
-                    Featured
-                </label>
-            </div>
-
-            {{-- OVERVIEW --}}
-            <div class="md:col-span-2">
-                <label class="text-xs font-mono text-slate-400">OVERVIEW</label>
-                <textarea name="overview" rows="5"
-                          class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">{{ old('overview', $project->overview) }}</textarea>
-
-                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('overview')"></p>
-                @error('overview') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
-            </div>
-
-            {{-- FEATURES --}}
-            <div class="md:col-span-2">
-                <label class="text-xs font-mono text-slate-400">FEATURES (one per line)</label>
-                <textarea name="features" rows="6"
-                          class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">{{ $featuresText }}</textarea>
-
-                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('features')"></p>
-                @error('features') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
             </div>
 
             {{-- GALLERY --}}
@@ -228,6 +168,141 @@
                 @error('gallery') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
                 @error('gallery.*') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
             </div>
+
+            {{-- CHECKBOXES --}}
+            <div class="md:col-span-2 grid sm:grid-cols-2 gap-4">
+                <label class="flex items-center gap-2 text-xs font-mono text-slate-300">
+                    <input type="checkbox" name="visibility" value="1"
+                           @checked(old('visibility', $project->visibility) ? true : false)
+                           class="rounded border-white/20 bg-slate-950/40 text-emerald-400">
+                    Visible (show on website)
+                </label>
+
+                <label class="flex items-center gap-2 text-xs font-mono text-slate-300">
+                    <input type="checkbox" name="is_featured" value="1"
+                           @checked(old('is_featured', $project->is_featured) ? true : false)
+                           class="rounded border-white/20 bg-slate-950/40 text-emerald-400">
+                    Featured
+                </label>
+            </div>
+
+            {{-- OVERVIEW --}}
+            <div class="md:col-span-2">
+                <label class="text-xs font-mono text-slate-400">OVERVIEW</label>
+                <textarea name="overview" rows="5"
+                          class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white">{{ old('overview', $project->overview) }}</textarea>
+
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('overview')"></p>
+                @error('overview') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- FEATURES (dynamic) --}}
+            <div class="md:col-span-2">
+                <label class="text-xs font-mono text-slate-400">FEATURES</label>
+
+                <div x-data="{ items: @js(old('features', $featuresArr ?? [])) }"
+                     class="mt-2 rounded-md border border-white/10 bg-slate-950/30 p-4">
+
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="text-xs font-mono text-slate-400">FEATURE ITEMS</p>
+
+                        <button type="button"
+                            class="text-[11px] font-mono text-emerald-200 hover:text-emerald-100"
+                            @click="items.push('')">
+                            + ADD_FEATURE
+                        </button>
+                    </div>
+
+                    <template x-for="(f,i) in items" :key="i">
+                        <div class="mb-3 flex flex-wrap md:flex-nowrap items-center gap-3">
+                            <input class="flex-1 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                                   :name="`features[${i}]`"
+                                   x-model="items[i]"
+                                   placeholder="e.g. Role based access">
+
+                            <button type="button"
+                                class="shrink-0 text-[11px] font-mono text-red-300 hover:text-red-200"
+                                @click="items.splice(i,1)">
+                                REMOVE
+                            </button>
+                        </div>
+                    </template>
+
+                    <template x-for="(f,i) in items" :key="'err-'+i">
+                        <p class="text-[11px] text-red-300 font-mono" x-text="$root.__pf_err?.(`features.${i}`)"></p>
+                    </template>
+
+                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="$root.__pf_err?.('features')"></p>
+                </div>
+
+                @error('features') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
+                @error('features.*') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- PROCESS (dynamic) --}}
+            <div class="md:col-span-2">
+                <label class="text-xs font-mono text-slate-400">DEVELOPMENT PROCESS</label>
+
+                <div
+                    x-data="{
+                        items: @js(old('process', ($processArr ?? []) ?: [
+                            ['title' => 'Planning',    'desc' => 'Requirements & architecture'],
+                            ['title' => 'Development', 'desc' => 'Modules, APIs, integrations'],
+                            ['title' => 'Testing',     'desc' => 'Manual & regression checks'],
+                            ['title' => 'Deploy',      'desc' => 'Production + support'],
+                        ]))
+                    }"
+                    class="mt-2 rounded-md border border-white/10 bg-slate-950/30 p-4"
+                >
+                    <div class="flex items-center justify-between mb-3">
+                        <p class="text-xs font-mono text-slate-400">PROCESS STEPS</p>
+
+                        <button type="button"
+                            class="text-[11px] font-mono text-emerald-200 hover:text-emerald-100"
+                            @click="items.push({ title: '', desc: '' })">
+                            + ADD_STEP
+                        </button>
+                    </div>
+
+                    <template x-for="(p,i) in items" :key="i">
+                        <div class="mb-3 grid md:grid-cols-12 gap-3 items-start">
+                            <div class="md:col-span-4">
+                                <label class="text-[10px] font-mono text-slate-400">TITLE</label>
+                                <input class="mt-1 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                                       :name="`process[${i}][title]`"
+                                       x-model="p.title"
+                                       placeholder="Planning">
+                                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="$root.__pf_err?.(`process.${i}.title`)"></p>
+                            </div>
+
+                            <div class="md:col-span-7">
+                                <label class="text-[10px] font-mono text-slate-400">DESCRIPTION</label>
+                                <input class="mt-1 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                                       :name="`process[${i}][desc]`"
+                                       x-model="p.desc"
+                                       placeholder="Requirements & architecture">
+                                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="$root.__pf_err?.(`process.${i}.desc`)"></p>
+                            </div>
+
+                            <div class="md:col-span-1 flex md:justify-end pt-5">
+                                <button type="button"
+                                    class="shrink-0 text-[11px] font-mono text-red-300 hover:text-red-200"
+                                    @click="items.splice(i,1)">
+                                    REMOVE
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="$root.__pf_err?.('process')"></p>
+                </div>
+
+                @error('process') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
+                @error('process.*.title') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
+                @error('process.*.desc') <p class="mt-1 text-xs text-red-400 font-mono">{{ $message }}</p> @enderror
+            </div>
+
+            
 
             <div class="md:col-span-2 flex gap-3">
                 <button type="submit"
@@ -277,7 +352,6 @@
         });
     };
 
-    // main image preview
     const mainInput = document.getElementById('main_image');
     const mainWrap  = mainInput?.closest('label');
     const mainBox   = document.getElementById('mainImagePreviewBox');
@@ -299,7 +373,6 @@
         bindDropZone(mainWrap, mainInput, { multiple: false });
     }
 
-    // gallery preview
     const gallery = document.getElementById('gallery');
     const galWrap = gallery?.closest('label');
     const preview = document.getElementById('galleryPreview');
@@ -341,6 +414,10 @@ function projectEditForm(){
         submitting: false,
         errors: {},
 
+        init(){
+            this.__pf_err = (key) => this.err(key);
+        },
+
         err(key){
             return (this.errors && this.errors[key]) ? this.errors[key][0] : '';
         },
@@ -357,7 +434,6 @@ function projectEditForm(){
             const url = formEl.getAttribute('action');
             const fd  = new FormData(formEl);
 
-            // FIX: ensure _method exists
             if (!fd.has('_method')) fd.append('_method', 'PUT');
 
             const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');

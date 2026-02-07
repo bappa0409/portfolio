@@ -54,11 +54,6 @@ class AboutSettingsSeeder extends Seeder
                 'profile' => [
                     'name' => 'Bappa Sutradhar',
                     'title' => 'Assistant Programmer • Laravel Developer',
-                    'location' => 'Dhaka, Bangladesh • BST (UTC+6)',
-                    'mobile' => '+8801928040976',
-                    'email' => 'sutradhar019@gmail.com',
-                    'github' => 'https://github.com/bappa0409',
-                    'profile_image' => 'profile.jpg',
                     'status' => [
                         'available' => 'Available for new projects',
                         'response' => 'Usually responds within 24h',
@@ -68,12 +63,7 @@ class AboutSettingsSeeder extends Seeder
 
                 // MY JOURNEY
                 'journey' =>
-                    "I’m a Laravel-focused developer working as an Assistant Programmer in Dhaka.
-I enjoy building real-world systems like ERP modules, management dashboards, news portals,
-and internal business applications.
-
-My strength is turning requirements into clean, maintainable features—database design,
-APIs, admin panels, bug fixing, testing releases, and supporting production users.",
+                    "I’m a Laravel-focused developer working as an Assistant Programmer in Dhaka. I enjoy building real-world systems like ERP modules, management dashboards, news portals, and internal business applications. My strength is turning requirements into clean, maintainable features—database design, APIs, admin panels, bug fixing, testing releases, and supporting production users.",
 
                 // EDUCATION
                 'education' => [

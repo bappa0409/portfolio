@@ -114,6 +114,83 @@ window.tagInput = function ({
 };
 
 // ==================================================
+// ✅ GLOBAL CV UPLOAD (Alpine) - PDF ONLY (preview)
+// ==================================================
+window.cvUploader = function ({
+  inputId = 'about_cv_file',
+  maxMB = 5,
+  existingUrl = '',
+  existingName = '',
+} = {}) {
+  return {
+    inputId,
+    maxMB,
+    existingUrl,
+    existingName,
+
+    picked: false,
+    pickedName: '',
+    pickedSize: '',
+    pickedError: '',
+
+    // helper
+    _isPdf(file) {
+      if (!file) return false;
+      return (
+        file.type === 'application/pdf' ||
+        String(file.name || '').toLowerCase().endsWith('.pdf')
+      );
+    },
+
+    _fmtMB(bytes) {
+      return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+    },
+
+    onPick(e) {
+      this.pickedError = '';
+      const input = e?.target;
+      const file = input?.files?.[0];
+
+      if (!file) {
+        this.clear();
+        return;
+      }
+
+      // PDF only
+      if (!this._isPdf(file)) {
+        this.pickedError = 'Only PDF files are allowed.';
+        input.value = '';
+        this.picked = false;
+        return;
+      }
+
+      // size check
+      const maxBytes = this.maxMB * 1024 * 1024;
+      if (file.size > maxBytes) {
+        this.pickedError = `Max allowed size is ${this.maxMB}MB.`;
+        input.value = '';
+        this.picked = false;
+        return;
+      }
+
+      this.picked = true;
+      this.pickedName = file.name;
+      this.pickedSize = `Size: ${this._fmtMB(file.size)}`;
+    },
+
+    clear() {
+      const input = document.getElementById(this.inputId);
+      if (input) input.value = '';
+      this.picked = false;
+      this.pickedName = '';
+      this.pickedSize = '';
+      this.pickedError = '';
+    },
+  };
+};
+
+
+// ==================================================
 // ✅ GLOBAL IMAGE UPLOAD (preview + drag/drop)
 // ==================================================
 function initImageUploads() {

@@ -610,181 +610,177 @@
     </section>
 
    {{-- ======================================================================
-WHY CHOOSE TAB (STATS STYLE)
-====================================================================== --}}
-<section x-show="tab==='why_choose'" x-transition class="mt-6">
-    <div class="flex items-center justify-between">
-        <p class="text-emerald-200/80 font-mono text-xs tracking-widest">&gt; WHY_CHOOSE_ME</p>
-
-        <button type="button"
-            class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-4 py-2 text-xs font-mono text-emerald-100 hover:bg-emerald-400/25"
-            @click="saveWhyChoose()" :disabled="saving.why_choose"
-            x-text="saving.why_choose ? 'SAVING...' : 'SAVE_WHY_CHOOSE'">
-        </button>
-    </div>
-
-    <form id="whyChooseForm" class="mt-4" @submit.prevent="saveWhyChoose()">
-        @csrf
-
-        <div x-data="{ items: @js($settings->why_choose_me ?? []) }"
-            class="rounded-md border border-white/10 bg-slate-950/30 p-4">
-
-            {{-- Header --}}
-            <div class="flex items-center justify-between mb-3">
-                <p class="text-xs font-mono text-slate-400">WHY CHOOSE ITEMS</p>
-
-                <button type="button"
-                    class="text-[11px] font-mono text-emerald-200 hover:text-emerald-100"
-                    @click="items.push({ icon:'', title:'', desc:'' })">
-                    + ADD_ITEM
-                </button>
-            </div>
-
-            {{-- Column labels --}}
-            <div class="hidden md:grid md:grid-cols-12 gap-3 mb-2">
-                <p class="md:col-span-1 text-[11px] font-mono text-slate-500">ICON</p>
-                <p class="md:col-span-2 text-[11px] font-mono text-slate-500">TITLE</p>
-                <p class="md:col-span-8 text-[11px] font-mono text-slate-500">DESCRIPTION</p>
-                <span class="md:col-span-1"></span>
-            </div>
-
-            {{-- Rows (STATS STYLE) --}}
-            <template x-for="(w,i) in items" :key="i">
-                <div class="mb-3 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-
-                    {{-- ICON --}}
-                    <input
-                        class="md:col-span-1 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
-                        :name="`why_choose_me[${i}][icon]`"
-                        x-model="w.icon"
-                        placeholder="🔒">
-
-                    {{-- TITLE --}}
-                    <input
-                        class="md:col-span-2 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
-                        :name="`why_choose_me[${i}][title]`"
-                        x-model="w.title"
-                        placeholder="Fast & Secure">
-
-                    {{-- DESCRIPTION --}}
-                    <textarea rows="1"
-                        class="md:col-span-8 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
-                        :name="`why_choose_me[${i}][desc]`"
-                        x-model="w.desc"
-                        placeholder="Short description"></textarea>
-
-                    {{-- REMOVE --}}
-                    <div class="md:col-span-1 flex md:justify-center md:pt-2">
-                        <button type="button"
-                            class="text-[11px] font-mono text-red-300 hover:text-red-200"
-                            @click="items.splice(i,1)">
-                            REMOVE
-                        </button>
-                    </div>
-                </div>
-            </template>
-
-            {{-- Validation errors (Stats style) --}}
-            <template x-for="(w,i) in items" :key="'err-'+i">
-                <div class="mb-2">
-                    <p class="text-[11px] text-red-300 font-mono"
-                        x-text="$root.err(`why_choose_me.${i}.icon`)"></p>
-                    <p class="text-[11px] text-red-300 font-mono"
-                        x-text="$root.err(`why_choose_me.${i}.title`)"></p>
-                    <p class="text-[11px] text-red-300 font-mono"
-                        x-text="$root.err(`why_choose_me.${i}.desc`)"></p>
-                </div>
-            </template>
-
-        </div>
-    </form>
-</section>
-
-
-    {{-- ======================================================================
-    PROCESS TAB
+    WHY CHOOSE TAB (STATS STYLE)
     ====================================================================== --}}
-    {{-- ======================================================================
-PROCESS TAB (STATS STYLE)
-====================================================================== --}}
-<section x-show="tab==='process'" x-transition class="mt-6">
-    <div class="flex items-center justify-between">
-        <p class="text-emerald-200/80 font-mono text-xs tracking-widest">&gt; PROCESS</p>
+    <section x-show="tab==='why_choose'" x-transition class="mt-6">
+        <div class="flex items-center justify-between">
+            <p class="text-emerald-200/80 font-mono text-xs tracking-widest">&gt; WHY_CHOOSE_ME</p>
 
-        <button type="button"
-            class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-4 py-2 text-xs font-mono text-emerald-100 hover:bg-emerald-400/25"
-            @click="saveProcess()" :disabled="saving.process"
-            x-text="saving.process ? 'SAVING...' : 'SAVE_PROCESS'">
-        </button>
-    </div>
-
-    <form id="processForm" class="mt-4" @submit.prevent="saveProcess()">
-        @csrf
-
-        <div x-data="{ items: @js($settings->process ?? []) }"
-            class="rounded-md border border-white/10 bg-slate-950/30 p-4">
-
-            {{-- Header --}}
-            <div class="flex items-center justify-between mb-3">
-                <p class="text-xs font-mono text-slate-400">PROCESS STEPS</p>
-
-                <button type="button"
-                    class="text-[11px] font-mono text-emerald-200 hover:text-emerald-100"
-                    @click="items.push({ step:'', title:'', desc:'' })">
-                    + ADD_STEP
-                </button>
-            </div>
-
-            {{-- Rows (STATS STYLE | GRID BASED) --}}
-            <template x-for="(p,i) in items" :key="i">
-                <div class="mb-3 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
-
-                    {{-- step --}}
-                    <input
-                        class="md:col-span-1 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
-                        :name="`process[${i}][step]`"
-                        x-model="p.step"
-                        placeholder="1">
-
-                    {{-- title --}}
-                    <input
-                        class="md:col-span-2 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
-                        :name="`process[${i}][title]`"
-                        x-model="p.title"
-                        placeholder="Title">
-
-                    {{-- desc --}}
-                    <textarea rows="1"
-                        class="md:col-span-8 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
-                        :name="`process[${i}][desc]`"
-                        x-model="p.desc"
-                        placeholder="Description"></textarea>
-
-                    {{-- remove --}}
-                    <div class="md:col-span-1 flex md:justify-center md:pt-2">
-                        <button type="button"
-                            class="text-[11px] font-mono text-red-300 hover:text-red-200"
-                            @click="items.splice(i,1)">
-                            REMOVE
-                        </button>
-                    </div>
-                </div>
-            </template>
-
-            {{-- Validation errors (optional | same as stats) --}}
-            <template x-for="(p,i) in items" :key="'err-'+i">
-                <div class="mb-2">
-                    {{-- ✅ nested scope, so use $root.err --}}
-                    <p class="text-[11px] text-red-300 font-mono" x-text="$root.err(`process.${i}.step`)"></p>
-                    <p class="text-[11px] text-red-300 font-mono" x-text="$root.err(`process.${i}.title`)"></p>
-                    <p class="text-[11px] text-red-300 font-mono" x-text="$root.err(`process.${i}.desc`)"></p>
-                </div>
-            </template>
-
+            <button type="button"
+                class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-4 py-2 text-xs font-mono text-emerald-100 hover:bg-emerald-400/25"
+                @click="saveWhyChoose()" :disabled="saving.why_choose"
+                x-text="saving.why_choose ? 'SAVING...' : 'SAVE_WHY_CHOOSE'">
+            </button>
         </div>
-    </form>
-</section>
 
+        <form id="whyChooseForm" class="mt-4" @submit.prevent="saveWhyChoose()">
+            @csrf
+
+            <div x-data="{ items: @js($settings->why_choose_me ?? []) }"
+                class="rounded-md border border-white/10 bg-slate-950/30 p-4">
+
+                {{-- Header --}}
+                <div class="flex items-center justify-between mb-3">
+                    <p class="text-xs font-mono text-slate-400">WHY CHOOSE ITEMS</p>
+
+                    <button type="button"
+                        class="text-[11px] font-mono text-emerald-200 hover:text-emerald-100"
+                        @click="items.push({ icon:'', title:'', desc:'' })">
+                        + ADD_ITEM
+                    </button>
+                </div>
+
+                {{-- Column labels --}}
+                <div class="hidden md:grid md:grid-cols-12 gap-3 mb-2">
+                    <p class="md:col-span-1 text-[11px] font-mono text-slate-500">ICON</p>
+                    <p class="md:col-span-2 text-[11px] font-mono text-slate-500">TITLE</p>
+                    <p class="md:col-span-8 text-[11px] font-mono text-slate-500">DESCRIPTION</p>
+                    <span class="md:col-span-1"></span>
+                </div>
+
+                {{-- Rows (STATS STYLE) --}}
+                <template x-for="(w,i) in items" :key="i">
+                    <div class="mb-3 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+
+                        {{-- ICON --}}
+                        <input
+                            class="md:col-span-1 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                            :name="`why_choose_me[${i}][icon]`"
+                            x-model="w.icon"
+                            placeholder="🔒">
+
+                        {{-- TITLE --}}
+                        <input
+                            class="md:col-span-2 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                            :name="`why_choose_me[${i}][title]`"
+                            x-model="w.title"
+                            placeholder="Fast & Secure">
+
+                        {{-- DESCRIPTION --}}
+                        <textarea rows="1"
+                            class="md:col-span-8 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                            :name="`why_choose_me[${i}][desc]`"
+                            x-model="w.desc"
+                            placeholder="Short description"></textarea>
+
+                        {{-- REMOVE --}}
+                        <div class="md:col-span-1 flex md:justify-center md:pt-2">
+                            <button type="button"
+                                class="text-[11px] font-mono text-red-300 hover:text-red-200"
+                                @click="items.splice(i,1)">
+                                REMOVE
+                            </button>
+                        </div>
+                    </div>
+                </template>
+
+                {{-- Validation errors (Stats style) --}}
+                <template x-for="(w,i) in items" :key="'err-'+i">
+                    <div class="mb-2">
+                        <p class="text-[11px] text-red-300 font-mono"
+                            x-text="$root.err(`why_choose_me.${i}.icon`)"></p>
+                        <p class="text-[11px] text-red-300 font-mono"
+                            x-text="$root.err(`why_choose_me.${i}.title`)"></p>
+                        <p class="text-[11px] text-red-300 font-mono"
+                            x-text="$root.err(`why_choose_me.${i}.desc`)"></p>
+                    </div>
+                </template>
+
+            </div>
+        </form>
+    </section>
+
+
+    {{-- ======================================================================
+    PROCESS TAB 
+    ====================================================================== --}}
+    <section x-show="tab==='process'" x-transition class="mt-6">
+        <div class="flex items-center justify-between">
+            <p class="text-emerald-200/80 font-mono text-xs tracking-widest">&gt; PROCESS</p>
+
+            <button type="button"
+                class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-4 py-2 text-xs font-mono text-emerald-100 hover:bg-emerald-400/25"
+                @click="saveProcess()" :disabled="saving.process"
+                x-text="saving.process ? 'SAVING...' : 'SAVE_PROCESS'">
+            </button>
+        </div>
+
+        <form id="processForm" class="mt-4" @submit.prevent="saveProcess()">
+            @csrf
+
+            <div x-data="{ items: @js($settings->process ?? []) }"
+                class="rounded-md border border-white/10 bg-slate-950/30 p-4">
+
+                {{-- Header --}}
+                <div class="flex items-center justify-between mb-3">
+                    <p class="text-xs font-mono text-slate-400">PROCESS STEPS</p>
+
+                    <button type="button"
+                        class="text-[11px] font-mono text-emerald-200 hover:text-emerald-100"
+                        @click="items.push({ step:'', title:'', desc:'' })">
+                        + ADD_STEP
+                    </button>
+                </div>
+
+                {{-- Rows (STATS STYLE | GRID BASED) --}}
+                <template x-for="(p,i) in items" :key="i">
+                    <div class="mb-3 grid grid-cols-1 md:grid-cols-12 gap-3 items-start">
+
+                        {{-- step --}}
+                        <input
+                            class="md:col-span-1 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                            :name="`process[${i}][step]`"
+                            x-model="p.step"
+                            placeholder="1">
+
+                        {{-- title --}}
+                        <input
+                            class="md:col-span-2 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                            :name="`process[${i}][title]`"
+                            x-model="p.title"
+                            placeholder="Title">
+
+                        {{-- desc --}}
+                        <textarea rows="1"
+                            class="md:col-span-8 rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                            :name="`process[${i}][desc]`"
+                            x-model="p.desc"
+                            placeholder="Description"></textarea>
+
+                        {{-- remove --}}
+                        <div class="md:col-span-1 flex md:justify-center md:pt-2">
+                            <button type="button"
+                                class="text-[11px] font-mono text-red-300 hover:text-red-200"
+                                @click="items.splice(i,1)">
+                                REMOVE
+                            </button>
+                        </div>
+                    </div>
+                </template>
+
+                {{-- Validation errors (optional | same as stats) --}}
+                <template x-for="(p,i) in items" :key="'err-'+i">
+                    <div class="mb-2">
+                        {{-- ✅ nested scope, so use $root.err --}}
+                        <p class="text-[11px] text-red-300 font-mono" x-text="$root.err(`process.${i}.step`)"></p>
+                        <p class="text-[11px] text-red-300 font-mono" x-text="$root.err(`process.${i}.title`)"></p>
+                        <p class="text-[11px] text-red-300 font-mono" x-text="$root.err(`process.${i}.desc`)"></p>
+                    </div>
+                </template>
+
+            </div>
+        </form>
+    </section>
 
     {{-- ======================================================================
     TECH STACK TAB

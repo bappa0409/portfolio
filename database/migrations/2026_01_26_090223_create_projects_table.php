@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->json('gallery')->nullable();
 
+            $table->json('process')->nullable();
+
             $table->json('stack')->nullable();
             $table->enum('status', ['Live', 'Private', 'In Progress'])->default('Private');
 

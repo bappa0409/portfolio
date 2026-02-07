@@ -31,11 +31,19 @@ class ProjectController extends Controller
             'stack.*'    => ['string', 'max:50'],
 
             'overview'   => ['nullable', 'string'],
-            'features'   => ['nullable', 'string'],
+
+            // ✅ features এখন array
+            'features'   => ['nullable', 'array'],
+            'features.*' => ['nullable', 'string', 'max:255'],
 
             'image'      => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'gallery'    => ['nullable', 'array'],
             'gallery.*'  => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+
+            // ✅ process
+            'process'         => ['nullable', 'array'],
+            'process.*.title' => ['nullable', 'string', 'max:100'],
+            'process.*.desc'  => ['nullable', 'string', 'max:200'],
         ]);
 
         // unique slug
@@ -46,9 +54,21 @@ class ProjectController extends Controller
             $slug = $baseSlug . '-' . $i++;
         }
 
-        // features => array
-        $features = collect(preg_split("/\r\n|\n|\r/", (string) $request->input('features', '')))
-            ->map(fn ($x) => trim($x))
+        // ✅ features sanitize
+        $features = collect($request->input('features', []))
+            ->map(fn($x) => trim((string)$x))
+            ->filter()
+            ->values()
+            ->all();
+
+        // ✅ process sanitize (empty title+desc বাদ)
+        $process = collect($request->input('process', []))
+            ->map(function ($row) {
+                $title = trim((string)($row['title'] ?? ''));
+                $desc  = trim((string)($row['desc'] ?? ''));
+                if ($title === '' && $desc === '') return null;
+                return ['title' => $title, 'desc' => $desc];
+            })
             ->filter()
             ->values()
             ->all();
@@ -93,7 +113,9 @@ class ProjectController extends Controller
             'is_featured' => $isFeatured,
 
             'overview'    => $validated['overview'] ?? null,
-            'features'    => $features,
+            'features'    => $features ?: null,   // ✅
+            'process'     => $process ?: null,    // ✅
+
             'image'       => $mainFilename,
             'gallery'     => $galleryFiles,
         ]);
@@ -104,10 +126,38 @@ class ProjectController extends Controller
         ]);
     }
 
+
     public function edit(Project $project)
     {
-        return view('backend.pages.project.edit', compact('project'));
+        // stack as array
+        $stackOld = is_array($project->stack)
+            ? $project->stack
+            : (json_decode($project->stack ?? '[]', true) ?: []);
+
+        // features as array
+        $featuresArr = is_array($project->features)
+            ? $project->features
+            : (json_decode($project->features ?? '[]', true) ?: []);
+
+        // process as array
+        $processArr = is_array($project->process ?? null)
+            ? $project->process
+            : (json_decode($project->process ?? '[]', true) ?: []);
+
+        // gallery as array
+        $gal = is_array($project->gallery)
+            ? $project->gallery
+            : (json_decode($project->gallery ?? '[]', true) ?: []);
+
+        return view('backend.pages.project.edit', compact(
+            'project',
+            'stackOld',
+            'featuresArr',
+            'processArr',
+            'gal'
+        ));
     }
+
 
     public function update(Request $request, Project $project)
     {
@@ -120,11 +170,19 @@ class ProjectController extends Controller
             'stack.*'    => ['string', 'max:50'],
 
             'overview'   => ['nullable', 'string'],
-            'features'   => ['nullable', 'string'],
+
+            // ✅ features এখন array
+            'features'   => ['nullable', 'array'],
+            'features.*' => ['nullable', 'string', 'max:255'],
 
             'image'      => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'gallery'    => ['nullable', 'array'],
             'gallery.*'  => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+
+            // ✅ process
+            'process'         => ['nullable', 'array'],
+            'process.*.title' => ['nullable', 'string', 'max:100'],
+            'process.*.desc'  => ['nullable', 'string', 'max:200'],
 
             'regenerate_slug' => ['nullable'],
             'replace_gallery' => ['nullable'],
@@ -144,9 +202,21 @@ class ProjectController extends Controller
             $project->slug = $slug;
         }
 
-        // features => array
-        $features = collect(preg_split("/\r\n|\n|\r/", (string) $request->input('features', '')))
-            ->map(fn ($x) => trim($x))
+        // ✅ features sanitize
+        $features = collect($request->input('features', []))
+            ->map(fn($x) => trim((string)$x))
+            ->filter()
+            ->values()
+            ->all();
+
+        // ✅ process sanitize
+        $process = collect($request->input('process', []))
+            ->map(function ($row) {
+                $title = trim((string)($row['title'] ?? ''));
+                $desc  = trim((string)($row['desc'] ?? ''));
+                if ($title === '' && $desc === '') return null;
+                return ['title' => $title, 'desc' => $desc];
+            })
             ->filter()
             ->values()
             ->all();
@@ -202,16 +272,19 @@ class ProjectController extends Controller
         $project->stack    = array_values(array_unique($validated['stack']));
 
         $project->overview = $validated['overview'] ?? null;
-        $project->features = $features;
+
+        // ✅ update new fields
+        $project->features = $features ?: null;
+        $project->process  = $process ?: null;
 
         $project->save();
 
-        // ✅ AJAX friendly response
         return response()->json([
             'message'  => 'Project updated successfully!',
             'redirect' => route('admin.projects.index'),
         ]);
     }
+
 
     public function destroy(Project $project)
     {
