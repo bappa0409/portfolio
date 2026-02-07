@@ -24,6 +24,7 @@ return new class extends Migration
             $table->json('skills')->nullable();
             $table->json('philosophy')->nullable();
             $table->json('passions')->nullable();
+            $table->json('footer')->nullable();
             $table->timestamps();
         });
     }

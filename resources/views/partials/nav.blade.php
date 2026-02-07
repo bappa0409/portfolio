@@ -1,3 +1,14 @@
+@php
+  $profile = $aboutSettings?->profile ?? [];
+  $name  = data_get($profile, 'name', 'BAPPA SUTRADHAR');
+  $title = data_get($profile, 'title', 'Laravel Developer');
+  $cvPath = data_get($profile, 'cv.path');
+  $initials = collect(explode(' ', trim($name)))
+      ->filter()
+      ->map(fn($word) => mb_substr($word, 0, 1))
+      ->take(2)
+      ->implode('.');
+@endphp
 <nav x-data="{
     open: false,
     lock() { document.body.classList.add('overflow-hidden'); },
@@ -24,18 +35,18 @@
 
                 <div class="absolute inset-1 rounded-md bg-emerald-400/10 flex items-center justify-center">
                     <span class="text-2xl font-bold font-mono text-emerald-300 tracking-[-2px]">
-                        B.S
+                        {{ $initials }}
                     </span>
                 </div>
             </div>
 
             <div class="hidden sm:block leading-tight">
                 <div
-                    class="text-xl font-bold font-mono bg-gradient-to-r from-emerald-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
-                    BAPPA SUTRADHAR
+                    class="text-xl font-bold font-mono bg-gradient-to-r from-emerald-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent uppercase">
+                    {{$name}}
                 </div>
                 <div class="text-xs text-emerald-300/80 font-mono tracking-wider">
-                    &gt; Laravel Developer<span class="animate-pulse">_</span>
+                    &gt; {{$title}}<span class="animate-pulse">_</span>
                 </div>
             </div>
         </a>
@@ -71,8 +82,7 @@
 
             <div class="w-px h-6 bg-white/10 mx-2"></div>
 
-            <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
-                class="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 font-semibold text-cyan-200
+            <a href="{{ $cvPath ? asset('storage/'.$cvPath) : '#' }}" target="_blank" class="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 font-semibold text-cyan-200
                       hover:bg-cyan-400/20 hover:border-cyan-400/40 transition focus:outline-none focus:ring-2 focus:ring-cyan-400/30">
                 ⭳ Download CV
             </a>
@@ -86,7 +96,7 @@
 
         <!-- MOBILE ACTIONS -->
         <div class="md:hidden flex items-center gap-2">
-            <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
+            <a href="{{ $cvPath ? asset('storage/'.$cvPath) : '#' }}" target="_blank"
                 class="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-xs font-semibold text-cyan-200 hover:bg-cyan-400/20 transition">
                 ⭳ CV
             </a>
@@ -156,7 +166,7 @@
 
                     <div class="my-3 h-px bg-white/10"></div>
 
-                    <a href="{{ asset('cv/resume.pdf') }}" target="_blank"
+                    <a href="{{ $cvPath ? asset('storage/'.$cvPath) : '#' }}" target="_blank"
                         class="block rounded-md border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-center text-cyan-200">
                         ⭳ Download CV
                     </a>
@@ -169,5 +179,4 @@
             </div>
         </div>
     </template>
-
 </nav>

@@ -158,7 +158,7 @@
                             <div class="relative h-60 px-6 pt-6 overflow-hidden">
                                 @php
                                     $img = $p['image'] ?? null;
-                                    $imgPath = $img ? (str_starts_with($img, 'images/') ? $img : ('images/projects/'.$img)) : null;
+                                    $imgPath = $img ? (str_starts_with($img, 'images/') ? $img : ('upload/images/projects/'.$img)) : null;
                                 @endphp
 
                                 @if($imgPath)
@@ -207,6 +207,11 @@
 
                 <div class="mt-6 grid sm:grid-cols-2 md:grid-cols-4 gap-5">
                     @foreach ($challenges as $c)
+                        @php
+                            $img = $p['image'] ?? null;
+                            $imgPath = $img ? (str_starts_with($img, 'images/') ? $img : ('upload/images/projects/'.$img)) : null;
+                        @endphp
+                        
                         <a href="{{ $c['url'] ?? '#' }}" target="_blank"
                         class="group block rounded-md overflow-hidden glass-soft cyber-glow hover:border-emerald-400/25 transition">
 

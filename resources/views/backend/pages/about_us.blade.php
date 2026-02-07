@@ -19,7 +19,7 @@
     <div class="flex flex-wrap gap-2 border-b border-white/10 pb-3">
         @php
             $tabs = [
-                'header' => 'HEADER',
+                'header' => 'PAGE_META',
                 'terminal' => 'TERMINAL',
                 'tags' => 'TAGS',
                 'profile' => 'PROFILE',
@@ -30,6 +30,7 @@
                 'skills' => 'SKILLS',
                 'philosophy' => 'PHILOSOPHY',
                 'passions' => 'PASSIONS',
+                'footer_section' => 'FOOTER_SECTION',
             ];
         @endphp
 
@@ -57,6 +58,7 @@
         $philosophy = $settings->philosophy ?? [];
         $passions = $settings->passions ?? [];
         $final = $settings->final_cta ?? [];
+        $footer = $settings->footer ?? [];
     @endphp
 
     {{-- ======================================================================
@@ -65,7 +67,6 @@
     <section x-show="tab==='header'" x-transition class="mt-6">
         <div class="flex items-center justify-between">
             <p class="text-emerald-200/80 font-mono text-xs tracking-widest">&gt; HEADER</p>
-
             <button type="button"
                 class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-4 py-2 text-xs font-mono text-emerald-100 hover:bg-emerald-400/25"
                 @click="saveHeader()" :disabled="saving.header" x-text="saving.header ? 'SAVING...' : 'SAVE_HEADER'"></button>
@@ -274,166 +275,119 @@
                     </div>
                 </div>
             </div>
-
-            {{-- CV UPLOAD (PDF ONLY) --}}
-            {{-- <div class="md:col-span-2 grid md:grid-cols-12 gap-4 items-start">
-                <div class="md:col-span-9">
-                    <label class="text-xs font-mono text-slate-400">CV (PDF)</label>
-
-                    <label for="about_cv_file"
-                        class="mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden">
-
-                        <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
-
-                        <div class="flex items-center justify-between gap-4">
-                            <div class="flex items-center gap-3">
-                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">⧉</div>
-                                <div>
-                                    <p class="text-sm text-white/85 font-semibold">Upload CV (PDF)</p>
-                                    <p class="text-[11px] text-slate-400 font-mono">click to upload • only .pdf • max 5MB</p>
-                                </div>
-                            </div>
-
-                            <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">PDF</span>
-                        </div>
-
-                        <input id="about_cv_file" type="file" name="cv_file" accept="application/pdf" class="hidden">
-                    </label>
-
-                    
-                    <div id="aboutCvPreview" class="mt-3 hidden">
-                        <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden p-3">
-                            <div class="flex items-center justify-between gap-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-9 w-9 rounded-md border border-white/10 bg-slate-950/40 flex items-center justify-center text-white/70">PDF</div>
-                                    <div>
-                                        <p id="aboutCvName" class="text-sm text-white/85 font-semibold truncate max-w-[260px]"></p>
-                                        <p id="aboutCvSize" class="text-[11px] text-slate-400 font-mono"></p>
-                                    </div>
-                                </div>
-
-                                <button type="button"
-                                    class="text-[11px] font-mono text-red-300 hover:text-red-200"
-                                    onclick="window.__cvClear && window.__cvClear()">
-                                    REMOVE
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('cv_file')"></p>
-                </div>
-
-                <div class="md:col-span-3 flex flex-col items-center">
-                    @if(data_get($settings,'cv.path'))
-                        <a href="{{ asset('storage/'.data_get($settings,'cv.path')) }}"
-                           target="_blank"
-                           class="w-full text-center rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs font-mono text-emerald-200 hover:text-emerald-100">
-                           VIEW_CURRENT_CV
-                        </a>
-
-                        <p class="mt-2 text-[10px] font-mono text-slate-400 break-all">
-                            {{ data_get($settings,'cv.original_name') }}
-                        </p>
-                    @else
-                        <div class="w-full text-center rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs font-mono text-slate-500">
-                            NO CV
-                        </div>
-                    @endif
-                </div>
-            </div> --}}
-            {{-- CV UPLOAD (PDF ONLY) - ALPINE --}}
-            <div class="md:col-span-2 grid md:grid-cols-12 gap-4 items-start"
+            
+            {{-- CV UPLOAD (PDF ONLY)  --}}
+            <div class="md:col-span-2"
                 x-data="cvUploader({
                     inputId: 'about_cv_file',
                     maxMB: 5,
-                    existingUrl: @js(data_get($settings,'cv.path') ? asset('storage/'.data_get($settings,'cv.path')) : ''),
-                    existingName: @js(data_get($settings,'cv.original_name') ?? ''),
+                    existingUrl: @js(
+                        data_get($settings,'profile.cv.path')
+                            ? asset('storage/'.data_get($settings,'profile.cv.path'))
+                            : ''
+                    ),
+                    existingName: @js(data_get($settings,'profile.cv.original_name') ?? ''),
                 })">
 
-                <div class="md:col-span-9">
-                    <label class="text-xs font-mono text-slate-400">CV (PDF)</label>
+                <label class="text-xs font-mono text-slate-400">CV (PDF)</label>
 
-                    <label for="about_cv_file"
-                        class="mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden">
+                <!-- SINGLE BLOCK -->
+                <div class="mt-2 rounded-md border border-dashed border-white/15 bg-slate-950/30
+                            hover:border-emerald-400/30 transition relative overflow-hidden">
+                    <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
 
-                        <div class="absolute inset-0 scanline opacity-30 pointer-events-none"></div>
-
-                        <div class="flex items-center justify-between gap-4">
+                    <!-- two columns inside one block -->
+                    <div class="grid md:grid-cols-12">
+                        <!-- LEFT: upload -->
+                        <label for="about_cv_file"
+                                class="md:col-span-9 cursor-pointer p-4 border-b md:border-b-0 md:border-r border-white/10">
+                            <div class="flex items-center justify-between gap-4">
                             <div class="flex items-center gap-3">
-                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 flex items-center justify-center text-white/70">⧉</div>
+                                <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5
+                                            flex items-center justify-center text-white/70">⧉</div>
                                 <div>
-                                    <p class="text-sm text-white/85 font-semibold">Upload CV (PDF)</p>
-                                    <p class="text-[11px] text-slate-400 font-mono">click to upload • only .pdf • max 5MB</p>
+                                <p class="text-sm text-white/85 font-semibold">Upload CV (PDF)</p>
+                                <p class="text-[11px] text-slate-400 font-mono">click to upload • only .pdf • max 5MB</p>
                                 </div>
                             </div>
 
-                            <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">PDF</span>
-                        </div>
+                            <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">
+                                PDF
+                            </span>
+                            </div>
 
-                        <input id="about_cv_file"
-                            type="file"
-                            name="cv_file"
-                            accept="application/pdf"
-                            class="hidden"
-                            @change="onPick($event)">
-                    </label>
+                            <input id="about_cv_file"
+                                type="file"
+                                name="cv_file"
+                                accept="application/pdf"
+                                class="hidden"
+                                @change="onPick($event)">
+                        </label>
 
-                    {{-- Selected preview --}}
-                    <div class="mt-3" x-show="picked" x-transition x-cloak>
-                        <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden p-3">
-                            <div class="flex items-center justify-between gap-3">
-                                <div class="flex items-center gap-3">
-                                    <div class="h-9 w-9 rounded-md border border-white/10 bg-slate-950/40 flex items-center justify-center text-white/70">PDF</div>
-                                    <div>
-                                        <p class="text-sm text-white/85 font-semibold truncate max-w-[260px]" x-text="pickedName"></p>
-                                        <p class="text-[11px] text-slate-400 font-mono" x-text="pickedSize"></p>
-                                        <p class="text-[11px] text-red-300 font-mono mt-1" x-show="pickedError" x-text="pickedError"></p>
-                                    </div>
+                        <!-- RIGHT: current view -->
+                        <div class="md:col-span-3 p-4 flex items-center justify-center">
+                            <template x-if="existingUrl">
+                            <a :href="existingUrl" target="_blank"
+                                class="w-full flex items-center justify-between gap-3
+                                        rounded-md px-3">
+                                <div class="flex items-center gap-2">
+                                <div class="h-8 w-8 rounded-md border border-white/10 bg-slate-950/40
+                                            flex items-center justify-center text-white/70 text-xs">PDF</div>
+                                <div class="leading-tight">
+                                    <p class="text-sm text-white/85 font-semibold">Current CV</p>
+                                    <p class="text-[11px] text-slate-400 font-mono">Click to view</p>
+                                </div>
                                 </div>
 
-                                <button type="button"
-                                    class="text-[11px] font-mono text-red-300 hover:text-red-200"
-                                    @click="clear()">
-                                    REMOVE
-                                </button>
+                                <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">
+                                VIEW
+                                </span>
+                            </a>
+                            </template>
+
+                            <template x-if="!existingUrl">
+                            <div class="w-full h-[56px] flex items-center justify-center
+                                        rounded-md border border-white/10 bg-white/5">
+                                <p class="text-xs font-mono text-slate-400">NO CV</p>
                             </div>
+                            </template>
                         </div>
                     </div>
-
-                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="$root.err('cv_file')"></p>
                 </div>
 
-                {{-- Current CV --}}
-                <div class="md:col-span-3 flex flex-col items-center">
-                    <template x-if="existingUrl">
-                        <div class="w-full">
-                            <a :href="existingUrl" target="_blank"
-                                class="block w-full text-center rounded-md border border-white/10 bg-white/5 px-3 py-2 text-xs font-mono text-emerald-200 hover:text-emerald-100">
-                                VIEW_CURRENT_CV
-                            </a>
-
-                            <p class="mt-2 text-[10px] font-mono text-slate-400 break-all" x-text="existingName"></p>
+                <!-- Selected preview (optional, keep as is) -->
+                <div class="mt-3" x-show="picked" x-transition x-cloak>
+                    <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden p-3">
+                    <div class="flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                        <div class="h-9 w-9 rounded-md border border-white/10 bg-slate-950/40 flex items-center justify-center text-white/70">PDF</div>
+                        <div>
+                            <p class="text-sm text-white/85 font-semibold truncate max-w-[260px]" x-text="pickedName"></p>
+                            <p class="text-[11px] text-slate-400 font-mono" x-text="pickedSize"></p>
+                            <p class="text-[11px] text-red-300 font-mono mt-1" x-show="pickedError" x-text="pickedError"></p>
                         </div>
-                    </template>
-
-                    <template x-if="!existingUrl">
-                        <div
-                            class="h-28 w-28 rounded-md border border-white/10 bg-white/5 shadow-md
-                                flex items-center justify-center
-                                text-xs font-mono text-slate-400">
-                            NO CV
                         </div>
-                    </template>
+
+                        <button type="button"
+                                class="text-[11px] font-mono text-red-300 hover:text-red-200"
+                                @click="clear()">
+                        REMOVE
+                        </button>
+                    </div>
+                    </div>
                 </div>
+
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="$root.err('cv_file')"></p>
             </div>
+
+            
 
             {{-- PROFILE IMAGE --}}
             <div class="md:col-span-2 grid md:grid-cols-12 gap-4 items-start">
                 <div class="md:col-span-9">
                     <label class="text-xs font-mono text-slate-400">PROFILE IMAGE</label>
 
-                    <label for="about_profile_image"
+                    <label for="profile_image"
                         class="js-image-upload mt-2 block rounded-md border border-dashed border-white/15 bg-slate-950/30 hover:border-emerald-400/30 transition p-4 cursor-pointer relative overflow-hidden"
                         data-preview="#aboutProfileImagePreview">
 
@@ -451,7 +405,7 @@
                             <span class="text-[10px] px-2 py-1 rounded bg-emerald-400/15 text-emerald-200 border border-emerald-400/20">HERO</span>
                         </div>
 
-                        <input id="about_profile_image" type="file" name="about_profile_image" accept="image/*" class="hidden">
+                        <input id="profile_image" type="file" name="profile_image" accept="image/*" class="hidden">
                     </label>
 
                     <div id="aboutProfileImagePreview" class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 hidden">
@@ -462,7 +416,7 @@
                         </div>
                     </div>
 
-                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('about_profile_image')"></p>
+                    <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('profile_image')"></p>
                 </div>
 
                 <div class="md:col-span-3 flex flex-col items-center">
@@ -476,7 +430,7 @@
                             class="h-28 w-28 rounded-md border border-white/10 bg-white/5 shadow-md
                                 flex items-center justify-center
                                 text-xs font-mono text-slate-400">
-                            NO CV
+                            NO IMAGE
                         </div>
                     @endif
                 </div>
@@ -824,6 +778,79 @@
             </div>
         </form>
     </section>
+
+    {{-- ======================================================================
+    FOOTER
+    ====================================================================== --}}
+    <section x-show="tab==='footer_section'" x-transition class="mt-6">
+        <div class="flex items-center justify-between">
+            <p class="text-emerald-200/80 font-mono text-xs tracking-widest">&gt; FOOTER_SECTION</p>
+            <button type="button"
+                class="rounded-md bg-emerald-400/20 border border-emerald-400/30 px-4 py-2 text-xs font-mono text-emerald-100 hover:bg-emerald-400/25"
+                @click="savePageFooter()" :disabled="saving.footer"
+                x-text="saving.footer ? 'SAVING...' : 'SAVE_PAGE_FOOTER'"></button>
+        </div>
+
+        <form id="pageFooterForm" class="mt-4 grid md:grid-cols-2 gap-3" @submit.prevent="savePageFooter()">
+            @csrf
+
+            <div>
+                <label class="text-xs font-mono text-slate-400">BRAND FIRST</label>
+                <input name="footer[brand_first]" value="{{ data_get($footer,'brand_first') }}"
+                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                    placeholder="Bappa">
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('footer.brand_first')"></p>
+            </div>
+
+            <div>
+                <label class="text-xs font-mono text-slate-400">BRAND LAST</label>
+                <input name="footer[brand_last]" value="{{ data_get($footer,'brand_last') }}"
+                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                    placeholder="Sutradhar">
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('footer.brand_last')"></p>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="text-xs font-mono text-slate-400">TAGLINE (without &gt;)</label>
+                <input name="footer[tagline]" value="{{ data_get($footer,'tagline') }}"
+                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                    placeholder="Building reliable production-grade software">
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('footer.tagline')"></p>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="text-xs font-mono text-slate-400">AVAILABILITY TEXT</label>
+                <input name="footer[availability]" value="{{ data_get($footer,'availability') }}"
+                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                    placeholder="Available for new projects">
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('footer.availability')"></p>
+            </div>
+
+            <div>
+                <label class="text-xs font-mono text-slate-400">BUILD</label>
+                <input name="footer[build]" value="{{ data_get($footer,'build') }}"
+                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                    placeholder="v1.0">
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('footer.build')"></p>
+            </div>
+
+            <div>
+                <label class="text-xs font-mono text-slate-400">SYSTEM STATUS</label>
+                <input name="footer[system_status]" value="{{ data_get($footer,'system_status') }}"
+                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                    placeholder="All systems operational">
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('footer.system_status')"></p>
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="text-xs font-mono text-slate-400">COPYRIGHT NAME</label>
+                <input name="footer[copyright_name]" value="{{ data_get($footer,'copyright_name') }}"
+                    class="mt-2 w-full rounded-md border border-white/10 bg-slate-950/40 px-3 py-2 text-white"
+                    placeholder="Bappa Sutradhar">
+                <p class="mt-1 text-[11px] text-red-300 font-mono" x-text="err('footer.copyright_name')"></p>
+            </div>
+        </form>
+    </section>
 </div>
 @endsection
 
@@ -836,7 +863,7 @@ function aboutSettings(){
         saving: {
             header:false, terminal:false, tags:false, profile:false, journey:false,
             education:false, training:false, experience:false, skills:false,
-            philosophy:false, passions:false
+            philosophy:false, passions:false, footer:false
         },
         errors: {},
 
@@ -905,6 +932,9 @@ function aboutSettings(){
         saveSkills(){ return this.handleSave('skills', "{{ route('admin.about.skills') }}", 'skillsForm'); },
         savePhilosophy(){ return this.handleSave('philosophy', "{{ route('admin.about.philosophy') }}", 'philosophyForm'); },
         savePassions(){ return this.handleSave('passions', "{{ route('admin.about.passions') }}", 'passionsForm'); },
+        savePageFooter(){
+            return this.handleSave('footer', "{{ route('admin.about.footer') }}", 'pageFooterForm');
+        },
     }
 }
 </script>

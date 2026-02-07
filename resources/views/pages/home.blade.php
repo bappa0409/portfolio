@@ -186,7 +186,7 @@
 
             <!-- IMAGE -->
             <div class="relative h-60 px-6 pt-6 overflow-hidden project-media">
-                <img src="{{ asset('images/projects/' . $p['image']) }}" alt="{{ $p['title'] }}"
+                <img src="{{ asset('upload/images/projects/' . $p['image']) }}" alt="{{ $p['title'] }}"
                     class="h-full w-full object-cover" loading="lazy" decoding="async">
 
                 <!-- Overlay -->

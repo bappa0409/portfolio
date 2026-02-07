@@ -14,7 +14,7 @@ class WebsiteController extends Controller
 {
     public function home()
     {
-        $home = HomePageSetting::firstOrFail();
+        $home = HomePageSetting::firstOrCreate(['id' => 1], []);
 
         $featuredLimit = (int) data_get($home->featured_projects, 'limit', 6);
         $featuredBtnText = (string) data_get($home->featured_projects, 'button_text', 'See all');
@@ -43,7 +43,7 @@ class WebsiteController extends Controller
 
     public function projects(Request $request, GitHubService $github)
     {
-        $home = HomePageSetting::firstOrFail();
+        $home = HomePageSetting::firstOrCreate(['id' => 1], []);
         $meta = $home->sections_meta ?? [];
         $activeFilter = $request->get('filter', 'all');
 
@@ -83,10 +83,10 @@ class WebsiteController extends Controller
         $githubRepos = $username ? $github->publicRepos($username, $token) : [];
 
         $challenges = [
-            ['title' => 'Card Generator', 'desc' => 'Component-based UI practice', 'tags' => ['UI','Tailwind'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-1.avif'],
-            ['title' => 'Landing Page', 'desc' => 'Hero + pricing layout', 'tags' => ['HTML','CSS'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-2.avif'],
-            ['title' => 'Dashboard UI', 'desc' => 'Grid layout & stats cards', 'tags' => ['UI','Grid'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-3.avif'],
-            ['title' => 'Form UI', 'desc' => 'Validation + spacing', 'tags' => ['Forms'], 'url' => '#', 'thumb' => 'images/projects/frontend/frontend-4.avif'],
+            ['title' => 'Card Generator', 'desc' => 'Component-based UI practice', 'tags' => ['UI','Tailwind'], 'url' => '#', 'thumb' => 'upload/images/projects/frontend/frontend-1.avif'],
+            ['title' => 'Landing Page', 'desc' => 'Hero + pricing layout', 'tags' => ['HTML','CSS'], 'url' => '#', 'thumb' => 'upload/images/projects/frontend/frontend-2.avif'],
+            ['title' => 'Dashboard UI', 'desc' => 'Grid layout & stats cards', 'tags' => ['UI','Grid'], 'url' => '#', 'thumb' => 'upload/images/projects/frontend/frontend-3.avif'],
+            ['title' => 'Form UI', 'desc' => 'Validation + spacing', 'tags' => ['Forms'], 'url' => '#', 'thumb' => 'upload/images/projects/frontend/frontend-4.avif'],
         ];
 
         $showLocal      = in_array($activeFilter, ['all','featured','professional','personal'], true);
@@ -118,7 +118,7 @@ class WebsiteController extends Controller
 
     public function projectShow(string $slug)
     {
-        $p = Project::active()->where('slug', $slug)->firstOrFail();
+        $p = Project::active()->where('slug', $slug)->firstOrCreate(['id' => 1], []);
 
         // ---------- normalize helpers ----------
         $arr = fn ($v) => is_array($v)
@@ -173,13 +173,13 @@ class WebsiteController extends Controller
 
     public function about()
     {
-        $settings = AboutSetting::firstOrFail();
+        $settings = AboutSetting::firstOrCreate(['id' => 1], []);
         return view('pages.about', compact('settings'));
     }
 
     public function contact()
     {
-        $settings = ContactSetting::firstOrFail(); 
+        $settings = ContactSetting::firstOrCreate(['id' => 1], []); 
         return view('pages.contact', compact('settings'));
     }
 }

@@ -77,7 +77,7 @@
             {{-- HERO IMAGE (no lightbox) --}}
             <div class="relative h-56 md:h-80 overflow-hidden">
                 @if(!empty($project['image']))
-                    <img src="{{ asset('images/projects/'.$project['image']) }}"
+                    <img src="{{ asset('upload/images/projects/'.$project['image']) }}"
                          alt="{{ $project['title'] ?? 'Project' }}"
                          class="h-full w-full object-cover"
                          loading="lazy" decoding="async">
@@ -125,7 +125,7 @@
                             <button type="button"
                                     @click="open({{ $i }})"
                                     class="relative rounded-md overflow-hidden border border-white/10 bg-white/5 hover:border-emerald-400/25 transition aspect-[4/3]">
-                                <img src="{{ asset('images/projects/'.$img) }}"
+                                <img src="{{ asset('upload/images/projects/'.$img) }}"
                                      alt="Gallery image {{ $i+1 }} - {{ $project['title'] ?? 'Project' }}"
                                      class="h-full w-full object-cover"
                                      loading="lazy" decoding="async">

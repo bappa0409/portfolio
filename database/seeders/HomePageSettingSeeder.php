@@ -63,7 +63,7 @@ class HomePageSettingSeeder extends Seeder
                     'tags' => [
                         '3+ Years', 'Laravel', 'CodeIgniter', 'PHP', 'MySQL', 'REST API', 'WordPress', 'SQA',
                     ],
-                    'profile_image' => null,
+                    'profile_image' => 'upload/images/default_profile.jpg',
                     'status' => [
                         'label' => 'Status',
                         'value' => 'Freelance',

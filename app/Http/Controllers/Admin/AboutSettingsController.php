@@ -6,12 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\AboutSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class AboutSettingsController extends Controller
 {
     private function settings(): AboutSetting
     {
         return AboutSetting::updateOrCreate(['id' => 1], []);
+    }
+    private function clearCache(): void
+    {
+        Cache::forget('about_settings');
     }
 
     public function edit()
@@ -30,8 +36,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['header' => $data['header'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Header saved']);
+        return response()->json(['message' => 'Header Saved Successfully..!!']);
     }
 
     public function terminal(Request $request)
@@ -46,8 +53,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['terminal' => $data['terminal'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Terminal saved']);
+        return response()->json(['message' => 'Terminal Saved Successfully..!!']);
     }
 
     public function tags(Request $request)
@@ -58,8 +66,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['tags' => $data['tags'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Tags saved']);
+        return response()->json(['message' => 'Tags Saved Successfully..!!']);
     }
 
     public function profile(Request $request)
@@ -73,7 +82,11 @@ class AboutSettingsController extends Controller
             'profile.status.response' => ['nullable', 'string', 'max:255'],
             'profile.status.collab' => ['nullable', 'string', 'max:255'],
             'profile_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'cv_file' => ['nullable', 'file', 'mimes:pdf', 'max:5120'],
         ]);
+
+        $name = data_get($validated, 'profile.name') ?? data_get($settings->profile, 'name') ?? 'profile';
+        $slug = Str::slug($name);
 
         $profile = $settings->profile ?? [];
 
@@ -86,19 +99,44 @@ class AboutSettingsController extends Controller
                 Storage::disk('public')->delete($oldPath);
             }
 
-            $path = $request->file('profile_image')->store('about', 'public');
+            $file = $request->file('profile_image');
+            $ext  = $file->getClientOriginalExtension();
+
+            $fileName = "{$slug}-profile.{$ext}";
+            $path = $file->storeAs('upload/about', $fileName, 'public');
+
             $profile['profile_image'] = $path;
+        }
+
+        if ($request->hasFile('cv_file')) {
+            $oldCvPath = data_get($profile, 'cv.path');
+            if ($oldCvPath && Storage::disk('public')->exists($oldCvPath)) {
+                Storage::disk('public')->delete($oldCvPath);
+            }
+
+            $file = $request->file('cv_file');
+            $ext  = $file->getClientOriginalExtension();
+
+            $fileName = "{$slug}-cv.{$ext}";
+            $path = $file->storeAs('upload/cv', $fileName, 'public');
+
+            $profile['cv'] = [
+                'path'          => $path,
+                'original_name' => $fileName, // or keep original if you want
+                'size'          => $file->getSize(),
+            ];
         }
 
         $settings->profile = $profile;
         $settings->save();
-
+        $this->clearCache();
 
          return response()->json([
-            'message' => 'Profile updated successfully.',
+            'message' => 'Profile Updated Successfully..!!',
             'data' => [
                 'profile' => $settings->profile,
                 'profile_image' => data_get($settings->profile, 'profile_image'),
+                'cv' => data_get($settings->profile, 'cv'),
             ],
         ]);
     }
@@ -110,8 +148,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['journey' => $data['journey'] ?? null]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Journey saved']);
+        return response()->json(['message' => 'Journey Saved Uuccessfully..!!']);
     }
 
     public function education(Request $request)
@@ -124,8 +163,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['education' => $data['education'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Education saved']);
+        return response()->json(['message' => 'Education Saved Uuccessfully..!!']);
     }
 
     public function training(Request $request)
@@ -138,8 +178,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['training' => $data['training'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Training saved']);
+        return response()->json(['message' => 'Training Saved Successfully..!!']);
     }
 
     public function experience(Request $request)
@@ -157,8 +198,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['experience' => $data['experience'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Experience saved']);
+        return response()->json(['message' => 'Experience Saved Successfully..!!']);
     }
 
     public function skills(Request $request)
@@ -170,8 +212,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['skills' => $data['skills'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Skills saved']);
+        return response()->json(['message' => 'Skills Saved Successfully..!!']);
     }
 
     public function philosophy(Request $request)
@@ -182,8 +225,9 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['philosophy' => $data['philosophy'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Philosophy saved']);
+        return response()->json(['message' => 'Philosophy Saved Successfully..!!']);
     }
 
     public function passions(Request $request)
@@ -195,8 +239,26 @@ class AboutSettingsController extends Controller
         ]);
 
         $this->settings()->update(['passions' => $data['passions'] ?? []]);
+        $this->clearCache();
 
-        return response()->json(['message' => 'Passions saved']);
+        return response()->json(['message' => 'Passions Saved Successfully..!!']);
     }
 
+    public function footer(Request $request)
+    {
+        $data = $request->validate([
+            'footer.brand_first' => ['nullable','string','max:50'],
+            'footer.brand_last' => ['nullable','string','max:50'],
+            'footer.tagline' => ['nullable','string','max:255'],
+            'footer.availability' => ['nullable','string','max:255'],
+            'footer.stack_text' => ['nullable','string','max:255'],
+            'footer.build' => ['nullable','string','max:50'],
+            'footer.system_status' => ['nullable','string','max:120'],
+            'footer.copyright_name' => ['nullable','string','max:120'],
+        ]);
+
+        $this->settings()->update(['footer' => $data['footer'] ?? []]);
+        $this->clearCache();
+        return response()->json(['message' => 'Footer Updated Successfully..!!']);
+    }
 }

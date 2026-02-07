@@ -68,7 +68,7 @@
                             <div class="flex items-center gap-3">
                                 <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 overflow-hidden">
                                     @if($p->image)
-                                        <img src="{{ asset('images/projects/'.$p->image) }}"
+                                        <img src="{{ asset('upload/images/projects/'.$p->image) }}"
                                              alt="{{ $p->title }}"
                                              class="h-full w-full object-cover">
                                     @else

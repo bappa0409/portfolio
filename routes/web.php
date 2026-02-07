@@ -83,6 +83,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::post('/skills', 'skills')->name('skills');
         Route::post('/philosophy', 'philosophy')->name('philosophy');
         Route::post('/passions', 'passions')->name('passions');
+        Route::post('/footer', 'footer')->name('footer');
     });
 
     /* =======================

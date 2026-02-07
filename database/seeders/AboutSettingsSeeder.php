@@ -17,15 +17,11 @@ class AboutSettingsSeeder extends Seeder
         AboutSetting::updateOrCreate(
             ['id' => 1],
             [
-
-                // HEADER
                 'header' => [
                     'kicker' => '> ABOUT_PROTOCOL',
                     'title' => 'ABOUT_ME.EXE',
                     'subtitle' => 'Decoding the human behind the code...',
                 ],
-
-                // TERMINAL SECTION
                 'terminal' => [
                     'whoami' => 'Bappa Sutradhar — Assistant Programmer / Laravel Developer',
 
@@ -43,14 +39,10 @@ class AboutSettingsSeeder extends Seeder
                         'Clean Solution Limited — Service Website with CMS-like Admin',
                     ],
                 ],
-
-                // TAGS (chips)
                 'tags' => [
                     'Laravel', 'PHP', 'MySQL', 'Oracle',
                     'REST API', 'Git', 'SQA', 'Production Support',
                 ],
-
-                // PROFILE CARD
                 'profile' => [
                     'name' => 'Bappa Sutradhar',
                     'title' => 'Assistant Programmer • Laravel Developer',
@@ -59,13 +51,16 @@ class AboutSettingsSeeder extends Seeder
                         'response' => 'Usually responds within 24h',
                         'collab' => 'Open to collaboration',
                     ],
+                    'profile_image' => 'upload/images/default_about.jpg',
+                    'cv' => [
+                        'path' => 'upload/cv/bappa-cv.pdf',
+                        'original_name' => 'bappa-cv.pdf',
+                        'size' => null,
+                    ],
                 ],
-
-                // MY JOURNEY
                 'journey' =>
                     "I’m a Laravel-focused developer working as an Assistant Programmer in Dhaka. I enjoy building real-world systems like ERP modules, management dashboards, news portals, and internal business applications. My strength is turning requirements into clean, maintainable features—database design, APIs, admin panels, bug fixing, testing releases, and supporting production users.",
 
-                // EDUCATION
                 'education' => [
                     [
                         'title' => 'BSc in CSE',
@@ -83,8 +78,6 @@ class AboutSettingsSeeder extends Seeder
                         'note' => 'GPA: 3.81 / 5.00',
                     ],
                 ],
-
-                // TRAINING
                 'training' => [
                     [
                         'title' => 'Web Design',
@@ -97,8 +90,6 @@ class AboutSettingsSeeder extends Seeder
                         'duration' => '3 months',
                     ],
                 ],
-
-                // EXPERIENCE
                 'experience' => [
                     [
                         'role' => 'Assistant Programmer',
@@ -134,8 +125,6 @@ class AboutSettingsSeeder extends Seeder
                         ],
                     ],
                 ],
-
-                // SKILLS (progress bars)
                 'skills' => [
                     ['name' => 'Laravel / PHP', 'percent' => 90],
                     ['name' => 'MySQL / DB Design', 'percent' => 85],
@@ -144,16 +133,12 @@ class AboutSettingsSeeder extends Seeder
                     ['name' => 'Frontend (Tailwind / JS)', 'percent' => 72],
                     ['name' => 'SQA / Testing', 'percent' => 70],
                 ],
-
-                // CODE PHILOSOPHY
                 'philosophy' => [
                     'Clean code & maintainable structure',
                     'Security-first mindset',
                     'Performance-aware development',
                     'Clear communication & reliable delivery',
                 ],
-
-                // PASSION MODULES
                 'passions' => [
                     [
                         'title' => 'Clean Architecture',
@@ -171,6 +156,16 @@ class AboutSettingsSeeder extends Seeder
                         'title' => 'APIs',
                         'desc' => 'REST APIs & integrations',
                     ],
+                ],
+                'footer' => [
+                    'brand_first'     => 'Bappa',
+                    'brand_last'      => 'Sutradhar',
+                    'tagline'         => 'Building reliable production-grade software',
+                    'availability'    => 'Available for new projects',
+                    'stack_text'      => 'Laravel • PHP • MySQL • Tailwind',
+                    'build'           => 'v1.0',
+                    'system_status'   => 'All systems operational',
+                    'copyright_name'  => 'Bappa Sutradhar',
                 ],
             ]
         );

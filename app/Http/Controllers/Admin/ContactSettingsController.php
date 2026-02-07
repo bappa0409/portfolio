@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ContactSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ContactSettingsController extends Controller
 {
@@ -17,6 +18,11 @@ class ContactSettingsController extends Controller
     private function settings(): ContactSetting
     {
         return ContactSetting::firstOrCreate(['id' => 1]);
+    }
+
+    private function clearCache(): void
+    {
+        Cache::forget('contact_settings');
     }
 
     private function mergeAndUpdate(ContactSetting $settings, string $key, array $incoming): array
@@ -37,6 +43,7 @@ class ContactSettingsController extends Controller
         ]);
 
         $settings = $this->settings();
+          $this->clearCache();
         $merged = $this->mergeAndUpdate($settings, 'page_meta', (array) ($validated['page_meta'] ?? []));
 
         return response()->json(['ok'=>true,'message'=>'Page meta updated.','page_meta'=>$merged]);
@@ -52,6 +59,7 @@ class ContactSettingsController extends Controller
         ]);
 
         $settings = $this->settings();
+          $this->clearCache();
         $merged = $this->mergeAndUpdate($settings, 'contact_cards', (array) ($validated['contact_cards'] ?? []));
 
         return response()->json(['ok'=>true,'message'=>'Contact cards updated.','contact_cards'=>$merged]);
@@ -67,6 +75,7 @@ class ContactSettingsController extends Controller
         ]);
 
         $settings = $this->settings();
+          $this->clearCache();
         $merged = $this->mergeAndUpdate($settings, 'social_links', (array) ($validated['social_links'] ?? []));
 
         return response()->json(['ok'=>true,'message'=>'Social links updated.','social_links'=>$merged]);

@@ -18,6 +18,7 @@ class AboutSetting extends Model
         'skills',
         'philosophy',
         'passions',
+        'footer'
     ];
 
     protected $casts = [
@@ -31,5 +32,6 @@ class AboutSetting extends Model
         'skills'     => 'array',
         'philosophy' => 'array',
         'passions'   => 'array',
+        'footer' => 'array',
     ];
 }
