@@ -68,9 +68,9 @@
                             <div class="flex items-center gap-3">
                                 <div class="h-9 w-9 rounded-md border border-white/10 bg-white/5 overflow-hidden">
                                     @if($p->image)
-                                        <img src="{{ asset('upload/images/projects/'.$p->image) }}"
-                                             alt="{{ $p->title }}"
-                                             class="h-full w-full object-cover">
+                                    <img src="{{ Storage::url($p->image) }}"
+                                        alt="{{ $p->title }}"
+                                        class="h-full w-full object-cover">
                                     @else
                                         <div class="h-full w-full bg-gradient-to-br from-emerald-400/15 to-white/0"></div>
                                     @endif

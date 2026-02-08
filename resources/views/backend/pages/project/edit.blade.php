@@ -76,8 +76,7 @@
                 <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
                     <div class="relative rounded-md border border-white/10 bg-white/5 overflow-hidden">
                         @if($project->image)
-                            <img src="{{ asset('upload/images/projects/'.$project->image) }}"
-                                 class="w-full h-24 object-cover" alt="Current main">
+                                 <img src="{{ Storage::url($project->image) }}" class="h-24 w-full object-cover">
                         @else
                             <div class="w-full h-24 bg-gradient-to-br from-emerald-400/15 to-white/0"></div>
                         @endif
@@ -151,11 +150,11 @@
                 </label>
 
                 {{-- Existing gallery thumbnails --}}
-                @if(!empty($gal))
+                @if(!empty($project->gallery))
                     <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-                        @foreach($gal as $g)
+                        @foreach(($project->gallery ?? []) as $img)
                             <div class="rounded-md border border-white/10 bg-white/5 overflow-hidden">
-                                <img src="{{ asset('upload/images/projects/'.$g) }}" class="w-full h-24 object-cover" alt="Gallery">
+                                <img src="{{ Storage::url($img) }}" class="w-full h-24 object-cover" alt="Gallery">
                                 <div class="px-2 py-1 text-[10px] font-mono text-slate-300 truncate">Existing</div>
                             </div>
                         @endforeach

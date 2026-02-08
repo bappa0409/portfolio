@@ -34,11 +34,8 @@ class WebsiteController extends Controller
             )
             ->values()
             ->all();
-        $heroImage = data_get($home->hero, 'profile_image')
-        ? asset('storage/' . data_get($home->hero, 'profile_image'))
-        : asset('images/profile.jpg');
-
-        return view('pages.home', compact('home', 'projects', 'meta', 'featuredBtnText','miniStats','heroImage'));
+        
+        return view('pages.home', compact('home', 'projects', 'meta', 'featuredBtnText','miniStats'));
     }
 
     public function projects(Request $request, GitHubService $github)
@@ -67,16 +64,17 @@ class WebsiteController extends Controller
 
         $visibleProjects = $dbProjects->map(fn ($p) => [
             'type' => $p->type,
-            'featured' => (bool) $p->featured,
+            'featured' => (bool) $p->is_featured,
             'title' => $p->title,
             'subtitle' => $p->subtitle,
             'status' => $p->status,
             'image' => $p->image,
+            'image' => $p->image ? asset('images/projects/'.$p->image) : null,
             'stack' => is_array($p->stack) ? $p->stack : (json_decode($p->stack ?? '[]', true) ?: []),
             'slug' => $p->slug,
             'url' => $p->url ?? null, 
         ])->toArray();
-
+        
         $username = config('services.github.username');
         $token    = config('services.github.token');
 
@@ -174,7 +172,8 @@ class WebsiteController extends Controller
     public function about()
     {
         $settings = AboutSetting::firstOrCreate(['id' => 1], []);
-        return view('pages.about', compact('settings'));
+        $contactSettings = ContactSetting::firstOrCreate(['id' => 1], []);
+        return view('pages.about', compact('settings', 'contactSettings'));
     }
 
     public function contact()

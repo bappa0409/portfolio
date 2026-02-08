@@ -10,6 +10,7 @@
 
     $img       = data_get($profile,'profile_image');
     $imgUrl    = $img ? asset('storage/'.$img) : asset('images/avatar-placeholder.png');
+     $contactCards = $contactSettings?->contact_cards ?? [];
 @endphp
 
 <div class="relative overflow-hidden">
@@ -113,24 +114,24 @@
                     <div>
                         <p class="text-white font-semibold text-lg">{{ data_get($profile,'name','') }}</p>
                         <p class="text-slate-300 text-sm">{{ data_get($profile,'title','') }}</p>
-                        <p class="text-xs text-slate-400 font-mono mt-1">{{ data_get($profile,'location','') }}</p>
+                        <p class="text-xs text-slate-400 font-mono mt-1">{{ data_get($contactCards,'location','') }}, {{ data_get($contactCards,'timezone','') }}</p>
                     </div>
                 </div>
 
                 <div class="mt-5 grid grid-cols-2 gap-3">
                     <div class="rounded-md border border-white/10 bg-slate-950/30 p-4">
                         <p class="text-xs text-slate-400 font-mono">Email</p>
-                        <p class="text-sm text-slate-200 break-all">{{ data_get($profile,'email','') }}</p>
+                        <p class="text-sm text-slate-200 break-all">{{ data_get($contactCards,'email','') }}</p>
                     </div>
                     <div class="rounded-md border border-white/10 bg-slate-950/30 p-4">
                         <p class="text-xs text-slate-400 font-mono">Mobile</p>
-                        <p class="text-sm text-slate-200 break-all">{{ data_get($profile,'mobile','') }}</p>
+                        <p class="text-sm text-slate-200 break-all">{{ data_get($contactCards,'phone','') }}</p>
                     </div>
                 </div>
 
                 <div class="mt-5 text-center rounded-md border border-white/10 bg-slate-950/30 p-4">
                     <p class="text-xs text-slate-400 font-mono">GitHub</p>
-                    @php $gh = data_get($profile,'github'); @endphp
+                    @php $gh = data_get($contactCards,'github'); @endphp
                     @if($gh)
                         <a href="{{ $gh }}" target="_blank" class="text-sm text-emerald-200 hover:text-emerald-100 break-all">
                             {{ \Illuminate\Support\Str::of($gh)->replace(['https://','http://'], '') }}

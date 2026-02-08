@@ -59,14 +59,14 @@
             <div class="flex justify-center">
                 <div
                     class="relative w-full max-h-[380px] md:max-h-[260px] overflow-hidden rounded-md border border-emerald-400/15">
-
+                    @if(!empty($hero['profile_image']))
                     <img
-                        src="{{ $heroImage }}"
+                        src="{{ Storage::url($hero['profile_image']) }}"
                         alt="{{ $home->hero['headline'] ?? 'Profile Image' }}"
                         class="w-full max-h-[380px] md:max-h-[260px] object-cover"
                         loading="lazy"
                     />
-
+                    @endif
 
                     <!-- DARK OVERLAY -->
                     <div class="absolute inset-0 bg-black/30"></div>

@@ -21,7 +21,7 @@ class ContactSettingSeeder extends Seeder
                     'email' => 'sutradhar019@gmail.com',
                     'phone' => '+880 1928040976',
                     'location' => 'Dhaka, Bangladesh',
-                    'timezone' => 'BST (UTC+6)',
+                    'timezone' => config('app.timezone'),
                     'github' => 'https://github.com/bappa0409',
                 ],
                 'social_links' => [

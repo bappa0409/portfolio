@@ -102,6 +102,7 @@ class HomepageSettingsController extends Controller
      | - Accepts multipart/form-data
      | - Buttons: only text (no url). Keeps existing order/length.
      * ============================================================ */
+
     public function updateHero(Request $request)
     {
         $validated = $request->validate([
@@ -116,21 +117,17 @@ class HomepageSettingsController extends Controller
             'hero.status.value' => ['nullable', 'string', 'max:100'],
             'hero.status.badge' => ['nullable', 'string', 'max:50'],
 
-            // Buttons (TEXT only)
             'hero.buttons' => ['nullable', 'array', 'max:10'],
-            'hero.buttons.0.text' => ['required', 'string', 'max:50'], // first button required
+            'hero.buttons.0.text' => ['required', 'string', 'max:50'],
             'hero.buttons.*.text' => ['nullable', 'string', 'max:50'],
 
-            // Tags
             'hero.tags' => ['nullable', 'array', 'max:20'],
             'hero.tags.*' => ['nullable', 'string', 'max:30'],
 
-            // Mini stats
             'hero.mini_stats' => ['nullable', 'array', 'max:10'],
             'hero.mini_stats.*.value' => ['nullable', 'string', 'max:30'],
             'hero.mini_stats.*.label' => ['nullable', 'string', 'max:50'],
 
-            // Image
             'hero_profile_image' => ['nullable', 'image', 'max:4096'],
         ]);
 
@@ -143,11 +140,8 @@ class HomepageSettingsController extends Controller
         $heroNew = array_replace_recursive($heroExisting, $heroIncoming);
 
         /* ------------------------------------------------------------
-         | Buttons Handling (Fixed Order / Fixed Count)
-         | ------------------------------------------------------------
-         | Keeps existing buttons length/order.
-         | Updates only text from incoming.
-         * ------------------------------------------------------------ */
+        | Buttons Handling (Fixed Order / Fixed Count)
+        * ------------------------------------------------------------ */
         $existingButtons = (array) data_get($heroExisting, 'buttons', []);
         $incomingButtons = (array) data_get($validated, 'hero.buttons', []);
 
@@ -160,22 +154,25 @@ class HomepageSettingsController extends Controller
             }
             $heroNew['buttons'] = $finalButtons;
         } else {
-            // If no existing buttons, just save incoming buttons (normalized)
             $heroNew['buttons'] = array_values(array_map(function ($b) {
                 return ['text' => trim((string) ($b['text'] ?? ''))];
             }, $incomingButtons));
         }
 
-        /* ------------------------------------------------------------
-         | Profile Image Upload
-         | ------------------------------------------------------------ */
         if ($request->hasFile('hero_profile_image')) {
-            if (!empty($heroExisting['profile_image'])) {
-                Storage::disk('public')->delete($heroExisting['profile_image']);
-            }
+            $file = $request->file('hero_profile_image');
+            $ext  = $file->getClientOriginalExtension();
 
-            $path = $request->file('hero_profile_image')->store('homepage', 'public');
-            $heroNew['profile_image'] = $path;
+            $fileName = "hero-profile.{$ext}";
+
+            $heroNew['profile_image'] = upload_image(
+                $file,
+                dir: 'upload/images',
+                disk: 'public',
+                deleteOldPath: $heroExisting['profile_image'] ?? null,
+                keepOriginalName: false,
+                storeAsName: $fileName
+            );
         }
 
         $settings->update(['hero' => $heroNew]);
@@ -184,8 +181,10 @@ class HomepageSettingsController extends Controller
             'ok' => true,
             'message' => 'Hero updated successfully.',
             'hero' => $heroNew,
+            'profile_image_url' => file_url($heroNew['profile_image'] ?? null),
         ]);
     }
+
 
     /* ============================================================
      | SERVICES

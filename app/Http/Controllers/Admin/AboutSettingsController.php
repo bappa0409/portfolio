@@ -95,15 +95,20 @@ class AboutSettingsController extends Controller
 
         if ($request->hasFile('profile_image')) {
             $oldPath = data_get($profile, 'profile_image');
-            if ($oldPath && Storage::disk('public')->exists($oldPath)) {
-                Storage::disk('public')->delete($oldPath);
-            }
 
             $file = $request->file('profile_image');
             $ext  = $file->getClientOriginalExtension();
 
-            $fileName = "{$slug}-profile.{$ext}";
-            $path = $file->storeAs('upload/about', $fileName, 'public');
+            $fileName = "{$slug}-about.{$ext}";
+
+            $path = upload_image(
+                $file,
+                dir: 'upload/images',
+                disk: 'public',
+                deleteOldPath: $oldPath,
+                keepOriginalName: false,
+                storeAsName: $fileName
+            );
 
             $profile['profile_image'] = $path;
         }
@@ -122,7 +127,7 @@ class AboutSettingsController extends Controller
 
             $profile['cv'] = [
                 'path'          => $path,
-                'original_name' => $fileName, // or keep original if you want
+                'original_name' => $fileName,
                 'size'          => $file->getSize(),
             ];
         }
