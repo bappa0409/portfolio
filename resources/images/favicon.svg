@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Background -->
+  <rect width="64" height="64" rx="10" fill="#020617"></rect>
+
+  <!-- Outer frame -->
+  <rect x="4" y="4" width="56" height="56" rx="8" fill="none" stroke="#10b981" stroke-width="2"></rect>
+
+  <!-- Inner glow -->
+  <rect x="10" y="10" width="44" height="44" rx="6" fill="#10b981" opacity="0.08"></rect>
+
+  <!-- Text -->
+  <text x="50%" y="52%" text-anchor="middle" dominant-baseline="middle" font-family="monospace" font-size="26" font-weight="700" fill="#10b981" letter-spacing="-3">
+    B.S
+  </text>
+</svg>

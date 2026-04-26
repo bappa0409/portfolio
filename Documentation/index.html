@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CONTROL_NEXUS Documentation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body { font-family: Arial; background:#f5f7fa; margin:0; }
+.container { max-width:1000px; margin:auto; background:#fff; padding:40px; }
+h1,h2 { color:#222; }
+pre { background:#2d2d2d; color:#fff; padding:15px; border-radius:5px; overflow:auto; }
+.box { background:#eef; padding:15px; border-left:4px solid #007bff; margin:20px 0; }
+.warn { background:#fff3cd; padding:10px; border-left:4px solid orange; }
+</style>
+
+</head>
+
+<body>
+<div class="container">
+
+<h1>🚀 CONTROL_NEXUS Documentation</h1>
+
+<p>A modern Portfolio CMS built with Laravel 12.</p>
+
+<h2>📌 1. Server Requirements</h2>
+<ul>
+<li>PHP 8.2+</li>
+<li>MySQL 8+</li>
+<li>Composer</li>
+<li>Node.js (optional)</li>
+</ul>
+
+<h2>⚙️ 2. Installation</h2>
+
+<h3>Step 1: Upload Files</h3>
+<p>Upload project files to server.</p>
+
+<h3>Step 2: Install Dependencies</h3>
+<pre>composer install</pre>
+
+<h2>🔧 3. Environment Setup</h2>
+
+<pre>
+cp .env.example .env
+php artisan key:generate
+</pre>
+
+<h2>🗄️ 4. Database Setup</h2>
+
+<pre>
+DB_DATABASE=control_nexus
+DB_USERNAME=root
+DB_PASSWORD=
+</pre>
+
+<h2>🚀 5. Migration & Seeder</h2>
+<pre>php artisan migrate --seed</pre>
+
+<div class="warn">
+This creates demo admin & portfolio data
+</div>
+
+<h2>📁 6. Storage Setup</h2>
+<pre>php artisan storage:link</pre>
+
+<h2>🎨 7. Assets (Optional)</h2>
+<pre>
+npm install
+npm run build
+</pre>
+
+<h2>🔐 8. Admin Login</h2>
+<div class="box">
+URL: /login <br>
+Email: admin@gmail.com <br>
+Password: 123456
+</div>
+
+<h2>🧩 9. Features</h2>
+<ul>
+<li>Portfolio Management</li>
+<li>Homepage Builder</li>
+<li>GitHub Integration</li>
+<li>Project Gallery</li>
+</ul>
+
+<h2>⚠️ 10. Common Issues</h2>
+<pre>
+php artisan storage:link
+php artisan cache:clear
+</pre>
+
+<h2>🔒 11. Security</h2>
+<ul>
+<li>Change admin password</li>
+<li>Keep .env private</li>
+</ul>
+
+<h2>📞 12. Support</h2>
+<p>Email: sutradhar019@email.com</p>
+
+</div>
+</body>
+</html>

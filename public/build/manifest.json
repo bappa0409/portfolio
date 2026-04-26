@@ -1,0 +1,24 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-BIc1aRwx.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/images/binary-bg.webp": {
+    "file": "assets/binary-bg-CCDRvty7.webp",
+    "src": "resources/images/binary-bg.webp"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-CHRlwH4G.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-FSCL7V4_.css"
+    ]
+  }
+}
